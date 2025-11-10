@@ -1,0 +1,88 @@
+destination: docs
+
+toc:
+  depth: 3
+
+url: https://mengxu98.github.io/thisplot/
+
+template:
+  bootstrap: 5
+  light-switch: true
+  package: thistemplate
+
+navbar:
+  structure:
+    left:  [articles, reference, tutorials, news]
+    right: [github, mengxu, lightswitch]
+
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/mengxu98/thisplot
+      title: GitHub
+      aria-label: GitHub repository
+
+    mengxu:
+      icon: fas fa-home fa-lg
+      href: https://github.com/mengxu98
+      title: MengXu
+      aria-label: MengXu's GitHub profile
+
+    reference:
+      text: Reference
+      href: reference/index.html
+
+reference:
+
+- subtitle: "Package overview"
+- contents:
+  - thisplot-package
+  - thisplot_logo
+
+- subtitle: "Color functions"
+- contents:
+  - adjcolors
+  - Blend2Color
+  - blendcolors
+  - BlendRGBList
+  - col2hex
+  - palette_colors
+  - palette_list
+  - RGBA2RGB
+  - show_palettes
+
+- subtitle: "Theme functions"
+- contents:
+  - theme_blank
+  - theme_this
+
+- subtitle: "Plot manipulation"
+- contents:
+  - add_grob
+  - as_grob
+  - as_gtable
+  - build_patchwork
+  - extractgrobs
+  - get_legend
+  - get_vars
+  - grid_draw
+  - patchwork_grob
+  - segements_df
+
+- subtitle: "Panel and layout control"
+- contents:
+  - adjustlayout
+  - panel_fix
+  - panel_fix_overall
+
+- subtitle: "Plot optimization"
+- contents:
+  - drop_data
+  - slim_data
+  - standardise
+
+- subtitle: "Utility functions"
+- contents:
+  - get_namespace_fun
+  - mestimate
+  - print.thisplot_logo

@@ -1,0 +1,15 @@
+# Directories
+.vscode
+docs
+pkgdown
+test/
+
+# macOS file
+.DS_Store
+
+# R files
+.Rhistory
+.Rproj.user
+.Ruserdata
+.RData
+.Rprofile
