@@ -13,7 +13,9 @@
 ^CRAN-SUBMISSION$
 ^cran-comments\.md$
 ^\.vscode$
-^scripts$
+^assets$
+^colors$
 ^docs$
 ^pkgdown$
+^scripts$
 ^test$
