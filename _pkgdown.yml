@@ -39,6 +39,14 @@ reference:
   - thisplot-package
   - thisplot_logo
 
+- subtitle: "Chinese traditional colors"
+- contents:
+  - ChineseColors
+  - chinese_colors
+  - get_chinese_palettes
+  - print.ChineseColors
+  - print.ChineseColorInfo
+
 - subtitle: "Color functions"
 - contents:
   - adjcolors
@@ -50,6 +58,8 @@ reference:
   - palette_list
   - RGBA2RGB
   - show_palettes
+  - simple_colors
+  - visual_colors
 
 - subtitle: "Theme functions"
 - contents:
