@@ -9,7 +9,7 @@ palette_colors(
   n = 100,
   palette = "Paired",
   palcolor = NULL,
-  type = "auto",
+  type = c("auto", "discrete", "continuous"),
   matched = FALSE,
   reverse = FALSE,
   NA_keep = FALSE,
@@ -42,6 +42,9 @@ Default is \code{FALSE}.}
 
 \item{NA_color}{Color assigned to NA if \code{NA_keep} is \code{TRUE}.
 Default is \code{"grey80"}.}
+}
+\value{
+A character vector of color codes (hexadecimal format) corresponding to the input values \code{x}. The length and structure depend on the \code{matched} parameter.
 }
 \description{
 This function creates a color palette for a given vector of values.
@@ -80,6 +83,18 @@ x <- c(1:3, NA, 3:5)
 ))
 show_palettes(
   list(pal1, pal2, pal3, pal4, pal5, pal6)
+)
+
+# Use Chinese color palettes
+palette_colors(
+  x = letters[1:5],
+  palette = "Chinese_red",
+  type = "discrete"
+)
+palette_colors(
+  x = letters[1:5],
+  palette = "Chinese",
+  type = "discrete"
 )
 
 all_palettes <- show_palettes(return_palettes = TRUE)

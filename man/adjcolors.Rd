@@ -11,6 +11,9 @@ adjcolors(colors, alpha)
 
 \item{alpha}{Alpha level in \verb{[0,1]}.}
 }
+\value{
+A character vector of hexadecimal color codes with the specified alpha level.
+}
 \description{
 Convert a color with specified alpha level
 }

@@ -5,6 +5,8 @@
 #' @param base_size Base font size
 #' @param ... Arguments passed to the [ggplot2::theme].
 #'
+#' @return A ggplot2 theme object (class `theme`, `gg`).
+#'
 #' @export
 #'
 #' @examples
@@ -123,6 +125,10 @@ theme_this <- function(
 #' @param ylab The label of the y-axis.
 #' @param lab_size The size of the axis labels.
 #' @param ... Arguments passed to the [ggplot2::theme].
+#'
+#' @return A list containing ggplot2 theme objects and annotation objects.
+#' If `add_coord` is `TRUE`, returns a list with coordinate arrows;
+#' otherwise returns a list with theme only.
 #'
 #' @export
 #'

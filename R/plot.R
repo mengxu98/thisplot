@@ -106,6 +106,8 @@ extractgrobs <- function(vlnplots, x_nm, y_nm, x, y) {
 #' @param width A numeric vector of widths for each grob.
 #' @param height A numeric vector of heights for each grob.
 #'
+#' @return No return value, called for side effects (drawing grobs).
+#'
 #' @export
 grid_draw <- function(groblist, x, y, width, height) {
   if (grid::is.grob(groblist)) {

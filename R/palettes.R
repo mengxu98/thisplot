@@ -21,6 +21,8 @@
 #' @param NA_color Color assigned to NA if `NA_keep` is `TRUE`.
 #' Default is `"grey80"`.
 #'
+#' @return A character vector of color codes (hexadecimal format) corresponding to the input values `x`. The length and structure depend on the `matched` parameter.
+#'
 #' @seealso [show_palettes], [palette_list]
 #'
 #' @export
@@ -61,6 +63,18 @@
 #'   list(pal1, pal2, pal3, pal4, pal5, pal6)
 #' )
 #'
+#' # Use Chinese color palettes
+#' palette_colors(
+#'   x = letters[1:5],
+#'   palette = "Chinese_red",
+#'   type = "discrete"
+#' )
+#' palette_colors(
+#'   x = letters[1:5],
+#'   palette = "Chinese",
+#'   type = "discrete"
+#' )
+#'
 #' all_palettes <- show_palettes(return_palettes = TRUE)
 #' names(all_palettes)
 palette_colors <- function(
@@ -68,20 +82,25 @@ palette_colors <- function(
   n = 100,
   palette = "Paired",
   palcolor = NULL,
-  type = "auto",
+  type = c("auto", "discrete", "continuous"),
   matched = FALSE,
   reverse = FALSE,
   NA_keep = FALSE,
   NA_color = "grey80"
 ) {
-  palette_list <- thisplot::palette_list
+  palette_list <- c(
+    thisplot::palette_list,
+    get_chinese_palettes()
+  )
   if (missing(x)) {
     x <- 1:n
     type <- "continuous"
   }
   if (!palette %in% names(palette_list)) {
     log_message(
-      "The palette ({.val {palette}}) is invalid! Check the available palette names with {.fn show_palettes}. Or pass palette colors via the {.arg palcolor} parameter",
+      "The palette {.val {palette}} is invalid.\n",
+      "Check the available palette names with {.fn show_palettes}.\n",
+      "Or pass palette colors via the {.arg palcolor} parameter",
       message_type = "error"
     )
   }
@@ -100,13 +119,8 @@ palette_colors <- function(
     }
   }
   pal_n <- length(palcolor)
+  type <- match.arg(type)
 
-  if (!type %in% c("auto", "discrete", "continuous")) {
-    log_message(
-      "'type' must be one of 'auto','discrete' and 'continuous'.",
-      message_type = "error"
-    )
-  }
   if (type == "auto") {
     if (is.numeric(x)) {
       type <- "continuous"
@@ -207,16 +221,18 @@ palette_colors <- function(
 #' @md
 #' @param palettes A list of color palettes.
 #' Default is `NULL`.
-#' @param type A character vector specifying the type of palettes to include.
+#' @param type The type of palettes to include.
 #' Default is `"discrete"`.
-#' @param index A numeric vector specifying the indices of the palettes to include.
+#' @param index The indices of the palettes to include.
 #' Default is `NULL`.
-#' @param palette_names A character vector specifying the names of the palettes to include.
+#' @param palette_names The names of the palettes to include.
 #' Default is `NULL`.
 #' @param return_names Whether to return the names of the selected palettes.
 #' Default is `TRUE`.
 #' @param return_palettes Whether to return the colors of selected palettes.
 #' Default is `FALSE`.
+#'
+#' @return If `return_palettes` is `TRUE`, returns a list of color palettes. If `return_names` is `TRUE` (default), returns a character vector of palette names. Otherwise, returns `NULL` (called for side effects to display the plot).
 #'
 #' @seealso [palette_colors], [palette_list]
 #'
@@ -243,8 +259,13 @@ palette_colors <- function(
 #' )
 #' show_palettes(
 #'   palette_names = c(
-#'     "Paired", "nejm", "simspec", "Spectral", "jet"
+#'     "Paired", "nejm", "simspec", "Spectral", "jet", "Chinese"
 #'   ),
+#'   return_palettes = TRUE
+#' )
+#' # Include Chinese palettes via prefix
+#' show_palettes(
+#'   palette_names = c("Chinese_red", "Chinese_blue"),
 #'   return_palettes = TRUE
 #' )
 show_palettes <- function(
@@ -255,7 +276,10 @@ show_palettes <- function(
   return_names = TRUE,
   return_palettes = FALSE
 ) {
-  palette_list <- thisplot::palette_list
+  palette_list <- c(
+    thisplot::palette_list,
+    get_chinese_palettes()
+  )
   if (!is.null(palettes)) {
     palette_list <- palettes
   } else {
@@ -290,9 +314,17 @@ show_palettes <- function(
       names(palette_list), sapply(palette_list, length)
     ), color = unlist(palette_list)
   )
-  df[["palette"]] <- factor(df[["palette"]], levels = rev(unique(df[["palette"]])))
-  df[["color_order"]] <- factor(seq_len(nrow(df)), levels = seq_len(nrow(df)))
-  df[["proportion"]] <- as.numeric(1 / table(df$palette)[df$palette])
+  df[["palette"]] <- factor(
+    df[["palette"]],
+    levels = rev(unique(df[["palette"]]))
+  )
+  df[["color_order"]] <- factor(
+    seq_len(nrow(df)),
+    levels = seq_len(nrow(df))
+  )
+  df[["proportion"]] <- as.numeric(
+    1 / table(df$palette)[df$palette]
+  )
 
   p <- ggplot(
     data = df,
@@ -319,4 +351,98 @@ show_palettes <- function(
   if (isTRUE(return_names)) {
     return(palette_names)
   }
+}
+
+#' @title Get Chinese color palettes
+#'
+#' @param prefix The prefix of the palette names.
+#' Default is `"Chinese_"`.
+#'
+#' @return A list of Chinese color palettes.
+#' @export
+#'
+#' @examples
+#' show_palettes(get_chinese_palettes())
+get_chinese_palettes <- function(
+  prefix = "Chinese_"
+) {
+  if (!exists("ChineseColors", mode = "function")) {
+    return(list())
+  }
+
+  cc_obj <- ChineseColors()
+
+  category_names <- c(
+    "blue", "cyan", "green", "gray_brown",
+    "orange", "purple", "red", "yellow"
+  )
+
+  palettes <- list()
+
+  unique_colors <- function(cols) {
+    cols[!duplicated(cols)]
+  }
+
+  all_palette_colors <- list()
+  for (name in category_names) {
+    discrete_cols <- unique_colors(cc_obj[[name]])
+    all_palette_colors[[name]] <- discrete_cols
+    attr(discrete_cols, "type") <- "discrete"
+    palettes[[paste0(prefix, name)]] <- discrete_cols
+  }
+
+  if (length(all_palette_colors) > 1) {
+    all_colors_vec <- unlist(all_palette_colors)
+    dup_colors <- all_colors_vec[duplicated(all_colors_vec)]
+
+    if (length(dup_colors) > 0) {
+      for (dup_color in unique(dup_colors)) {
+        containing_palettes <- names(all_palette_colors)[
+          sapply(all_palette_colors, function(x) dup_color %in% x)
+        ]
+
+        if (length(containing_palettes) > 1) {
+          keep_in <- sort(containing_palettes)[1]
+          remove_from <- containing_palettes[containing_palettes != keep_in]
+
+          for (pal_name in remove_from) {
+            pal_key <- paste0(prefix, pal_name)
+            if (pal_key %in% names(palettes)) {
+              palettes[[pal_key]] <- palettes[[pal_key]][palettes[[pal_key]] != dup_color]
+            }
+          }
+        }
+      }
+    }
+  }
+
+  chinese_small <- c(
+    "#004EA2", # 景泰蓝   蓝
+    "#007175", # 青雘     青
+    "#1A6840", # 荷叶绿   绿
+    "#FECC11", # 向日葵黄 黄
+    "#ED5736", # 妃色     红
+    "#BC172D", # 牡丹红   红 <- 橙
+    "#AA6A4C", # 火泥棕   棕
+    "#8A1874" # 赪紫     紫
+  )
+
+  attr(chinese_small, "type") <- "discrete"
+  palettes[["Chinese"]] <- chinese_small
+
+  if (length(chinese_small) >= 2) {
+    continuous_cols <- grDevices::colorRampPalette(chinese_small)(256)
+    attr(continuous_cols, "type") <- "continuous"
+    palettes[["Chinese_continuous"]] <- continuous_cols
+  }
+
+  palette_names <- names(palettes)
+  special_names <- c("Chinese", "Chinese_continuous")
+  other_names <- setdiff(palette_names, special_names)
+  sorted_names <- c(
+    intersect(special_names, palette_names),
+    sort(other_names)
+  )
+  palettes <- palettes[sorted_names]
+  palettes
 }

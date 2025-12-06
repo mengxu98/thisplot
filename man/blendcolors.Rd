@@ -12,6 +12,9 @@ blendcolors(colors, mode = c("blend", "average", "screen", "multiply"))
 \item{mode}{Blend mode.
 One of \code{"blend"}, \code{"average"}, \code{"screen"}, or \code{"multiply"}.}
 }
+\value{
+A character vector of hexadecimal color codes representing the blended color.
+}
 \description{
 Blends a list of colors using the specified blend mode
 }
