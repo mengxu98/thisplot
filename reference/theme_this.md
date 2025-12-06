@@ -23,6 +23,10 @@ theme_this(aspect.ratio = NULL, base_size = 12, ...)
   Arguments passed to the
   [ggplot2::theme](https://ggplot2.tidyverse.org/reference/theme.html).
 
+## Value
+
+A ggplot2 theme object (class `theme`, `gg`).
+
 ## Examples
 
 ``` r

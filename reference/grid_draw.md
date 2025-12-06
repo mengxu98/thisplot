@@ -30,3 +30,7 @@ grid_draw(groblist, x, y, width, height)
 - height:
 
   A numeric vector of heights for each grob.
+
+## Value
+
+No return value, called for side effects (drawing grobs).

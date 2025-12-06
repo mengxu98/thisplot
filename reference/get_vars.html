@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,6 +64,12 @@ Default is <code>FALSE</code>.</p></dd>
 Default is <code>TRUE</code>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    <p>A character vector of variable names.
+If <code>reverse</code> is <code>FALSE</code>, returns used variables;
+if <code>TRUE</code>, returns unused variables.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
@@ -74,11 +80,11 @@ Default is <code>TRUE</code>.</p></dd>
 <span class="r-in"><span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">get_vars</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> [2025-11-10 02:55:02] Vars_used: <span style="color: #0000BB;">"mpg"</span>, <span style="color: #0000BB;">"cyl"</span>, and <span style="color: #0000BB;">"wt"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> [2025-12-06 13:09:56] Vars_used: <span style="color: #0000BB;">"mpg"</span>, <span style="color: #0000BB;">"cyl"</span>, and <span style="color: #0000BB;">"wt"</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span>                       vars_notused: <span style="color: #0000BB;">"disp"</span>, <span style="color: #0000BB;">"hp"</span>, <span style="color: #0000BB;">"drat"</span>, <span style="color: #0000BB;">"qsec"</span>, <span style="color: #0000BB;">"vs"</span>, <span style="color: #0000BB;">"am"</span>, <span style="color: #0000BB;">"gear"</span>, and <span style="color: #0000BB;">"carb"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "mpg" "cyl" "wt" </span>
 <span class="r-in"><span><span class="fu">get_vars</span><span class="op">(</span><span class="va">p</span>, reverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> [2025-11-10 02:55:02] Vars_used: <span style="color: #0000BB;">"mpg"</span>, <span style="color: #0000BB;">"cyl"</span>, and <span style="color: #0000BB;">"wt"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> [2025-12-06 13:09:56] Vars_used: <span style="color: #0000BB;">"mpg"</span>, <span style="color: #0000BB;">"cyl"</span>, and <span style="color: #0000BB;">"wt"</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span>                       vars_notused: <span style="color: #0000BB;">"disp"</span>, <span style="color: #0000BB;">"hp"</span>, <span style="color: #0000BB;">"drat"</span>, <span style="color: #0000BB;">"qsec"</span>, <span style="color: #0000BB;">"vs"</span>, <span style="color: #0000BB;">"am"</span>, <span style="color: #0000BB;">"gear"</span>, and <span style="color: #0000BB;">"carb"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "disp" "hp"   "drat" "qsec" "vs"   "am"   "gear" "carb"</span>
 </code></pre></div>

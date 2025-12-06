@@ -48,6 +48,12 @@ theme_blank(
   Arguments passed to the
   [ggplot2::theme](https://ggplot2.tidyverse.org/reference/theme.html).
 
+## Value
+
+A list containing ggplot2 theme objects and annotation objects. If
+`add_coord` is `TRUE`, returns a list with coordinate arrows; otherwise
+returns a list with theme only.
+
 ## Examples
 
 ``` r

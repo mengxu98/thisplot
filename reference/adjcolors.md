@@ -18,6 +18,11 @@ adjcolors(colors, alpha)
 
   Alpha level in `[0,1]`.
 
+## Value
+
+A character vector of hexadecimal color codes with the specified alpha
+level.
+
 ## Examples
 
 ``` r

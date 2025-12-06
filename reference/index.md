@@ -8,6 +8,19 @@
 - [`thisplot_logo()`](https://mengxu98.github.io/thisplot/reference/thisplot_logo.md)
   : The logo of thisplot
 
+### Chinese traditional colors
+
+- [`ChineseColors()`](https://mengxu98.github.io/thisplot/reference/ChineseColors.md)
+  : Chinese traditional colors system
+- [`chinese_colors`](https://mengxu98.github.io/thisplot/reference/chinese_colors.md)
+  : Chinese traditional colors dataset
+- [`get_chinese_palettes()`](https://mengxu98.github.io/thisplot/reference/get_chinese_palettes.md)
+  : Get Chinese color palettes
+- [`print(`*`<ChineseColors>`*`)`](https://mengxu98.github.io/thisplot/reference/print.ChineseColors.md)
+  : Print ChineseColors object
+- [`print(`*`<ChineseColorInfo>`*`)`](https://mengxu98.github.io/thisplot/reference/print.ChineseColorInfo.md)
+  : Print ChineseColorInfo object
+
 ### Color functions
 
 - [`adjcolors()`](https://mengxu98.github.io/thisplot/reference/adjcolors.md)
@@ -28,6 +41,10 @@
   : Convert RGBA color to RGB with background
 - [`show_palettes()`](https://mengxu98.github.io/thisplot/reference/show_palettes.md)
   : Show the color palettes
+- [`simple_colors()`](https://mengxu98.github.io/thisplot/reference/simple_colors.md)
+  : Simple random color selection
+- [`visual_colors()`](https://mengxu98.github.io/thisplot/reference/visual_colors.md)
+  : Visualize colors in HTML format
 
 ### Theme functions
 

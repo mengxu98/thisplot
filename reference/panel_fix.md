@@ -109,6 +109,12 @@ panel_fix_overall(
 
   Additional arguments passed to other functions.
 
+## Value
+
+If `return_grob` is `TRUE`, returns a gtable object. Otherwise, returns
+a patchwork object with fixed panel sizes. The returned object has a
+`size` attribute containing width, height, and units.
+
 ## Examples
 
 ``` r
@@ -150,28 +156,4 @@ object.size(
   )
 )
 #> 1375808 bytes
-
-## save the plot with appropriate size
-# p_fix <- panel_fix(
-#   p,
-#   width = 5,
-#   height = 3,
-#   units = "cm"
-# )
-# plot_size <- attr(p_fix, "size")
-# ggsave(
-#   filename = "p_fix.png",
-#   plot = p_fix,
-#   units = plot_size$units,
-#   width = plot_size$width,
-#   height = plot_size$height
-# )
-## or save the plot directly
-# p_fix <- panel_fix(
-#   p,
-#   width = 5,
-#   height = 3,
-#   units = "cm",
-#   save = "p_fix.png"
-# )
 ```

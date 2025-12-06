@@ -10,6 +10,35 @@ size control, data optimization for plots, and layout adjustments.
 Designed to enhance workflows with ggplot2, patchwork, and
 ComplexHeatmap.
 
+## **Chinese traditional colors**
+
+The package includes a comprehensive Chinese traditional color system
+with 1058 representative colors. You can access colors by name (pinyin
+or Chinese), create color palettes, and visualize color collections.
+
+Example usage:
+
+``` r
+library(thisplot)
+cc <- ChineseColors()
+widget_ch <- cc$visual_colors(
+  num_per_row = 30,
+  title = "中国传统颜色",
+  name_type = "chinese"
+)
+htmltools::browsable(widget_ch)
+```
+
+![](reference/figures/ChineseColors.png)
+
+``` r
+show_palettes(
+  palettes = get_chinese_palettes()
+)
+```
+
+![](reference/figures/ChineseColors_palettes.svg)
+
 ## **Installation**
 
 Install CRAN version:

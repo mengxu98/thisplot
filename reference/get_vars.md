@@ -22,6 +22,11 @@ get_vars(p, reverse = FALSE, verbose = TRUE)
 
   Whether to print the message. Default is `TRUE`.
 
+## Value
+
+A character vector of variable names. If `reverse` is `FALSE`, returns
+used variables; if `TRUE`, returns unused variables.
+
 ## Examples
 
 ``` r
@@ -32,11 +37,11 @@ p <- ggplot(
 ) +
   geom_point()
 get_vars(p)
-#> ℹ [2025-11-10 02:55:02] Vars_used: "mpg", "cyl", and "wt"
+#> ℹ [2025-12-06 13:09:56] Vars_used: "mpg", "cyl", and "wt"
 #> ℹ                       vars_notused: "disp", "hp", "drat", "qsec", "vs", "am", "gear", and "carb"
 #> [1] "mpg" "cyl" "wt" 
 get_vars(p, reverse = TRUE)
-#> ℹ [2025-11-10 02:55:02] Vars_used: "mpg", "cyl", and "wt"
+#> ℹ [2025-12-06 13:09:56] Vars_used: "mpg", "cyl", and "wt"
 #> ℹ                       vars_notused: "disp", "hp", "drat", "qsec", "vs", "am", "gear", and "carb"
 #> [1] "disp" "hp"   "drat" "qsec" "vs"   "am"   "gear" "carb"
 ```

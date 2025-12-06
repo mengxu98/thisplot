@@ -19,6 +19,11 @@ blendcolors(colors, mode = c("blend", "average", "screen", "multiply"))
   Blend mode. One of `"blend"`, `"average"`, `"screen"`, or
   `"multiply"`.
 
+## Value
+
+A character vector of hexadecimal color codes representing the blended
+color.
+
 ## Examples
 
 ``` r
