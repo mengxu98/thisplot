@@ -10,6 +10,33 @@
 
 [thisplot](https://mengxu98.github.io/thisplot/) is an R package providing utility functions for data visualization and plotting. It includes tools for color manipulation (blending, conversion, palettes), plot customization (themes, grob operations, patchwork building), panel size control, data optimization for plots, and layout adjustments. Designed to enhance workflows with ggplot2, patchwork, and ComplexHeatmap.
 
+## **Chinese traditional colors**
+
+The package includes a comprehensive Chinese traditional color system with 1058 representative colors. You can access colors by name (pinyin or Chinese), create color palettes, and visualize color collections.
+
+Example usage:
+
+```r
+library(thisplot)
+cc <- ChineseColors()
+widget_ch <- cc$visual_colors(
+  num_per_row = 30,
+  title = "中国传统颜色",
+  name_type = "chinese"
+)
+htmltools::browsable(widget_ch)
+```
+
+<img src="man/figures/ChineseColors.png" align="center"/>
+
+```r
+show_palettes(
+  palettes = get_chinese_palettes()
+)
+```
+
+<img src="man/figures/ChineseColors_palettes.svg" align="center" width="700"/>
+
 ## **Installation**
 
 Install CRAN version:
