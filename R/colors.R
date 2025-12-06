@@ -24,6 +24,8 @@ col2hex <- function(cname) {
 #' @param colors Color vectors.
 #' @param alpha Alpha level in `[0,1]`.
 #'
+#' @return A character vector of hexadecimal color codes with the specified alpha level.
+#'
 #' @export
 #'
 #' @examples
@@ -57,6 +59,8 @@ adjcolors <- function(colors, alpha) {
 #' @param colors Color vectors.
 #' @param mode Blend mode.
 #' One of `"blend"`, `"average"`, `"screen"`, or `"multiply"`.
+#'
+#' @return A character vector of hexadecimal color codes representing the blended color.
 #'
 #' @export
 #'
@@ -237,4 +241,111 @@ BlendRGBList <- function(
   result <- list(clist_use[[1]][[1]], clist_use[[1]][[2]])
   result <- RGBA2RGB(result, BackGround = RGB_BackGround)
   return(result)
+}
+
+#' @title Simple random color selection
+#'
+#' @description
+#' Randomly select a specified number of colors from ChineseColors or other palettes.
+#'
+#' @md
+#' @param n The number of colors to return. Default is `10`.
+#' @param palette The name of the palette to use.
+#' If `NULL` (default), colors will be selected from ChineseColors.
+#' Otherwise, colors will be selected from the specified palette.
+#' Available palette names can be queried with [show_palettes].
+#'
+#' @return A character vector of hexadecimal color codes.
+#'
+#' @export
+#'
+#' @examples
+#' simple_colors()
+#'
+#' show_palettes(simple_colors(n = 5))
+#'
+#' # Get colors from a specific palette
+#' simple_colors(n = 10, palette = "Paired")
+#' simple_colors(n = 10, palette = "Chinese_blue")
+#' simple_colors(n = 10, palette = "Spectral")
+simple_colors <- function(n = 10, palette = NULL) {
+  if (!is.numeric(n) || n < 1) {
+    log_message(
+      "Parameter 'n' must be a positive integer",
+      message_type = "error"
+    )
+  }
+  n <- as.integer(n)
+
+  if (is.null(palette)) {
+    cc_obj <- tryCatch(
+      ChineseColors(),
+      error = function(e) {
+        log_message(
+          "Failed to initialize {.fn ChineseColors}: {.val {conditionMessage(e)}}",
+          message_type = "warning"
+        )
+        NULL
+      }
+    )
+
+    if (is.null(cc_obj)) {
+      log_message(
+        "Cannot access ChineseColors. Please specify a palette name.",
+        message_type = "error"
+      )
+    }
+
+    all_colors <- cc_obj$colors$hex
+    if (length(all_colors) == 0) {
+      log_message(
+        "No colors available in ChineseColors.",
+        message_type = "error"
+      )
+    }
+
+    # Randomly sample colors
+    if (n > length(all_colors)) {
+      log_message(
+        "Requested {.val {n}} colors but only {.val {length(all_colors)}} available. Returning all colors.",
+        message_type = "warning"
+      )
+      return(sample(all_colors, length(all_colors)))
+    }
+
+    return(sample(all_colors, n))
+  } else {
+    # Get colors from specified palette
+    palette_list <- c(
+      thisplot::palette_list,
+      get_chinese_palettes()
+    )
+
+    if (!palette %in% names(palette_list)) {
+      log_message(
+        "The palette {.val {palette}} is invalid.\n",
+        "Check the available palette names with {.fn show_palettes}.",
+        message_type = "error"
+      )
+    }
+
+    palette_colors <- palette_list[[palette]]
+    if (length(palette_colors) == 0) {
+      log_message(
+        "The palette {.val {palette}} is empty.",
+        message_type = "error"
+      )
+    }
+
+    # Randomly sample colors
+    if (n > length(palette_colors)) {
+      log_message(
+        "Requested {.val {n}} colors but only {.val {length(palette_colors)}} available in palette {.val {palette}}. Returning all colors.",
+        message_type = "warning"
+      )
+      return(sample(palette_colors, length(palette_colors)))
+    }
+
+    return(sample(palette_colors, n))
+  }
 }
