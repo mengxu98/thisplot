@@ -76,6 +76,11 @@ Default is \code{TRUE}.}
 
 \item{...}{Additional arguments passed to other functions.}
 }
+\value{
+If \code{return_grob} is \code{TRUE}, returns a gtable object.
+Otherwise, returns a patchwork object with fixed panel sizes.
+The returned object has a \code{size} attribute containing width, height, and units.
+}
 \description{
 The ggplot object, when stored, can only specify the height and width of the entire plot, not the panel.
 The latter is obviously more important to control the final result of a plot.
@@ -116,28 +121,4 @@ object.size(
     units = "cm"
   )
 )
-
-## save the plot with appropriate size
-# p_fix <- panel_fix(
-#   p,
-#   width = 5,
-#   height = 3,
-#   units = "cm"
-# )
-# plot_size <- attr(p_fix, "size")
-# ggsave(
-#   filename = "p_fix.png",
-#   plot = p_fix,
-#   units = plot_size$units,
-#   width = plot_size$width,
-#   height = plot_size$height
-# )
-## or save the plot directly
-# p_fix <- panel_fix(
-#   p,
-#   width = 5,
-#   height = 3,
-#   units = "cm",
-#   save = "p_fix.png"
-# )
 }

@@ -28,6 +28,10 @@ get_namespace_fun <- function(pkg, fun) {
 #' @param reverse Whether to return unused vars.
 #' Default is `FALSE`.
 #'
+#' @return A character vector of variable names.
+#' If `reverse` is `FALSE`, returns used variables;
+#' if `TRUE`, returns unused variables.
+#'
 #' @export
 #' @examples
 #' library(ggplot2)

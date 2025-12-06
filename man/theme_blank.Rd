@@ -29,6 +29,11 @@ theme_blank(
 
 \item{...}{Arguments passed to the \link[ggplot2:theme]{ggplot2::theme}.}
 }
+\value{
+A list containing ggplot2 theme objects and annotation objects.
+If \code{add_coord} is \code{TRUE}, returns a list with coordinate arrows;
+otherwise returns a list with theme only.
+}
 \description{
 This function creates a theme with all elements blank except for axis lines and labels.
 It can optionally add coordinate axes in the plot.

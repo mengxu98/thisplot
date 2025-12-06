@@ -17,6 +17,9 @@ grid_draw(groblist, x, y, width, height)
 
 \item{height}{A numeric vector of heights for each grob.}
 }
+\value{
+No return value, called for side effects (drawing grobs).
+}
 \description{
 Draw a list of grobs at specified positions with given widths and heights.
 }

@@ -15,6 +15,11 @@ Default is \code{FALSE}.}
 \item{verbose}{Whether to print the message.
 Default is \code{TRUE}.}
 }
+\value{
+A character vector of variable names.
+If \code{reverse} is \code{FALSE}, returns used variables;
+if \code{TRUE}, returns unused variables.
+}
 \description{
 Get used vars in a ggplot object
 }

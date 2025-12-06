@@ -17,13 +17,13 @@ show_palettes(
 \item{palettes}{A list of color palettes.
 Default is \code{NULL}.}
 
-\item{type}{A character vector specifying the type of palettes to include.
+\item{type}{The type of palettes to include.
 Default is \code{"discrete"}.}
 
-\item{index}{A numeric vector specifying the indices of the palettes to include.
+\item{index}{The indices of the palettes to include.
 Default is \code{NULL}.}
 
-\item{palette_names}{A character vector specifying the names of the palettes to include.
+\item{palette_names}{The names of the palettes to include.
 Default is \code{NULL}.}
 
 \item{return_names}{Whether to return the names of the selected palettes.
@@ -31,6 +31,9 @@ Default is \code{TRUE}.}
 
 \item{return_palettes}{Whether to return the colors of selected palettes.
 Default is \code{FALSE}.}
+}
+\value{
+If \code{return_palettes} is \code{TRUE}, returns a list of color palettes. If \code{return_names} is \code{TRUE} (default), returns a character vector of palette names. Otherwise, returns \code{NULL} (called for side effects to display the plot).
 }
 \description{
 This function displays color palettes using ggplot2.
@@ -56,8 +59,13 @@ show_palettes(
 )
 show_palettes(
   palette_names = c(
-    "Paired", "nejm", "simspec", "Spectral", "jet"
+    "Paired", "nejm", "simspec", "Spectral", "jet", "Chinese"
   ),
+  return_palettes = TRUE
+)
+# Include Chinese palettes via prefix
+show_palettes(
+  palette_names = c("Chinese_red", "Chinese_blue"),
   return_palettes = TRUE
 )
 }
