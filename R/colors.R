@@ -266,7 +266,7 @@ BlendRGBList <- function(
 #'
 #' # Get colors from a specific palette
 #' simple_colors(n = 10, palette = "Paired")
-#' simple_colors(n = 10, palette = "Chinese_blue")
+#' simple_colors(n = 10, palette = "ChineseBlue")
 #' simple_colors(n = 10, palette = "Spectral")
 simple_colors <- function(n = 10, palette = NULL) {
   if (!is.numeric(n) || n < 1) {

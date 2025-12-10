@@ -27,6 +27,6 @@ show_palettes(simple_colors(n = 5))
 
 # Get colors from a specific palette
 simple_colors(n = 10, palette = "Paired")
-simple_colors(n = 10, palette = "Chinese_blue")
+simple_colors(n = 10, palette = "ChineseBlue")
 simple_colors(n = 10, palette = "Spectral")
 }

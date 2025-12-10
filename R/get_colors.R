@@ -59,6 +59,16 @@ get_colors <- function(..., palettes = NULL) {
   palette_colors_found <- character(0)
   remaining_search_values <- character(0)
 
+  looks_like_palette_name <- function(s) {
+    if (grepl("^[A-Z][A-Z0-9]*$", s)) {
+      return(TRUE)
+    }
+    if (grepl("^[A-Z][a-zA-Z0-9]*$", s)) {
+      return(TRUE)
+    }
+    return(FALSE)
+  }
+
   for (val in search_values) {
     val_char <- as.character(val)
     if (val_char %in% names(all_palettes)) {
@@ -67,7 +77,7 @@ get_colors <- function(..., palettes = NULL) {
     } else {
       is_hex <- grepl("^#[0-9A-Fa-f]{6}$", val_char)
       is_number <- !is.na(suppressWarnings(as.numeric(val_char)))
-      if (!is_hex && !is_number) {
+      if (!is_hex && !is_number && looks_like_palette_name(val_char)) {
         palette_names_not_found <- c(palette_names_not_found, val_char)
       }
       remaining_search_values <- c(remaining_search_values, val_char)
@@ -97,40 +107,6 @@ get_colors <- function(..., palettes = NULL) {
       class(result) <- c("colors", "data.frame")
       cli::cli_h3("Found palette{?s}: {.val {palette_names_found}}")
       return(result)
-    }
-  }
-
-  if (length(palette_names_not_found) > 0 &&
-    length(palette_names_found) == 0 &&
-    length(remaining_search_values) == length(palette_names_not_found)) {
-    available_palette_names <- names(all_palettes)
-    suggestions <- character(0)
-    for (not_found in palette_names_not_found) {
-      prefix_matches <- available_palette_names[grepl(
-        paste0("^", not_found), available_palette_names,
-        ignore.case = TRUE
-      )]
-      if (length(prefix_matches) > 0) {
-        suggestions <- c(
-          suggestions, prefix_matches[1:min(3, length(prefix_matches))]
-        )
-      }
-    }
-    suggestions <- unique(suggestions)
-
-    if (length(suggestions) > 0) {
-      log_message(
-        "No matching palettes found for: {.val {palette_names_not_found}}. ",
-        "Did you mean: {.val {suggestions}}?",
-        message_type = "error"
-      )
-    } else {
-      log_message(
-        "No matching palettes found for: {.val {palette_names_not_found}}. ",
-        "Available palettes include: {.val {available_palette_names}}. ",
-        "Use {.code show_palettes(return_palettes = TRUE)} to see all available palettes.",
-        message_type = "error"
-      )
     }
   }
 
@@ -228,10 +204,53 @@ get_colors <- function(..., palettes = NULL) {
   }
 
   if (length(idx) == 0 && length(search_values) > 0) {
-    log_message(
-      "No matching color{?s} found for: {.val {search_values}}",
-      message_type = "error"
-    )
+    palette_like_values <- character(0)
+    for (val in search_values) {
+      val_char <- as.character(val)
+      is_hex <- grepl("^#[0-9A-Fa-f]{6}$", val_char)
+      is_number <- !is.na(suppressWarnings(as.numeric(val_char)))
+      if (!is_hex && !is_number && looks_like_palette_name(val_char)) {
+        palette_like_values <- c(palette_like_values, val_char)
+      }
+    }
+
+    if (length(palette_like_values) > 0 &&
+      length(palette_like_values) == length(search_values)) {
+      available_palette_names <- names(all_palettes)
+      suggestions <- character(0)
+      for (not_found in palette_like_values) {
+        prefix_matches <- available_palette_names[grepl(
+          paste0("^", not_found), available_palette_names,
+          ignore.case = TRUE
+        )]
+        if (length(prefix_matches) > 0) {
+          suggestions <- c(
+            suggestions, prefix_matches[1:min(3, length(prefix_matches))]
+          )
+        }
+      }
+      suggestions <- unique(suggestions)
+
+      if (length(suggestions) > 0) {
+        log_message(
+          "No matching palettes found for: {.val {palette_like_values}}. ",
+          "Did you mean: {.val {suggestions}}?",
+          message_type = "error"
+        )
+      } else {
+        log_message(
+          "No matching palettes found for: {.val {palette_like_values}}. ",
+          "Available palettes include: {.val {available_palette_names}}. ",
+          "Use {.code show_palettes(return_palettes = TRUE)} to see all available palettes.",
+          message_type = "error"
+        )
+      }
+    } else {
+      log_message(
+        "No matching color{?s} found for: {.val {search_values}}",
+        message_type = "error"
+      )
+    }
   }
 
   if (length(idx) > 0) {

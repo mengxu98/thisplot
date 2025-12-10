@@ -65,7 +65,7 @@ show_palettes(
 )
 # Include Chinese palettes via prefix
 show_palettes(
-  palette_names = c("Chinese_red", "Chinese_blue"),
+  palette_names = c("ChineseRed", "ChineseBlue"),
   return_palettes = TRUE
 )
 }
