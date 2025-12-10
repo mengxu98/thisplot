@@ -5,7 +5,7 @@ Get Chinese color palettes
 ## Usage
 
 ``` r
-get_chinese_palettes(prefix = "Chinese_")
+get_chinese_palettes(prefix = "Chinese")
 ```
 
 ## Arguments
@@ -23,8 +23,9 @@ A list of Chinese color palettes.
 ``` r
 show_palettes(get_chinese_palettes())
 
-#>  [1] "Chinese"            "Chinese_continuous" "Chinese_blue"      
-#>  [4] "Chinese_cyan"       "Chinese_gray_brown" "Chinese_green"     
-#>  [7] "Chinese_orange"     "Chinese_purple"     "Chinese_red"       
-#> [10] "Chinese_yellow"    
+#>  [1] "Chinese"           "ChineseContinuous" "ChineseSet8"      
+#>  [4] "ChineseSet16"      "ChineseSet32"      "ChineseSet64"     
+#>  [7] "ChineseSet128"     "ChineseBlue"       "ChineseCyan"      
+#> [10] "ChineseGray_brown" "ChineseGreen"      "ChineseOrange"    
+#> [13] "ChinesePurple"     "ChineseRed"        "ChineseYellow"    
 ```

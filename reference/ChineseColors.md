@@ -23,6 +23,8 @@ for the dataset of Chinese traditional colors.
 for getting Chinese color palettes.
 [visual_colors](https://mengxu98.github.io/thisplot/reference/visual_colors.md)
 for visualizing any color vector.
+[get_colors](https://mengxu98.github.io/thisplot/reference/get_colors.md)
+for searching colors in dataset and palettes.
 
 ## Examples
 
@@ -43,36 +45,106 @@ cc
 #> • yellow: 101 colors
 #> 
 #> ── Methods: 
-#> • get_color(...): Get color information
+#> • get_color(...): Get color information (searches only in dataset)
 #> • visual_colors(loc_range, num_per_row, title, name_type)
+#> 
+#> ── See also: 
+#> [get_colors()] for searching colors in dataset and palettes
 
 # Get a color by pinyin name
 cc$get_color("pinlan")
-#> num  name    name_ch  rgb             hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
-
-# Or by Chinese name
-cc$get_color("品蓝")
-#> num  name    name_ch  rgb             hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
+#> Error in get_colors(...): No matching palettes found for: "pinlan". Available palettes include:
+#> "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral",
+#> "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3",
+#> "Blues", …, "ChineseRed", and "ChineseYellow". Use
+#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
+# Or use external function
+get_colors("pinlan")
+#> Error in get_colors("pinlan"): No matching palettes found for: "pinlan". Available palettes include:
+#> "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral",
+#> "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3",
+#> "Blues", …, "ChineseRed", and "ChineseYellow". Use
+#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
 
 # By number
 cc$get_color(44)
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
+#> num  name    name_ch  rgb             hex      category  category_ch   
+#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
+get_colors(44)
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
 #> num  name    name_ch  rgb             hex      category  category_ch   
 #> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 
 # By hex code
 cc$get_color("#2B73AF")
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
+#> num  name    name_ch  rgb             hex      category  category_ch   
+#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
+get_colors("#2B73AF") # Also searches in palettes
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
 #> num  name    name_ch  rgb             hex      category  category_ch   
 #> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 
 # Multiple colors
 cc$get_color("pinlan", "piao")
-#> num  name    name_ch  rgb              hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)   #2B73AF  blue      蓝            
-#> 256  piao    缥       (127, 236, 173)  #7FECAD  green     绿            
+#> Error in get_colors(...): No matching palettes found for: "pinlan" and "piao". Available palettes
+#> include: "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn",
+#> "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2",
+#> "Set3", "Blues", …, "ChineseRed", and "ChineseYellow". Use
+#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
+get_colors("pinlan", "piao")
+#> Error in get_colors("pinlan", "piao"): No matching palettes found for: "pinlan" and "piao". Available palettes
+#> include: "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn",
+#> "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2",
+#> "Set3", "Blues", …, "ChineseRed", and "ChineseYellow". Use
+#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
 
 cc$get_color(91:100)
+#> 
+#> ── Found in: 
+#> #006D87: "ChineseSet128" and "ChineseCyan"
+#> #C6E6E8: "ChineseBlue"
+#> #D2F0F4: "ChineseBlue"
+#> #13393E: "ChineseCyan"
+#> #284852: "ChineseCyan"
+#> #424C50: "ChineseCyan"
+#> #3B5554: "ChineseCyan"
+#> #41555D: "ChineseCyan"
+#> #426666: "ChineseCyan"
+#> #226B68: "ChineseCyan"
+#> num  name        name_ch  rgb              hex      category  category_ch   
+#> 91   haitianlan  海天蓝   (198, 230, 232)  #C6E6E8  blue      蓝            
+#> 92   shuilan     水蓝     (210, 240, 244)  #D2F0F4  blue      蓝            
+#> 93   luozidai    螺子黛   (19, 57, 62)     #13393E  cyan      青            
+#> 94   qinggua     青緺     (40, 72, 82)     #284852  cyan      青            
+#> 95   yaqing      鸦青     (66, 76, 80)     #424C50  cyan      青            
+#> 96   daise       黛色     (59, 85, 84)     #3B5554  cyan      青            
+#> 97   an          黯       (65, 85, 93)     #41555D  cyan      青            
+#> 98   dailv       黛绿     (66, 102, 102)   #426666  cyan      青            
+#> 99   daose       䌦色     (34, 107, 104)   #226B68  cyan      青            
+#> 100  ruancui     软翠     (0, 109, 135)    #006D87  cyan      青            
+get_colors(91:100)
+#> 
+#> ── Found in: 
+#> #006D87: "ChineseSet128" and "ChineseCyan"
+#> #C6E6E8: "ChineseBlue"
+#> #D2F0F4: "ChineseBlue"
+#> #13393E: "ChineseCyan"
+#> #284852: "ChineseCyan"
+#> #424C50: "ChineseCyan"
+#> #3B5554: "ChineseCyan"
+#> #41555D: "ChineseCyan"
+#> #426666: "ChineseCyan"
+#> #226B68: "ChineseCyan"
 #> num  name        name_ch  rgb              hex      category  category_ch   
 #> 91   haitianlan  海天蓝   (198, 230, 232)  #C6E6E8  blue      蓝            
 #> 92   shuilan     水蓝     (210, 240, 244)  #D2F0F4  blue      蓝            
@@ -87,12 +159,12 @@ cc$get_color(91:100)
 
 # Chinese names
 widget_ch <- cc$visual_colors(
-  title = "中国传统颜色",
+  title = "Chinese Traditional Colors",
   name_type = "chinese"
 )
 htmltools::browsable(widget_ch)
 
-  中国传统颜色
+  Chinese Traditional Colors
   
 
 

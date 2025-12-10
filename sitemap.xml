@@ -21,6 +21,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/drop_data.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/extractgrobs.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_chinese_palettes.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/get_colors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_legend.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_namespace_fun.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_vars.html</loc></url>
@@ -31,8 +32,8 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/palette_list.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/panel_fix.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/patchwork_grob.html</loc></url>
-<url><loc>https://mengxu98.github.io/thisplot/reference/print.ChineseColorInfo.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/print.ChineseColors.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/print.colors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/print.thisplot_logo.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/segements_df.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/show_palettes.html</loc></url>

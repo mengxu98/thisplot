@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -238,15 +238,15 @@ Default is <code>"grey80"</code>.</p></dd>
 <span class="r-in"><span>  palette <span class="op">=</span> <span class="st">"Chinese_red"</span>,</span></span>
 <span class="r-in"><span>  type <span class="op">=</span> <span class="st">"discrete"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c         d         e </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "#4C1E1A" "#631216" "#62102E" "#622A1D" "#662B1F" </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in palette_colors(x = letters[1:5], palette = "Chinese_red", type = "discrete"):</span> The palette <span style="color: #0000BB;">"Chinese_red"</span> is invalid. Check the available palette names</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> with `show_palettes()`. Or pass palette colors via the `palcolor` parameter</span>
 <span class="r-in"><span><span class="fu">palette_colors</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>  palette <span class="op">=</span> <span class="st">"Chinese"</span>,</span></span>
 <span class="r-in"><span>  type <span class="op">=</span> <span class="st">"discrete"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         a         b         c         d         e </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> "#004EA2" "#007175" "#1A6840" "#FECC11" "#ED5736" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> "#1772B4" "#0AA344" "#F9BD10" "#F97D1C" "#ED5736" </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">all_palettes</span> <span class="op">&lt;-</span> <span class="fu"><a href="show_palettes.html">show_palettes</a></span><span class="op">(</span>return_palettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="palette_colors-2.png" alt="" width="700" height="433"></span>
@@ -327,10 +327,12 @@ Default is <code>"grey80"</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [220] "jcolors-pal7"           "jcolors-pal8"           "jcolors-pal9"          </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [223] "jcolors-pal10"          "jcolors-pal11"          "jcolors-pal12"         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [226] "jcolors-rainbow"        "jet"                    "simspec"               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [229] "GdRd"                   "Chinese"                "Chinese_continuous"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [232] "Chinese_blue"           "Chinese_cyan"           "Chinese_gray_brown"    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [235] "Chinese_green"          "Chinese_orange"         "Chinese_purple"        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [238] "Chinese_red"            "Chinese_yellow"        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [229] "GdRd"                   "Chinese"                "ChineseContinuous"     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [232] "ChineseSet8"            "ChineseSet16"           "ChineseSet32"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [235] "ChineseSet64"           "ChineseSet128"          "ChineseBlue"           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [238] "ChineseCyan"            "ChineseGray_brown"      "ChineseGreen"          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [241] "ChineseOrange"          "ChinesePurple"          "ChineseRed"            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [244] "ChineseYellow"         </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

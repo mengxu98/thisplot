@@ -11,7 +11,7 @@ create color palettes, and generate segmented colormaps."><meta property="og:ima
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,8 @@ Detailed information can be found in <code><a href="print.ChineseColors.html">pr
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><a href="chinese_colors.html">chinese_colors</a> for the dataset of Chinese traditional colors.
 <a href="get_chinese_palettes.html">get_chinese_palettes</a> for getting Chinese color palettes.
-<a href="visual_colors.html">visual_colors</a> for visualizing any color vector.</p></div>
+<a href="visual_colors.html">visual_colors</a> for visualizing any color vector.
+<a href="get_colors.html">get_colors</a> for searching colors in dataset and palettes.</p></div>
     </div>
 
     <div class="section level2">
@@ -82,36 +83,106 @@ Detailed information can be found in <code><a href="print.ChineseColors.html">pr
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • yellow: 101 colors</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Methods: </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> • get_color(...): Get color information</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> • get_color(...): Get color information (searches only in dataset)</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • visual_colors(loc_range, num_per_row, title, name_type)</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── See also: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> [get_colors()] for searching colors in dataset and palettes</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Get a color by pinyin name</span></span></span>
 <span class="r-in"><span><span class="va">cc</span><span class="op">$</span><span class="fu">get_color</span><span class="op">(</span><span class="st">"pinlan"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Or by Chinese name</span></span></span>
-<span class="r-in"><span><span class="va">cc</span><span class="op">$</span><span class="fu">get_color</span><span class="op">(</span><span class="st">"品蓝"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_colors(...):</span> No matching palettes found for: <span style="color: #0000BB;">"pinlan"</span>. Available palettes include:</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"BrBG"</span>, <span style="color: #0000BB;">"PiYG"</span>, <span style="color: #0000BB;">"PRGn"</span>, <span style="color: #0000BB;">"PuOr"</span>, <span style="color: #0000BB;">"RdBu"</span>, <span style="color: #0000BB;">"RdGy"</span>, <span style="color: #0000BB;">"RdYlBu"</span>, <span style="color: #0000BB;">"RdYlGn"</span>, <span style="color: #0000BB;">"Spectral"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Accent"</span>, <span style="color: #0000BB;">"Dark2"</span>, <span style="color: #0000BB;">"Paired"</span>, <span style="color: #0000BB;">"Pastel1"</span>, <span style="color: #0000BB;">"Pastel2"</span>, <span style="color: #0000BB;">"Set1"</span>, <span style="color: #0000BB;">"Set2"</span>, <span style="color: #0000BB;">"Set3"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Blues"</span>, …, <span style="color: #0000BB;">"ChineseRed"</span>, and <span style="color: #0000BB;">"ChineseYellow"</span>. Use</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> `show_palettes(return_palettes = TRUE)` to see all available palettes.</span>
+<span class="r-in"><span><span class="co"># Or use external function</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="st">"pinlan"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_colors("pinlan"):</span> No matching palettes found for: <span style="color: #0000BB;">"pinlan"</span>. Available palettes include:</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"BrBG"</span>, <span style="color: #0000BB;">"PiYG"</span>, <span style="color: #0000BB;">"PRGn"</span>, <span style="color: #0000BB;">"PuOr"</span>, <span style="color: #0000BB;">"RdBu"</span>, <span style="color: #0000BB;">"RdGy"</span>, <span style="color: #0000BB;">"RdYlBu"</span>, <span style="color: #0000BB;">"RdYlGn"</span>, <span style="color: #0000BB;">"Spectral"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Accent"</span>, <span style="color: #0000BB;">"Dark2"</span>, <span style="color: #0000BB;">"Paired"</span>, <span style="color: #0000BB;">"Pastel1"</span>, <span style="color: #0000BB;">"Pastel2"</span>, <span style="color: #0000BB;">"Set1"</span>, <span style="color: #0000BB;">"Set2"</span>, <span style="color: #0000BB;">"Set3"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Blues"</span>, …, <span style="color: #0000BB;">"ChineseRed"</span>, and <span style="color: #0000BB;">"ChineseYellow"</span>. Use</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> `show_palettes(return_palettes = TRUE)` to see all available palettes.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># By number</span></span></span>
 <span class="r-in"><span><span class="va">cc</span><span class="op">$</span><span class="fu">get_color</span><span class="op">(</span><span class="fl">44</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#2B73AF</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseBlue"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
+<span class="r-in"><span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="fl">44</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#2B73AF</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseBlue"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># By hex code</span></span></span>
 <span class="r-in"><span><span class="va">cc</span><span class="op">$</span><span class="fu">get_color</span><span class="op">(</span><span class="st">"#2B73AF"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#2B73AF</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseBlue"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
+<span class="r-in"><span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="st">"#2B73AF"</span><span class="op">)</span> <span class="co"># Also searches in palettes</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#2B73AF</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseBlue"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Multiple colors</span></span></span>
 <span class="r-in"><span><span class="va">cc</span><span class="op">$</span><span class="fu">get_color</span><span class="op">(</span><span class="st">"pinlan"</span>, <span class="st">"piao"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb              hex      category  category_ch   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">44   pinlan  品蓝     (43, 115, 175)   #2B73AF  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #87FFD7;">256  piao    缥       (127, 236, 173)  #7FECAD  green     绿           </span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_colors(...):</span> No matching palettes found for: <span style="color: #0000BB;">"pinlan"</span> and <span style="color: #0000BB;">"piao"</span>. Available palettes</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> include: <span style="color: #0000BB;">"BrBG"</span>, <span style="color: #0000BB;">"PiYG"</span>, <span style="color: #0000BB;">"PRGn"</span>, <span style="color: #0000BB;">"PuOr"</span>, <span style="color: #0000BB;">"RdBu"</span>, <span style="color: #0000BB;">"RdGy"</span>, <span style="color: #0000BB;">"RdYlBu"</span>, <span style="color: #0000BB;">"RdYlGn"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Spectral"</span>, <span style="color: #0000BB;">"Accent"</span>, <span style="color: #0000BB;">"Dark2"</span>, <span style="color: #0000BB;">"Paired"</span>, <span style="color: #0000BB;">"Pastel1"</span>, <span style="color: #0000BB;">"Pastel2"</span>, <span style="color: #0000BB;">"Set1"</span>, <span style="color: #0000BB;">"Set2"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Set3"</span>, <span style="color: #0000BB;">"Blues"</span>, …, <span style="color: #0000BB;">"ChineseRed"</span>, and <span style="color: #0000BB;">"ChineseYellow"</span>. Use</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> `show_palettes(return_palettes = TRUE)` to see all available palettes.</span>
+<span class="r-in"><span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="st">"pinlan"</span>, <span class="st">"piao"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in get_colors("pinlan", "piao"):</span> No matching palettes found for: <span style="color: #0000BB;">"pinlan"</span> and <span style="color: #0000BB;">"piao"</span>. Available palettes</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> include: <span style="color: #0000BB;">"BrBG"</span>, <span style="color: #0000BB;">"PiYG"</span>, <span style="color: #0000BB;">"PRGn"</span>, <span style="color: #0000BB;">"PuOr"</span>, <span style="color: #0000BB;">"RdBu"</span>, <span style="color: #0000BB;">"RdGy"</span>, <span style="color: #0000BB;">"RdYlBu"</span>, <span style="color: #0000BB;">"RdYlGn"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Spectral"</span>, <span style="color: #0000BB;">"Accent"</span>, <span style="color: #0000BB;">"Dark2"</span>, <span style="color: #0000BB;">"Paired"</span>, <span style="color: #0000BB;">"Pastel1"</span>, <span style="color: #0000BB;">"Pastel2"</span>, <span style="color: #0000BB;">"Set1"</span>, <span style="color: #0000BB;">"Set2"</span>,</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">"Set3"</span>, <span style="color: #0000BB;">"Blues"</span>, …, <span style="color: #0000BB;">"ChineseRed"</span>, and <span style="color: #0000BB;">"ChineseYellow"</span>. Use</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> `show_palettes(return_palettes = TRUE)` to see all available palettes.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cc</span><span class="op">$</span><span class="fu">get_color</span><span class="op">(</span><span class="fl">91</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#006D87</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#C6E6E8</span>: <span style="color: #0000BB;">"ChineseBlue"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#D2F0F4</span>: <span style="color: #0000BB;">"ChineseBlue"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#13393E</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#284852</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#424C50</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#3B5554</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#41555D</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#426666</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#226B68</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> num  name        name_ch  rgb              hex      category  category_ch   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">91   haitianlan  海天蓝   (198, 230, 232)  #C6E6E8  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">92   shuilan     水蓝     (210, 240, 244)  #D2F0F4  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #005F5F;">93   luozidai    螺子黛   (19, 57, 62)     #13393E  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #005F5F;">94   qinggua     青緺     (40, 72, 82)     #284852  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #4E4E4E;">95   yaqing      鸦青     (66, 76, 80)     #424C50  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F5F5F;">96   daise       黛色     (59, 85, 84)     #3B5554  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F5F87;">97   an          黯       (65, 85, 93)     #41555D  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F8787;">98   dailv       黛绿     (66, 102, 102)   #426666  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #008787;">99   daose       䌦色     (34, 107, 104)   #226B68  cyan      青           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0087AF;">100  ruancui     软翠     (0, 109, 135)    #006D87  cyan      青           </span> </span>
+<span class="r-in"><span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="fl">91</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#006D87</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#C6E6E8</span>: <span style="color: #0000BB;">"ChineseBlue"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#D2F0F4</span>: <span style="color: #0000BB;">"ChineseBlue"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#13393E</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#284852</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#424C50</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#3B5554</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#41555D</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#426666</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#226B68</span>: <span style="color: #0000BB;">"ChineseCyan"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> num  name        name_ch  rgb              hex      category  category_ch   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">91   haitianlan  海天蓝   (198, 230, 232)  #C6E6E8  blue      蓝           </span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">92   shuilan     水蓝     (210, 240, 244)  #D2F0F4  blue      蓝           </span> </span>
@@ -126,12 +197,12 @@ Detailed information can be found in <code><a href="print.ChineseColors.html">pr
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Chinese names</span></span></span>
 <span class="r-in"><span><span class="va">widget_ch</span> <span class="op">&lt;-</span> <span class="va">cc</span><span class="op">$</span><span class="fu">visual_colors</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"中国传统颜色"</span>,</span></span>
+<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"Chinese Traditional Colors"</span>,</span></span>
 <span class="r-in"><span>  name_type <span class="op">=</span> <span class="st">"chinese"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/browsable.html" class="external-link">browsable</a></span><span class="op">(</span><span class="va">widget_ch</span><span class="op">)</span></span></span>
 <div style="background:transparent;padding:12px;border-radius:12px;border:1px solid rgba(0,0,0,0.1);box-shadow:none;display:inline-block;overflow-x:auto;">
-  <div style="font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;font-size:13px;font-weight:600;color:inherit;margin-bottom:3px;">中国传统颜色</div>
+  <div style="font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;font-size:13px;font-weight:600;color:inherit;margin-bottom:3px;">Chinese Traditional Colors</div>
   <table style="border-collapse:separate;border-spacing:3px;" class="table"><tbody><tr><td style="padding:2px 2px;width:21px;min-width:21px;max-width:21px;height:50px;min-height:50px;border-radius:3px;background:#0F1423;box-shadow:0 1px 2px rgba(0,0,0,0.2);text-align:center;vertical-align:middle;display:table-cell;position:relative;overflow:hidden;">
           <div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;">
             <div style="color:#FFFFFF;font-size:8px;font-family:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;letter-spacing:0.2px;line-height:1.2;display:block;text-align:center;width:100%;">钢<br>蓝</div>

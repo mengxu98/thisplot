@@ -198,15 +198,15 @@ palette_colors(
   palette = "Chinese_red",
   type = "discrete"
 )
-#>         a         b         c         d         e 
-#> "#4C1E1A" "#631216" "#62102E" "#622A1D" "#662B1F" 
+#> Error in palette_colors(x = letters[1:5], palette = "Chinese_red", type = "discrete"): The palette "Chinese_red" is invalid. Check the available palette names
+#> with `show_palettes()`. Or pass palette colors via the `palcolor` parameter
 palette_colors(
   x = letters[1:5],
   palette = "Chinese",
   type = "discrete"
 )
 #>         a         b         c         d         e 
-#> "#004EA2" "#007175" "#1A6840" "#FECC11" "#ED5736" 
+#> "#1772B4" "#0AA344" "#F9BD10" "#F97D1C" "#ED5736" 
 
 all_palettes <- show_palettes(return_palettes = TRUE)
 
@@ -287,8 +287,10 @@ names(all_palettes)
 #> [220] "jcolors-pal7"           "jcolors-pal8"           "jcolors-pal9"          
 #> [223] "jcolors-pal10"          "jcolors-pal11"          "jcolors-pal12"         
 #> [226] "jcolors-rainbow"        "jet"                    "simspec"               
-#> [229] "GdRd"                   "Chinese"                "Chinese_continuous"    
-#> [232] "Chinese_blue"           "Chinese_cyan"           "Chinese_gray_brown"    
-#> [235] "Chinese_green"          "Chinese_orange"         "Chinese_purple"        
-#> [238] "Chinese_red"            "Chinese_yellow"        
+#> [229] "GdRd"                   "Chinese"                "ChineseContinuous"     
+#> [232] "ChineseSet8"            "ChineseSet16"           "ChineseSet32"          
+#> [235] "ChineseSet64"           "ChineseSet128"          "ChineseBlue"           
+#> [238] "ChineseCyan"            "ChineseGray_brown"      "ChineseGreen"          
+#> [241] "ChineseOrange"          "ChinesePurple"          "ChineseRed"            
+#> [244] "ChineseYellow"         
 ```

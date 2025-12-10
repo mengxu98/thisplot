@@ -1,5 +1,20 @@
 # Changelog
 
+## thisplot 0.3.0
+
+- **func**:
+  - Color search and retrieval
+    - [`get_colors()`](https://mengxu98.github.io/thisplot/reference/get_colors.md):
+      New function to search for colors in the Chinese colors dataset
+      and all available palettes. Supports searching by palette names,
+      color names (pinyin or Chinese), numbers, or hex codes.
+      Automatically reports which palette(s) contain the found colors.
+    - [`print.colors()`](https://mengxu98.github.io/thisplot/reference/print.colors.md):
+      New print method for colors objects to display color information
+      with ANSI color support in terminal.
+- **enhancement**:
+  - Updated Chinese color system with improved functionality.
+
 ## thisplot 0.2.0
 
 - **func**:
@@ -18,11 +33,6 @@
       New function to get Chinese color palettes organized by color
       categories (blue, green, yellow, red, brown, purple, etc.) with
       automatic continuous palette generation.
-    - [`print.ChineseColors()`](https://mengxu98.github.io/thisplot/reference/print.ChineseColors.md)
-      and
-      [`print.ChineseColorInfo()`](https://mengxu98.github.io/thisplot/reference/print.ChineseColorInfo.md):
-      New print methods for ChineseColors objects to display color
-      information.
 - **data**:
   - `chinese_colors`: New data object containing 1058 Chinese
     traditional colors.

@@ -18,8 +18,6 @@
   : Get Chinese color palettes
 - [`print(`*`<ChineseColors>`*`)`](https://mengxu98.github.io/thisplot/reference/print.ChineseColors.md)
   : Print ChineseColors object
-- [`print(`*`<ChineseColorInfo>`*`)`](https://mengxu98.github.io/thisplot/reference/print.ChineseColorInfo.md)
-  : Print ChineseColorInfo object
 
 ### Color functions
 
@@ -33,6 +31,8 @@
   : Blend a list of colors
 - [`col2hex()`](https://mengxu98.github.io/thisplot/reference/col2hex.md)
   : Convert color names to hexadecimal format
+- [`get_colors()`](https://mengxu98.github.io/thisplot/reference/get_colors.md)
+  : Get colors from Chinese colors dataset or palettes
 - [`palette_colors()`](https://mengxu98.github.io/thisplot/reference/palette_colors.md)
   : Color palettes collected
 - [`palette_list`](https://mengxu98.github.io/thisplot/reference/palette_list.md)
@@ -101,3 +101,5 @@
   : Estimate the fuzzifier parameter m
 - [`print(`*`<thisplot_logo>`*`)`](https://mengxu98.github.io/thisplot/reference/print.thisplot_logo.md)
   : Print logo
+- [`print(`*`<colors>`*`)`](https://mengxu98.github.io/thisplot/reference/print.colors.md)
+  : Print colors object
