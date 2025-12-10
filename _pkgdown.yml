@@ -45,7 +45,6 @@ reference:
   - chinese_colors
   - get_chinese_palettes
   - print.ChineseColors
-  - print.ChineseColorInfo
 
 - subtitle: "Color functions"
 - contents:
@@ -54,6 +53,7 @@ reference:
   - blendcolors
   - BlendRGBList
   - col2hex
+  - get_colors
   - palette_colors
   - palette_list
   - RGBA2RGB
@@ -96,3 +96,4 @@ reference:
   - get_namespace_fun
   - mestimate
   - print.thisplot_logo
+  - print.colors
