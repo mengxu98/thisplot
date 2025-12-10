@@ -195,11 +195,11 @@ show_palettes(
 # Use Chinese color palettes
 palette_colors(
   x = letters[1:5],
-  palette = "Chinese_red",
+  palette = "ChineseRed",
   type = "discrete"
 )
-#> Error in palette_colors(x = letters[1:5], palette = "Chinese_red", type = "discrete"): The palette "Chinese_red" is invalid. Check the available palette names
-#> with `show_palettes()`. Or pass palette colors via the `palcolor` parameter
+#>         a         b         c         d         e 
+#> "#4C1E1A" "#631216" "#62102E" "#622A1D" "#662B1F" 
 palette_colors(
   x = letters[1:5],
   palette = "Chinese",

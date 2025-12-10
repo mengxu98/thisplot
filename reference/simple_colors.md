@@ -41,10 +41,10 @@ show_palettes(simple_colors(n = 5))
 simple_colors(n = 10, palette = "Paired")
 #>  [1] "#A6CEE3" "#CAB2D6" "#1F78B4" "#FDBF6F" "#E31A1C" "#B15928" "#33A02C"
 #>  [8] "#B2DF8A" "#FF7F00" "#FFFF99"
-simple_colors(n = 10, palette = "Chinese_blue")
-#> Error in simple_colors(n = 10, palette = "Chinese_blue"): The palette "Chinese_blue" is invalid. Check the available palette names
-#> with `show_palettes()`.
+simple_colors(n = 10, palette = "ChineseBlue")
+#>  [1] "#D0DFE6" "#106898" "#131824" "#BCD4E7" "#101F30" "#126BAE" "#66A9C9"
+#>  [8] "#22A2C3" "#1C2938" "#45465E"
 simple_colors(n = 10, palette = "Spectral")
-#>  [1] "#D53E4F" "#66C2A5" "#3288BD" "#FEE08B" "#F46D43" "#9E0142" "#ABDDA4"
-#>  [8] "#FDAE61" "#5E4FA2" "#FFFFBF"
+#>  [1] "#66C2A5" "#F46D43" "#3288BD" "#FDAE61" "#5E4FA2" "#ABDDA4" "#FEE08B"
+#>  [8] "#9E0142" "#D53E4F" "#E6F598"
 ```
