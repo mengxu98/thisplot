@@ -88,7 +88,7 @@ show_palettes(
 # Use Chinese color palettes
 palette_colors(
   x = letters[1:5],
-  palette = "Chinese_red",
+  palette = "ChineseRed",
   type = "discrete"
 )
 palette_colors(

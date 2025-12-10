@@ -66,7 +66,7 @@
 #' # Use Chinese color palettes
 #' palette_colors(
 #'   x = letters[1:5],
-#'   palette = "Chinese_red",
+#'   palette = "ChineseRed",
 #'   type = "discrete"
 #' )
 #' palette_colors(
@@ -265,7 +265,7 @@ palette_colors <- function(
 #' )
 #' # Include Chinese palettes via prefix
 #' show_palettes(
-#'   palette_names = c("Chinese_red", "Chinese_blue"),
+#'   palette_names = c("ChineseRed", "ChineseBlue"),
 #'   return_palettes = TRUE
 #' )
 show_palettes <- function(
