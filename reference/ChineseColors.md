@@ -53,18 +53,18 @@ cc
 
 # Get a color by pinyin name
 cc$get_color("pinlan")
-#> Error in get_colors(...): No matching palettes found for: "pinlan". Available palettes include:
-#> "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral",
-#> "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3",
-#> "Blues", …, "ChineseRed", and "ChineseYellow". Use
-#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
+#> num  name    name_ch  rgb             hex      category  category_ch   
+#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 # Or use external function
 get_colors("pinlan")
-#> Error in get_colors("pinlan"): No matching palettes found for: "pinlan". Available palettes include:
-#> "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn", "Spectral",
-#> "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2", "Set3",
-#> "Blues", …, "ChineseRed", and "ChineseYellow". Use
-#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
+#> num  name    name_ch  rgb             hex      category  category_ch   
+#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 
 # By number
 cc$get_color(44)
@@ -96,17 +96,21 @@ get_colors("#2B73AF") # Also searches in palettes
 
 # Multiple colors
 cc$get_color("pinlan", "piao")
-#> Error in get_colors(...): No matching palettes found for: "pinlan" and "piao". Available palettes
-#> include: "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn",
-#> "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2",
-#> "Set3", "Blues", …, "ChineseRed", and "ChineseYellow". Use
-#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
+#> #7FECAD: "ChineseGreen"
+#> num  name    name_ch  rgb              hex      category  category_ch   
+#> 44   pinlan  品蓝     (43, 115, 175)   #2B73AF  blue      蓝            
+#> 256  piao    缥       (127, 236, 173)  #7FECAD  green     绿            
 get_colors("pinlan", "piao")
-#> Error in get_colors("pinlan", "piao"): No matching palettes found for: "pinlan" and "piao". Available palettes
-#> include: "BrBG", "PiYG", "PRGn", "PuOr", "RdBu", "RdGy", "RdYlBu", "RdYlGn",
-#> "Spectral", "Accent", "Dark2", "Paired", "Pastel1", "Pastel2", "Set1", "Set2",
-#> "Set3", "Blues", …, "ChineseRed", and "ChineseYellow". Use
-#> `show_palettes(return_palettes = TRUE)` to see all available palettes.
+#> 
+#> ── Found in: 
+#> #2B73AF: "ChineseSet128" and "ChineseBlue"
+#> #7FECAD: "ChineseGreen"
+#> num  name    name_ch  rgb              hex      category  category_ch   
+#> 44   pinlan  品蓝     (43, 115, 175)   #2B73AF  blue      蓝            
+#> 256  piao    缥       (127, 236, 173)  #7FECAD  green     绿            
 
 cc$get_color(91:100)
 #> 
