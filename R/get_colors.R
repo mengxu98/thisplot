@@ -86,27 +86,36 @@ get_colors <- function(..., palettes = NULL) {
 
   if (length(palette_names_found) > 0) {
     palette_colors_found <- unique(palette_colors_found)
+    if (length(remaining_search_values) == 0) {
+      if (length(palette_colors_found) > 0) {
+        palette_hex_upper <- toupper(palette_colors_found)
+        colors_hex_upper <- toupper(colors_df$hex)
+        hex_matches <- which(colors_hex_upper %in% palette_hex_upper)
+        if (length(hex_matches) > 0) {
+          result <- colors_df[hex_matches, , drop = FALSE]
+        } else {
+          result <- data.frame(
+            num = NA_integer_,
+            name = NA_character_,
+            name_ch = NA_character_,
+            rgb = NA_character_,
+            hex = palette_colors_found,
+            category = NA_character_,
+            category_ch = NA_character_,
+            stringsAsFactors = FALSE
+          )
+        }
+        class(result) <- c("colors", "data.frame")
+        cli::cli_h3("Found palette{?s}: {.val {palette_names_found}}")
+        return(result)
+      }
+    }
     if (length(palette_colors_found) > 0) {
       palette_hex_upper <- toupper(palette_colors_found)
       colors_hex_upper <- toupper(colors_df$hex)
-      hex_matches <- which(colors_hex_upper %in% palette_hex_upper)
-      if (length(hex_matches) > 0) {
-        result <- colors_df[hex_matches, , drop = FALSE]
-      } else {
-        result <- data.frame(
-          num = NA_integer_,
-          name = NA_character_,
-          name_ch = NA_character_,
-          rgb = NA_character_,
-          hex = palette_colors_found,
-          category = NA_character_,
-          category_ch = NA_character_,
-          stringsAsFactors = FALSE
-        )
-      }
-      class(result) <- c("colors", "data.frame")
-      cli::cli_h3("Found palette{?s}: {.val {palette_names_found}}")
-      return(result)
+      palette_color_indices <- which(colors_hex_upper %in% palette_hex_upper)
+      colors_df <- colors_df[palette_color_indices, , drop = FALSE]
+      cli::cli_h3("Searching in palette{?s}: {.val {palette_names_found}}")
     }
   }
 
