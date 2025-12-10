@@ -364,12 +364,8 @@ show_palettes <- function(
 #' @examples
 #' show_palettes(get_chinese_palettes())
 get_chinese_palettes <- function(
-  prefix = "Chinese_"
+  prefix = "Chinese"
 ) {
-  if (!exists("ChineseColors", mode = "function")) {
-    return(list())
-  }
-
   cc_obj <- ChineseColors()
 
   category_names <- c(
@@ -379,16 +375,12 @@ get_chinese_palettes <- function(
 
   palettes <- list()
 
-  unique_colors <- function(cols) {
-    cols[!duplicated(cols)]
-  }
-
   all_palette_colors <- list()
   for (name in category_names) {
-    discrete_cols <- unique_colors(cc_obj[[name]])
+    discrete_cols <- cc_obj[[name]]
     all_palette_colors[[name]] <- discrete_cols
     attr(discrete_cols, "type") <- "discrete"
-    palettes[[paste0(prefix, name)]] <- discrete_cols
+    palettes[[paste0(prefix, thisutils::capitalize(name))]] <- discrete_cols
   }
 
   if (length(all_palette_colors) > 1) {
@@ -406,7 +398,7 @@ get_chinese_palettes <- function(
           remove_from <- containing_palettes[containing_palettes != keep_in]
 
           for (pal_name in remove_from) {
-            pal_key <- paste0(prefix, pal_name)
+            pal_key <- paste0(prefix, thisutils::capitalize(pal_name))
             if (pal_key %in% names(palettes)) {
               palettes[[pal_key]] <- palettes[[pal_key]][palettes[[pal_key]] != dup_color]
             }
@@ -416,31 +408,32 @@ get_chinese_palettes <- function(
     }
   }
 
-  chinese_small <- c(
-    "#004EA2", # 景泰蓝   蓝
-    "#007175", # 青雘     青
-    "#1A6840", # 荷叶绿   绿
-    "#FECC11", # 向日葵黄 黄
-    "#ED5736", # 妃色     红
-    "#BC172D", # 牡丹红   红 <- 橙
-    "#AA6A4C", # 火泥棕   棕
-    "#8A1874" # 赪紫     紫
-  )
-
-  attr(chinese_small, "type") <- "discrete"
-  palettes[["Chinese"]] <- chinese_small
-
-  if (length(chinese_small) >= 2) {
-    continuous_cols <- grDevices::colorRampPalette(chinese_small)(256)
-    attr(continuous_cols, "type") <- "continuous"
-    palettes[["Chinese_continuous"]] <- continuous_cols
+  color_sets <- attr(thisplot::chinese_colors, "color_sets", exact = TRUE)
+  chinese_default <- color_sets$ChineseSet8
+  for (set_name in names(color_sets)) {
+    palettes[[set_name]] <- color_sets[[set_name]]
   }
 
+  attr(chinese_default, "type") <- "discrete"
+  palettes[["Chinese"]] <- chinese_default
+
+  continuous_cols <- grDevices::colorRampPalette(chinese_default)(256)
+  attr(continuous_cols, "type") <- "continuous"
+  palettes[["ChineseContinuous"]] <- continuous_cols
+
   palette_names <- names(palettes)
-  special_names <- c("Chinese", "Chinese_continuous")
-  other_names <- setdiff(palette_names, special_names)
+  special_names <- c("Chinese", "ChineseContinuous")
+  set_names <- grep("^ChineseSet[0-9]+$", palette_names, value = TRUE)
+
+  if (length(set_names) > 0) {
+    set_numbers <- as.numeric(gsub("ChineseSet", "", set_names))
+    set_names <- set_names[order(set_numbers)]
+  }
+
+  other_names <- setdiff(palette_names, c(special_names, set_names))
   sorted_names <- c(
     intersect(special_names, palette_names),
+    set_names,
     sort(other_names)
   )
   palettes <- palettes[sorted_names]

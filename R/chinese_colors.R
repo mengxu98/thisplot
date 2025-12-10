@@ -17,6 +17,7 @@
 #' [chinese_colors] for the dataset of Chinese traditional colors.
 #' [get_chinese_palettes] for getting Chinese color palettes.
 #' [visual_colors] for visualizing any color vector.
+#' [get_colors] for searching colors in dataset and palettes.
 #'
 #' @examples
 #' cc <- ChineseColors()
@@ -24,24 +25,27 @@
 #'
 #' # Get a color by pinyin name
 #' cc$get_color("pinlan")
-#'
-#' # Or by Chinese name
-#' cc$get_color("品蓝")
+#' # Or use external function
+#' get_colors("pinlan")
 #'
 #' # By number
 #' cc$get_color(44)
+#' get_colors(44)
 #'
 #' # By hex code
 #' cc$get_color("#2B73AF")
+#' get_colors("#2B73AF") # Also searches in palettes
 #'
 #' # Multiple colors
 #' cc$get_color("pinlan", "piao")
+#' get_colors("pinlan", "piao")
 #'
 #' cc$get_color(91:100)
+#' get_colors(91:100)
 #'
 #' # Chinese names
 #' widget_ch <- cc$visual_colors(
-#'   title = "中国传统颜色",
+#'   title = "Chinese Traditional Colors",
 #'   name_type = "chinese"
 #' )
 #' htmltools::browsable(widget_ch)
@@ -128,73 +132,7 @@ ChineseColors <- function() {
   }
 
   get_color <- function(...) {
-    args <- list(...)
-
-    if (length(args) == 0) {
-      result <- colors_df
-      class(result) <- c("ChineseColorInfo", "data.frame")
-      return(result)
-    }
-
-    search_values <- unlist(args, use.names = FALSE)
-
-    available_columns <- colnames(colors_df)
-
-    all_matches <- integer(0)
-
-    for (val in search_values) {
-      val_char <- as.character(val)
-
-      for (col in available_columns) {
-        if (col == "num") {
-          val_num <- suppressWarnings(as.numeric(val_char))
-          if (!is.na(val_num)) {
-            matches <- which(colors_df[[col]] == val_num)
-            all_matches <- c(all_matches, matches)
-          }
-        } else {
-          matches <- which(colors_df[[col]] == val_char)
-          all_matches <- c(all_matches, matches)
-        }
-      }
-    }
-
-    idx <- unique(all_matches)
-
-    if (length(idx) == 0) {
-      log_message(
-        "No matching colors found for {.val {search_values}} in any column",
-        message_type = "warning"
-      )
-      return(NULL)
-    }
-
-    if (length(search_values) > 1) {
-      ordered_idx <- integer(0)
-      for (val in search_values) {
-        val_char <- as.character(val)
-        for (col in available_columns) {
-          if (col == "num") {
-            val_num <- suppressWarnings(as.numeric(val_char))
-            if (!is.na(val_num)) {
-              match_idx <- which(colors_df[[col]] == val_num)
-            } else {
-              match_idx <- integer(0)
-            }
-          } else {
-            match_idx <- which(colors_df[[col]] == val_char)
-          }
-          if (length(match_idx) > 0) {
-            ordered_idx <- c(ordered_idx, match_idx)
-          }
-        }
-      }
-      idx <- unique(ordered_idx)
-    }
-
-    result <- colors_df[idx, , drop = FALSE]
-    class(result) <- c("ChineseColorInfo", "data.frame")
-    return(result)
+    get_colors(...)
   }
 
   visual_colors <- function(
@@ -297,93 +235,10 @@ print.ChineseColors <- function(x, ...) {
   cli::cli_h3("Methods:")
   cli::cli_ul(
     c(
-      "get_color(...): Get color information",
+      "get_color(...): Get color information (searches only in dataset)",
       "visual_colors(loc_range, num_per_row, title, name_type)"
     )
   )
-}
-
-#' @title Print ChineseColorInfo object
-#'
-#' @md
-#' @param x A ChineseColorInfo object.
-#' @param ... Additional arguments passed to print.
-#'
-#' @return
-#' Details of the ChineseColorInfo object.
-#'
-#' @method print ChineseColorInfo
-#' @export
-print.ChineseColorInfo <- function(x, ...) {
-  if (nrow(x) == 0) {
-    log_message("Empty color information", message_type = "warning")
-    return(invisible(x))
-  }
-
-  has_color <- cli::num_ansi_colors() > 1 && "hex" %in% colnames(x)
-
-  display_width <- function(s) {
-    if (is.na(s) || length(s) == 0) {
-      return(0)
-    }
-    plain_s <- cli::ansi_strip(s)
-    nchar(plain_s, type = "width")
-  }
-
-  if (has_color) {
-    col_names <- colnames(x)
-
-    col_widths <- vapply(col_names, function(nm) {
-      name_width <- display_width(nm)
-      data_widths <- vapply(x[[nm]], function(val) {
-        if (is.na(val)) {
-          return(2)
-        }
-        display_width(format(val))
-      }, numeric(1))
-      max(name_width, max(data_widths, na.rm = TRUE), na.rm = TRUE)
-    }, numeric(1))
-
-    header_parts <- vapply(seq_along(col_names), function(i) {
-      nm <- col_names[i]
-      width <- as.integer(col_widths[i])
-      current_width <- display_width(nm)
-      padding <- max(0, width - current_width)
-      paste0(nm, strrep(" ", padding + 2))
-    }, character(1))
-    cat(paste(header_parts, collapse = ""), "\n")
-
-    for (i in seq_len(nrow(x))) {
-      hex_val <- x$hex[i]
-
-      if (!is.na(hex_val) && nchar(hex_val) > 0) {
-        row_style <- cli::make_ansi_style(hex_val)
-      } else {
-        row_style <- function(x) x
-      }
-
-      row_parts <- vapply(
-        seq_along(col_names), function(j) {
-          col_name <- col_names[j]
-          val <- x[[col_name]][i]
-          formatted_val <- format(val)
-
-          width <- as.integer(col_widths[j])
-          current_width <- display_width(formatted_val)
-          padding <- max(0, width - current_width)
-
-          cell_content <- paste0(formatted_val, strrep(" ", padding + 2))
-          return(cell_content)
-        }, character(1)
-      )
-
-      row_text <- paste(row_parts, collapse = "")
-      styled_row <- row_style(row_text)
-      cat(styled_row, "\n")
-    }
-  } else {
-    print.data.frame(x, ...)
-  }
-
-  invisible(x)
+  cli::cli_h3("See also:")
+  cli::cli_text("[get_colors()] for searching colors in dataset and palettes")
 }

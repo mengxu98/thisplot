@@ -21,24 +21,27 @@ cc
 
 # Get a color by pinyin name
 cc$get_color("pinlan")
-
-# Or by Chinese name
-cc$get_color("品蓝")
+# Or use external function
+get_colors("pinlan")
 
 # By number
 cc$get_color(44)
+get_colors(44)
 
 # By hex code
 cc$get_color("#2B73AF")
+get_colors("#2B73AF") # Also searches in palettes
 
 # Multiple colors
 cc$get_color("pinlan", "piao")
+get_colors("pinlan", "piao")
 
 cc$get_color(91:100)
+get_colors(91:100)
 
 # Chinese names
 widget_ch <- cc$visual_colors(
-  title = "中国传统颜色",
+  title = "Chinese Traditional Colors",
   name_type = "chinese"
 )
 htmltools::browsable(widget_ch)
@@ -71,4 +74,5 @@ htmltools::browsable(widget_hex)
 \link{chinese_colors} for the dataset of Chinese traditional colors.
 \link{get_chinese_palettes} for getting Chinese color palettes.
 \link{visual_colors} for visualizing any color vector.
+\link{get_colors} for searching colors in dataset and palettes.
 }

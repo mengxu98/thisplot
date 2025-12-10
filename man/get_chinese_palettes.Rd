@@ -4,7 +4,7 @@
 \alias{get_chinese_palettes}
 \title{Get Chinese color palettes}
 \usage{
-get_chinese_palettes(prefix = "Chinese_")
+get_chinese_palettes(prefix = "Chinese")
 }
 \arguments{
 \item{prefix}{The prefix of the palette names.
