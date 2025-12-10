@@ -1,9 +1,7 @@
 #' @title Chinese traditional colors system
 #'
 #' @description
-#' A color system based on Chinese traditional colors with 1058 representative colors.
-#' This system provides functions to access colors by name,
-#' create color palettes, and generate segmented colormaps.
+#' A color system based on Chinese traditional colors with 1058 colors.
 #'
 #' @md
 #' @return
@@ -23,56 +21,45 @@
 #' cc <- ChineseColors()
 #' cc
 #'
-#' # Get a color by pinyin name
-#' cc$get_color("pinlan")
-#' # Or use external function
+#' # Get a color by pinyin
 #' get_colors("pinlan")
 #'
 #' # By number
-#' cc$get_color(44)
 #' get_colors(44)
 #'
 #' # By hex code
-#' cc$get_color("#2B73AF")
-#' get_colors("#2B73AF") # Also searches in palettes
+#' get_colors("#2B73AF")
 #'
 #' # Multiple colors
-#' cc$get_color("pinlan", "piao")
 #' get_colors("pinlan", "piao")
-#'
-#' cc$get_color(91:100)
 #' get_colors(91:100)
 #'
 #' # Chinese names
-#' widget_ch <- cc$visual_colors(
+#' cc$visual_colors(
 #'   title = "Chinese Traditional Colors",
 #'   name_type = "chinese"
 #' )
-#' htmltools::browsable(widget_ch)
 #'
 #' # pinyin as names
-#' widget <- cc$visual_colors(
-#'   loc_range = c(1, 90),
+#' cc$visual_colors(
+#'   loc_range = c(1, 120),
 #'   title = "Chinese Traditional Colors",
 #'   name_type = "pinyin"
 #' )
-#' htmltools::browsable(widget)
 #'
 #' # rgb as names
-#' widget_rgb <- cc$visual_colors(
-#'   loc_range = c(1, 90),
+#' cc$visual_colors(
+#'   loc_range = c(1, 120),
 #'   title = "Colors with RGB values",
 #'   name_type = "rgb"
 #' )
-#' htmltools::browsable(widget_rgb)
 #'
 #' # hex as names
-#' widget_hex <- cc$visual_colors(
-#'   loc_range = c(1, 90),
+#' cc$visual_colors(
+#'   loc_range = c(1, 120),
 #'   title = "Colors with hex codes",
 #'   name_type = "hex"
 #' )
-#' htmltools::browsable(widget_hex)
 ChineseColors <- function() {
   colors_df <- thisplot::chinese_colors
   category_ranges <- list()
@@ -131,10 +118,6 @@ ChineseColors <- function() {
     }
   }
 
-  get_color <- function(...) {
-    get_colors(...)
-  }
-
   visual_colors <- function(
     loc_range = c(1, nrow(colors_df)),
     num_per_row = 30,
@@ -153,26 +136,17 @@ ChineseColors <- function() {
     colors_subset <- colors_df[indices, ]
     color_col <- colors_subset$hex
     rgb_col <- colors_subset$rgb
+
     if (name_type == "chinese") {
       display_name <- colors_subset$name_ch
-      rgb_param <- NULL
-      hex_param <- NULL
     } else if (name_type == "pinyin") {
       display_name <- colors_subset$name
-      rgb_param <- NULL
-      hex_param <- NULL
     } else if (name_type == "rgb") {
-      display_name <- NULL
-      rgb_param <- rgb_col
-      hex_param <- NULL
+      display_name <- rgb_col
     } else if (name_type == "hex") {
-      display_name <- NULL
-      rgb_param <- NULL
-      hex_param <- TRUE
+      display_name <- color_col
     } else {
       display_name <- colors_subset$name
-      rgb_param <- NULL
-      hex_param <- NULL
     }
 
     return(
@@ -180,9 +154,7 @@ ChineseColors <- function() {
         colors = color_col,
         names = display_name,
         num_per_row = num_per_row,
-        title = title,
-        rgb = rgb_param,
-        hex = hex_param
+        title = title
       )
     )
   }
@@ -199,21 +171,20 @@ ChineseColors <- function() {
     cc_obj[[sub_name]] <- sub_palettes[[sub_name]]
   }
 
-  cc_obj$get_color <- get_color
   cc_obj$visual_colors <- visual_colors
 
   class(cc_obj) <- "ChineseColors"
   return(cc_obj)
 }
 
-#' @title Print ChineseColors object
+#' @title Print `ChineseColors` object
 #'
 #' @md
-#' @param x A ChineseColors object.
-#' @param ... Additional arguments (not used).
+#' @param x A `ChineseColors` object.
+#' @param ... Additional arguments.
 #'
 #' @return
-#' Details of the ChineseColors object.
+#' Details of the `ChineseColors` object.
 #'
 #' @method print ChineseColors
 #' @export
@@ -234,11 +205,8 @@ print.ChineseColors <- function(x, ...) {
   )
   cli::cli_h3("Methods:")
   cli::cli_ul(
-    c(
-      "get_color(...): Get color information (searches only in dataset)",
-      "visual_colors(loc_range, num_per_row, title, name_type)"
-    )
+    "visual_colors(loc_range, num_per_row, title, name_type)"
   )
   cli::cli_h3("See also:")
-  cli::cli_text("[get_colors()] for searching colors in dataset and palettes")
+  cli::cli_ul("[get_colors()] for searching colors")
 }
