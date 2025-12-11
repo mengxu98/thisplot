@@ -451,6 +451,8 @@ print.colors <- function(x, ...) {
 #' A colors object with the first `n` rows.
 #'
 #' @method head colors
+#' @importFrom utils head
+#'
 #' @export
 #' @examples
 #' head(get_colors())
