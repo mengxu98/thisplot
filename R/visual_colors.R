@@ -1,72 +1,58 @@
-#' @title Visualize colors in HTML format
+#' @title Visualize colors in HTML widget
 #'
 #' @description
 #' Display a grid of color swatches with optional names or color codes.
 #'
 #' @md
-#' @param colors A character vector of color codes (hex format, e.g., "#FF0000").
+#' @param colors A character vector of hex color codes.
 #' @param names Optional. A character vector of names for each color.
-#' Default is `NULL`, which means color codes will be displayed.
+#' Default is `NULL`, which means hex color codes will be displayed.
+#' You can pass any labels (e.g., RGB values, custom names) via this parameter.
 #' @param num_per_row Number of colors per row.
 #' Default is `30`.
 #' @param title Optional title for the visualization.
 #' Default is `NULL`.
-#' @param rgb Optional. A character vector of RGB values (e.g., "(255, 0, 0)").
-#' If provided and `names` is `NULL`, RGB values will be displayed as names.
-#' @param hex Optional. A logical or character vector. If `TRUE` and `names` is `NULL`,
-#' hex codes will be displayed as names. If a character vector is provided,
-#' it will be used as names.
 #'
 #' @return
-#' An HTML widget that can be displayed with [htmltools::browsable].
+#' An HTML widget.
 #'
 #' @export
 #'
 #' @examples
 #' # Visualize a simple color palette
-#' colors <- c("#FF0000", "#00FF00", "#0000FF")
-#' widget <- visual_colors(colors, names = c("Red", "Green", "Blue"))
-#' htmltools::browsable(widget)
+#' visual_colors(
+#'   colors = c("#FF0000", "#00FF00", "#0000FF"),
+#'   names = c("Red", "Green", "Blue")
+#' )
 #'
-#' # Visualize a built-in palette
-#' widget2 <- visual_colors(thisplot::palette_list$Paired)
-#' htmltools::browsable(widget2)
+#' visual_colors(
+#'   colors = c("#FF0000", "#00FF00"),
+#'   names = c("(255, 0, 0)", "(0, 255, 0)")
+#' )
+#'
+#' visual_colors(thisplot::palette_list$Paired)
 #'
 #' # Use with ChineseColors
 #' cc <- ChineseColors()
-#' widget3 <- visual_colors(
+#' visual_colors(
 #'   colors = cc$blue[1:60],
 #'   title = "Chinese Blue Colors"
 #' )
-#' htmltools::browsable(widget3)
 visual_colors <- function(
   colors,
   names = NULL,
   num_per_row = 30,
-  title = NULL,
-  rgb = NULL,
-  hex = NULL
+  title = NULL
 ) {
   if (is.null(colors) || length(colors) == 0) {
     log_message(
       "No colors provided",
-      message_type = "warning"
+      message_type = "error"
     )
-    return(NULL)
   }
 
   if (is.null(names)) {
-    if (!is.null(rgb) && length(rgb) == length(colors)) {
-      names <- rgb
-    } else if (isTRUE(hex) || (!is.null(hex) && is.character(hex) && length(hex) == length(colors))) {
-      if (is.character(hex)) {
-        names <- hex
-      } else {
-        names <- colors
-      }
-    } else {
-      names <- colors
-    }
+    names <- colors
   }
 
   if (length(names) != length(colors)) {
@@ -150,11 +136,11 @@ visual_colors <- function(
         text_style <- get_text_style(names[i], text_color)
         text_content <- format_text_display(names[i])
         is_chinese_text <- is_chinese(names[i])
-
+        text <- "display:flex;align-items:center;justify-content:center;width:100%;height:100%;"
         container_style <- if (is_chinese_text) {
-          "display:flex;align-items:center;justify-content:center;width:100%;height:100%;"
+          text
         } else {
-          "display:flex;align-items:center;justify-content:center;width:100%;height:100%;transform:rotate(-90deg);transform-origin:center;"
+          paste0(text, "transform:rotate(-90deg);transform-origin:center;")
         }
 
         htmltools::tags$td(
@@ -239,5 +225,9 @@ visual_colors <- function(
     )
   )
 
-  table_html
+  if (check_ci_env()) {
+    htmltools::browsable(table_html)
+  } else {
+    invisible(table_html)
+  }
 }
