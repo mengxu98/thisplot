@@ -12,12 +12,17 @@
 
 - [`ChineseColors()`](https://mengxu98.github.io/thisplot/reference/ChineseColors.md)
   : Chinese traditional colors system
+
 - [`chinese_colors`](https://mengxu98.github.io/thisplot/reference/chinese_colors.md)
   : Chinese traditional colors dataset
+
 - [`get_chinese_palettes()`](https://mengxu98.github.io/thisplot/reference/get_chinese_palettes.md)
   : Get Chinese color palettes
+
 - [`print(`*`<ChineseColors>`*`)`](https://mengxu98.github.io/thisplot/reference/print.ChineseColors.md)
-  : Print ChineseColors object
+  :
+
+  Print `ChineseColors` object
 
 ### Color functions
 
@@ -44,7 +49,7 @@
 - [`simple_colors()`](https://mengxu98.github.io/thisplot/reference/simple_colors.md)
   : Simple random color selection
 - [`visual_colors()`](https://mengxu98.github.io/thisplot/reference/visual_colors.md)
-  : Visualize colors in HTML format
+  : Visualize colors in HTML widget
 
 ### Theme functions
 
@@ -97,9 +102,13 @@
 
 - [`get_namespace_fun()`](https://mengxu98.github.io/thisplot/reference/get_namespace_fun.md)
   : Get a function from a namespace
+- [`head(`*`<colors>`*`)`](https://mengxu98.github.io/thisplot/reference/head.colors.md)
+  : Return the first part of a colors object
 - [`mestimate()`](https://mengxu98.github.io/thisplot/reference/mestimate.md)
   : Estimate the fuzzifier parameter m
 - [`print(`*`<thisplot_logo>`*`)`](https://mengxu98.github.io/thisplot/reference/print.thisplot_logo.md)
   : Print logo
 - [`print(`*`<colors>`*`)`](https://mengxu98.github.io/thisplot/reference/print.colors.md)
   : Print colors object
+- [`check_ci_env()`](https://mengxu98.github.io/thisplot/reference/check_ci_env.md)
+  : Check CI environment

@@ -1,6 +1,6 @@
-# Print ChineseColors object
+# Print `ChineseColors` object
 
-Print ChineseColors object
+Print `ChineseColors` object
 
 ## Usage
 
@@ -13,12 +13,12 @@ print(x, ...)
 
 - x:
 
-  A ChineseColors object.
+  A `ChineseColors` object.
 
 - ...:
 
-  Additional arguments (not used).
+  Additional arguments.
 
 ## Value
 
-Details of the ChineseColors object.
+Details of the `ChineseColors` object.

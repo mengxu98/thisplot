@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,15 +37,32 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.1" id="thisplot-031">thisplot 0.3.1<a class="anchor" aria-label="anchor" href="#thisplot-031"></a></h2>
+<ul><li>
+<strong>func</strong>:
+<ul><li>
+<code><a href="../reference/check_ci_env.html">check_ci_env()</a></code>: New function to detect if the current environment supports browsable HTML output. Now detects local pkgdown builds via <code>IN_PKGDOWN</code> environment variable and knitr HTML output contexts.</li>
+<li>
+<code><a href="../reference/head.colors.html">head.colors()</a></code>: New S3 method for <code>colors</code> objects, allowing the use of <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> function to limit the number of displayed rows (default <code>n = 6L</code>).</li>
+</ul></li>
+<li>
+<strong>enhancement</strong>:
+<ul><li>
+<code><a href="../reference/visual_colors.html">visual_colors()</a></code>: Integrated <code><a href="https://rstudio.github.io/htmltools/reference/browsable.html" class="external-link">htmltools::browsable</a></code> functionality. Added <code>browsable</code> parameter (default <code>NULL</code> for auto-detection) to automatically display widgets in appropriate environments. Automatically detects interactive sessions and GitHub Actions pkgdown workflow, while preventing browser opening during CRAN checks.</li>
+<li>
+<code>ChineseColors$visual_colors()</code>: Added <code>browsable</code> parameter support, consistent with the global <code><a href="../reference/visual_colors.html">visual_colors()</a></code> function.</li>
+<li>
+<code><a href="../reference/get_colors.html">get_colors()</a></code>: Now automatically infers RGB values from hex codes when colors are found in palettes but not in the main dataset. Added internal <code>hex_to_rgb()</code> helper function to convert hex color codes to RGB format strings.</li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="thisplot-030">thisplot 0.3.0<a class="anchor" aria-label="anchor" href="#thisplot-030"></a></h2>
 <ul><li>
 <strong>func</strong>:
-<ul><li>Color search and retrieval
 <ul><li>
 <code><a href="../reference/get_colors.html">get_colors()</a></code>: New function to search for colors in the Chinese colors dataset and all available palettes. Supports searching by palette names, color names (pinyin or Chinese), numbers, or hex codes. Automatically reports which palette(s) contain the found colors.</li>
 <li>
 <code><a href="../reference/print.colors.html">print.colors()</a></code>: New print method for colors objects to display color information with ANSI color support in terminal.</li>
-</ul></li>
 </ul></li>
 <li>
 <strong>enhancement</strong>:

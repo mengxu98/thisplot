@@ -11,12 +11,12 @@ Source:
 [`DESCRIPTION`](https://github.com/mengxu98/thisplot/blob/main/DESCRIPTION)
 
 Xu M (2025). *thisplot: Utility Functions for Plotting*. R package
-version 0.3.0, <https://mengxu98.github.io/thisplot/>.
+version 0.3.1, <https://mengxu98.github.io/thisplot/>.
 
     @Manual{,
       title = {thisplot: Utility Functions for Plotting},
       author = {Meng Xu},
       year = {2025},
-      note = {R package version 0.3.0},
+      note = {R package version 0.3.1},
       url = {https://mengxu98.github.io/thisplot/},
     }

@@ -1,8 +1,6 @@
 # Chinese traditional colors system
 
-A color system based on Chinese traditional colors with 1058
-representative colors. This system provides functions to access colors
-by name, create color palettes, and generate segmented colormaps.
+A color system based on Chinese traditional colors with 1058 colors.
 
 ## Usage
 
@@ -45,20 +43,12 @@ cc
 #> • yellow: 101 colors
 #> 
 #> ── Methods: 
-#> • get_color(...): Get color information (searches only in dataset)
 #> • visual_colors(loc_range, num_per_row, title, name_type)
 #> 
 #> ── See also: 
-#> [get_colors()] for searching colors in dataset and palettes
+#> • [get_colors()] for searching colors
 
-# Get a color by pinyin name
-cc$get_color("pinlan")
-#> 
-#> ── Found in: 
-#> #2B73AF: "ChineseSet128" and "ChineseBlue"
-#> num  name    name_ch  rgb             hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
-# Or use external function
+# Get a color by pinyin
 get_colors("pinlan")
 #> 
 #> ── Found in: 
@@ -67,12 +57,6 @@ get_colors("pinlan")
 #> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 
 # By number
-cc$get_color(44)
-#> 
-#> ── Found in: 
-#> #2B73AF: "ChineseSet128" and "ChineseBlue"
-#> num  name    name_ch  rgb             hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 get_colors(44)
 #> 
 #> ── Found in: 
@@ -81,13 +65,7 @@ get_colors(44)
 #> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 
 # By hex code
-cc$get_color("#2B73AF")
-#> 
-#> ── Found in: 
-#> #2B73AF: "ChineseSet128" and "ChineseBlue"
-#> num  name    name_ch  rgb             hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
-get_colors("#2B73AF") # Also searches in palettes
+get_colors("#2B73AF")
 #> 
 #> ── Found in: 
 #> #2B73AF: "ChineseSet128" and "ChineseBlue"
@@ -95,14 +73,6 @@ get_colors("#2B73AF") # Also searches in palettes
 #> 44   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝            
 
 # Multiple colors
-cc$get_color("pinlan", "piao")
-#> 
-#> ── Found in: 
-#> #2B73AF: "ChineseSet128" and "ChineseBlue"
-#> #7FECAD: "ChineseGreen"
-#> num  name    name_ch  rgb              hex      category  category_ch   
-#> 44   pinlan  品蓝     (43, 115, 175)   #2B73AF  blue      蓝            
-#> 256  piao    缥       (127, 236, 173)  #7FECAD  green     绿            
 get_colors("pinlan", "piao")
 #> 
 #> ── Found in: 
@@ -111,31 +81,6 @@ get_colors("pinlan", "piao")
 #> num  name    name_ch  rgb              hex      category  category_ch   
 #> 44   pinlan  品蓝     (43, 115, 175)   #2B73AF  blue      蓝            
 #> 256  piao    缥       (127, 236, 173)  #7FECAD  green     绿            
-
-cc$get_color(91:100)
-#> 
-#> ── Found in: 
-#> #006D87: "ChineseSet128" and "ChineseCyan"
-#> #C6E6E8: "ChineseBlue"
-#> #D2F0F4: "ChineseBlue"
-#> #13393E: "ChineseCyan"
-#> #284852: "ChineseCyan"
-#> #424C50: "ChineseCyan"
-#> #3B5554: "ChineseCyan"
-#> #41555D: "ChineseCyan"
-#> #426666: "ChineseCyan"
-#> #226B68: "ChineseCyan"
-#> num  name        name_ch  rgb              hex      category  category_ch   
-#> 91   haitianlan  海天蓝   (198, 230, 232)  #C6E6E8  blue      蓝            
-#> 92   shuilan     水蓝     (210, 240, 244)  #D2F0F4  blue      蓝            
-#> 93   luozidai    螺子黛   (19, 57, 62)     #13393E  cyan      青            
-#> 94   qinggua     青緺     (40, 72, 82)     #284852  cyan      青            
-#> 95   yaqing      鸦青     (66, 76, 80)     #424C50  cyan      青            
-#> 96   daise       黛色     (59, 85, 84)     #3B5554  cyan      青            
-#> 97   an          黯       (65, 85, 93)     #41555D  cyan      青            
-#> 98   dailv       黛绿     (66, 102, 102)   #426666  cyan      青            
-#> 99   daose       䌦色     (34, 107, 104)   #226B68  cyan      青            
-#> 100  ruancui     软翠     (0, 109, 135)    #006D87  cyan      青            
 get_colors(91:100)
 #> 
 #> ── Found in: 
@@ -162,11 +107,10 @@ get_colors(91:100)
 #> 100  ruancui     软翠     (0, 109, 135)    #006D87  cyan      青            
 
 # Chinese names
-widget_ch <- cc$visual_colors(
+cc$visual_colors(
   title = "Chinese Traditional Colors",
   name_type = "chinese"
 )
-htmltools::browsable(widget_ch)
 
   Chinese Traditional Colors
   
@@ -3902,28 +3846,25 @@ htmltools::browsable(widget_ch)
 白  
 色
 
-\# pinyin as names widget \<- cc\$visual_colors( loc_range =
-[c](https://rdrr.io/r/base/c.html)(1, 90), title = "Chinese Traditional
+\# pinyin as names cc\$visual_colors( loc_range =
+[c](https://rdrr.io/r/base/c.html)(1, 120), title = "Chinese Traditional
 Colors", name_type = "pinyin" )
-htmltools::[browsable](https://rstudio.github.io/htmltools/reference/browsable.html)(widget)
 
 Chinese Traditional Colors
 
 [TABLE]
 
-\# rgb as names widget_rgb \<- cc\$visual_colors( loc_range =
-[c](https://rdrr.io/r/base/c.html)(1, 90), title = "Colors with RGB
+\# rgb as names cc\$visual_colors( loc_range =
+[c](https://rdrr.io/r/base/c.html)(1, 120), title = "Colors with RGB
 values", name_type = "rgb" )
-htmltools::[browsable](https://rstudio.github.io/htmltools/reference/browsable.html)(widget_rgb)
 
 Colors with RGB values
 
 [TABLE]
 
-\# hex as names widget_hex \<- cc\$visual_colors( loc_range =
-[c](https://rdrr.io/r/base/c.html)(1, 90), title = "Colors with hex
+\# hex as names cc\$visual_colors( loc_range =
+[c](https://rdrr.io/r/base/c.html)(1, 120), title = "Colors with hex
 codes", name_type = "hex" )
-htmltools::[browsable](https://rstudio.github.io/htmltools/reference/browsable.html)(widget_hex)
 
 Colors with hex codes
 
