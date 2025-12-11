@@ -19,12 +19,11 @@ Example usage:
 ```r
 library(thisplot)
 cc <- ChineseColors()
-widget_ch <- cc$visual_colors(
+cc$visual_colors(
   num_per_row = 30,
-  title = "中国传统颜色",
+  title = "Chinese traditional colors",
   name_type = "chinese"
 )
-htmltools::browsable(widget_ch)
 ```
 
 <img src="man/figures/ChineseColors.png" align="center"/>
