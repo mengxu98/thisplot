@@ -8,6 +8,7 @@
 #' @md
 #' @param ... One or more search values.
 #' Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
+#' If NULL, using all Chinese colors.
 #' @param palettes Optional. A named list of palettes to search in.
 #' If `NULL` (default), searches in all available palettes.
 #'
@@ -24,19 +25,77 @@
 #' @examples
 #' get_colors("Paired")
 #'
+#' get_colors("#FF7F00")
+#'
 #' get_colors("pinlan")
 #' get_colors(44)
 #' get_colors("#2B73AF")
 #'
-#' get_colors("cyan")
+#' get_colors("cyan", palettes = "ChineseSet64")
 get_colors <- function(..., palettes = NULL) {
   args <- list(...)
 
   colors_df <- thisplot::chinese_colors
   available_columns <- colnames(colors_df)
 
+  all_palettes <- c(
+    thisplot::palette_list,
+    get_chinese_palettes()
+  )
+  specified_palette_names <- character(0)
+  if (!is.null(palettes)) {
+    if (is.character(palettes)) {
+      all_palettes_list <- c(
+        thisplot::palette_list,
+        get_chinese_palettes()
+      )
+      specified_palette_names <- palettes
+      all_palettes <- all_palettes_list[names(all_palettes_list) %in% palettes]
+      if (length(all_palettes) == 0) {
+        log_message(
+          "No matching palettes found for: {.val {palettes}}",
+          message_type = "error"
+        )
+      }
+    } else {
+      log_message(
+        "Invalid palettes argument: {.val {palettes}}",
+        message_type = "error"
+      )
+    }
+  }
+
   if (length(args) == 0) {
-    result <- colors_df
+    if (length(specified_palette_names) > 0) {
+      palette_colors_list <- character(0)
+      for (pal_name in specified_palette_names) {
+        if (pal_name %in% names(all_palettes)) {
+          palette_colors_list <- c(palette_colors_list, all_palettes[[pal_name]])
+        }
+      }
+      palette_colors_list <- unique(palette_colors_list)
+
+      if (length(palette_colors_list) > 0) {
+        palette_hex_upper <- toupper(palette_colors_list)
+        colors_hex_upper <- toupper(colors_df$hex)
+        palette_color_indices <- which(colors_hex_upper %in% palette_hex_upper)
+
+        if (length(palette_color_indices) > 0) {
+          result <- colors_df[palette_color_indices, , drop = FALSE]
+        } else {
+          result <- data.frame(
+            name = palette_colors_list,
+            rgb = hex_to_rgb(palette_colors_list),
+            hex = palette_colors_list,
+            stringsAsFactors = FALSE
+          )
+        }
+      } else {
+        result <- colors_df[integer(0), , drop = FALSE]
+      }
+    } else {
+      result <- colors_df
+    }
     class(result) <- c("colors", "data.frame")
     return(result)
   }
@@ -44,15 +103,6 @@ get_colors <- function(..., palettes = NULL) {
   search_values <- unlist(args, use.names = FALSE)
   all_matches <- integer(0)
   found_hex_codes <- character(0)
-
-  if (is.null(palettes)) {
-    all_palettes <- c(
-      thisplot::palette_list,
-      get_chinese_palettes()
-    )
-  } else {
-    all_palettes <- palettes
-  }
 
   palette_names_found <- character(0)
   palette_names_not_found <- character(0)
@@ -95,13 +145,9 @@ get_colors <- function(..., palettes = NULL) {
           result <- colors_df[hex_matches, , drop = FALSE]
         } else {
           result <- data.frame(
-            num = NA_integer_,
-            name = NA_character_,
-            name_ch = NA_character_,
-            rgb = NA_character_,
+            name = palette_colors_found,
+            rgb = hex_to_rgb(palette_colors_found),
             hex = palette_colors_found,
-            category = NA_character_,
-            category_ch = NA_character_,
             stringsAsFactors = FALSE
           )
         }
@@ -117,6 +163,10 @@ get_colors <- function(..., palettes = NULL) {
       colors_df <- colors_df[palette_color_indices, , drop = FALSE]
       cli::cli_h3("Searching in palette{?s}: {.val {palette_names_found}}")
     }
+  }
+
+  if (length(specified_palette_names) > 0 && length(remaining_search_values) > 0) {
+    cli::cli_h3("Searching in palette{?s}: {.val {specified_palette_names}}")
   }
 
   if (length(remaining_search_values) > 0) {
@@ -210,6 +260,25 @@ get_colors <- function(..., palettes = NULL) {
       pal_names <- unique(names(pal_info))
       cli::cli_text("{.strong {hex_code}}: {.val {pal_names}}")
     }
+
+    if (length(idx) == 0) {
+      palette_hex_codes <- unique(names(palette_matches))
+      result <- data.frame(
+        name = palette_hex_codes,
+        rgb = hex_to_rgb(palette_hex_codes),
+        hex = palette_hex_codes,
+        stringsAsFactors = FALSE
+      )
+      if (length(palette_hex_codes) == 1) {
+        result <- result[1, , drop = FALSE]
+        result$hex <- palette_hex_codes[1]
+      } else {
+        result <- result[rep(1, length(palette_hex_codes)), , drop = FALSE]
+        result$hex <- palette_hex_codes
+      }
+      class(result) <- c("colors", "data.frame")
+      return(result)
+    }
   }
 
   if (length(idx) == 0 && length(search_values) > 0) {
@@ -264,6 +333,22 @@ get_colors <- function(..., palettes = NULL) {
 
   if (length(idx) > 0) {
     result <- colors_df[idx, , drop = FALSE]
+
+    if (length(specified_palette_names) > 0) {
+      if (length(palette_matches) > 0) {
+        palette_hex_codes <- unique(names(palette_matches))
+        result_hex_upper <- toupper(result$hex)
+        palette_hex_upper <- toupper(palette_hex_codes)
+        keep_indices <- which(result_hex_upper %in% palette_hex_upper)
+        if (length(keep_indices) > 0) {
+          result <- result[keep_indices, , drop = FALSE]
+        } else {
+          result <- result[integer(0), , drop = FALSE]
+        }
+      } else {
+        result <- result[integer(0), , drop = FALSE]
+      }
+    }
   } else {
     result <- colors_df[integer(0), , drop = FALSE]
   }
@@ -350,4 +435,41 @@ print.colors <- function(x, ...) {
   }
 
   invisible(x)
+}
+
+#' @title Return the first part of a colors object
+#'
+#' @description
+#' Returns the first part of a colors object, similar to [head()] for data frames.
+#'
+#' @md
+#' @param x A colors object (data frame with color information).
+#' @param n Number of rows to return. Default is `6`.
+#' @param ... Additional arguments passed to [head()].
+#'
+#' @return
+#' A colors object with the first `n` rows.
+#'
+#' @method head colors
+#' @export
+#' @examples
+#' head(get_colors())
+#'
+#' head(get_colors(), n = 10)
+head.colors <- function(x, n = 6L, ...) {
+  if (nrow(x) == 0) {
+    return(x)
+  }
+  result <- x[seq_len(min(n, nrow(x))), , drop = FALSE]
+  class(result) <- c("colors", "data.frame")
+  return(result)
+}
+
+hex_to_rgb <- function(hex_colors) {
+  vapply(hex_colors, function(hex) {
+    rgb_vals <- grDevices::col2rgb(hex)
+    paste0(
+      "(", rgb_vals[1], ", ", rgb_vals[2], ", ", rgb_vals[3], ")"
+    )
+  }, character(1), USE.NAMES = FALSE)
 }

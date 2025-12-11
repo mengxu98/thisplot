@@ -8,7 +8,8 @@ get_colors(..., palettes = NULL)
 }
 \arguments{
 \item{...}{One or more search values.
-Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.}
+Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
+If NULL, using all Chinese colors.}
 
 \item{palettes}{Optional. A named list of palettes to search in.
 If \code{NULL} (default), searches in all available palettes.}
@@ -25,11 +26,13 @@ It automatically searches in all palettes and reports which palette(s) contain t
 \examples{
 get_colors("Paired")
 
+get_colors("#FF7F00")
+
 get_colors("pinlan")
 get_colors(44)
 get_colors("#2B73AF")
 
-get_colors("cyan")
+get_colors("cyan", palettes = "ChineseSet64")
 }
 \seealso{
 \link{chinese_colors} for the dataset of Chinese traditional colors.
