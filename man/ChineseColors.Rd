@@ -11,64 +11,51 @@ A \code{ChineseColors} object.
 Detailed information can be found in \code{\link[=print.ChineseColors]{print.ChineseColors()}}.
 }
 \description{
-A color system based on Chinese traditional colors with 1058 representative colors.
-This system provides functions to access colors by name,
-create color palettes, and generate segmented colormaps.
+A color system based on Chinese traditional colors with 1058 colors.
 }
 \examples{
 cc <- ChineseColors()
 cc
 
-# Get a color by pinyin name
-cc$get_color("pinlan")
-# Or use external function
+# Get a color by pinyin
 get_colors("pinlan")
 
 # By number
-cc$get_color(44)
 get_colors(44)
 
 # By hex code
-cc$get_color("#2B73AF")
-get_colors("#2B73AF") # Also searches in palettes
+get_colors("#2B73AF")
 
 # Multiple colors
-cc$get_color("pinlan", "piao")
 get_colors("pinlan", "piao")
-
-cc$get_color(91:100)
 get_colors(91:100)
 
 # Chinese names
-widget_ch <- cc$visual_colors(
+cc$visual_colors(
   title = "Chinese Traditional Colors",
   name_type = "chinese"
 )
-htmltools::browsable(widget_ch)
 
 # pinyin as names
-widget <- cc$visual_colors(
-  loc_range = c(1, 90),
+cc$visual_colors(
+  loc_range = c(1, 120),
   title = "Chinese Traditional Colors",
   name_type = "pinyin"
 )
-htmltools::browsable(widget)
 
 # rgb as names
-widget_rgb <- cc$visual_colors(
-  loc_range = c(1, 90),
+cc$visual_colors(
+  loc_range = c(1, 120),
   title = "Colors with RGB values",
   name_type = "rgb"
 )
-htmltools::browsable(widget_rgb)
 
 # hex as names
-widget_hex <- cc$visual_colors(
-  loc_range = c(1, 90),
+cc$visual_colors(
+  loc_range = c(1, 120),
   title = "Colors with hex codes",
   name_type = "hex"
 )
-htmltools::browsable(widget_hex)
 }
 \seealso{
 \link{chinese_colors} for the dataset of Chinese traditional colors.

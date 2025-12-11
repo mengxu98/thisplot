@@ -2,18 +2,18 @@
 % Please edit documentation in R/chinese_colors.R
 \name{print.ChineseColors}
 \alias{print.ChineseColors}
-\title{Print ChineseColors object}
+\title{Print \code{ChineseColors} object}
 \usage{
 \method{print}{ChineseColors}(x, ...)
 }
 \arguments{
-\item{x}{A ChineseColors object.}
+\item{x}{A \code{ChineseColors} object.}
 
-\item{...}{Additional arguments (not used).}
+\item{...}{Additional arguments.}
 }
 \value{
-Details of the ChineseColors object.
+Details of the \code{ChineseColors} object.
 }
 \description{
-Print ChineseColors object
+Print \code{ChineseColors} object
 }
