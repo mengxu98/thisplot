@@ -93,7 +93,6 @@ reference:
 
 - subtitle: "Utility functions"
 - contents:
-  - get_namespace_fun
   - head.colors
   - mestimate
   - print.thisplot_logo
