@@ -16,3 +16,4 @@ assets/
 .Rprofile
 *.csv
 *.pyc
+README.html

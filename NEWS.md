@@ -1,5 +1,10 @@
 # thisplot
 
+# thisplot 0.3.2
+
+* **docs**:
+  * `README`: Converted from static Markdown to R Markdown (`README.Rmd`) for dynamic content generation. Code examples now execute and display actual output instead of static images.
+
 # thisplot 0.3.1
 
 * **func**:

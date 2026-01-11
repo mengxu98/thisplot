@@ -61,6 +61,20 @@ reference:
   - simple_colors
   - visual_colors
 
+- subtitle: "Statistic plot"
+- contents:
+  - StatPlot
+
+- subtitle: "Sankey and alluvial"
+- contents:
+  - make_long
+  - geom_sankey
+  - geom_sankey_label
+  - geom_sankey_bump
+  - theme_sankey
+  - geom_alluvial
+  - geom_alluvial_label
+
 - subtitle: "Theme functions"
 - contents:
   - theme_blank
