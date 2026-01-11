@@ -100,8 +100,6 @@
 
 ### Utility functions
 
-- [`get_namespace_fun()`](https://mengxu98.github.io/thisplot/reference/get_namespace_fun.md)
-  : Get a function from a namespace
 - [`head(`*`<colors>`*`)`](https://mengxu98.github.io/thisplot/reference/head.colors.md)
   : Return the first part of a colors object
 - [`mestimate()`](https://mengxu98.github.io/thisplot/reference/mestimate.md)

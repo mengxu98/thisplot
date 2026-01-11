@@ -1,6 +1,15 @@
 # Changelog
 
+## thisplot 0.3.2
+
+- **docs**:
+  - `README`: Converted from static Markdown to R Markdown
+    (`README.Rmd`) for dynamic content generation. Code examples now
+    execute and display actual output instead of static images.
+
 ## thisplot 0.3.1
+
+CRAN release: 2025-12-17
 
 - **func**:
   - [`check_ci_env()`](https://mengxu98.github.io/thisplot/reference/check_ci_env.md):
