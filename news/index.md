@@ -2,6 +2,8 @@
 
 ## thisplot 0.3.2
 
+CRAN release: 2026-01-11
+
 - **docs**:
   - `README`: Converted from static Markdown to R Markdown
     (`README.Rmd`) for dynamic content generation. Code examples now

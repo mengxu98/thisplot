@@ -52,6 +52,7 @@ cc
 
 ``` r
 cc$visual_colors(
+  loc_range = c(1, 180),
   num_per_row = 30,
   title = "Chinese traditional colors",
   name_type = "chinese"
@@ -61,6 +62,11 @@ cc$visual_colors(
 Chinese traditional colors
 
 [TABLE]
+
+To keep the GitHub README lightweight, the HTML swatch output is hidden
+here. View the full palette at
+<https://mengxu98.github.io/thisplot/reference/visual_colors.html> or
+run `cc$visual_colors()` locally.
 
 ``` r
 get_colors("Paired")
