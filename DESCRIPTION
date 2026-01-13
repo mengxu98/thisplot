@@ -1,8 +1,8 @@
 Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
-Version: 0.3.2
-Date: 2026-01-11
+Version: 0.3.3
+Date: 2026-01-13
 Authors@R:
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054"))
 Maintainer: Meng Xu <mengxu98@qq.com>
