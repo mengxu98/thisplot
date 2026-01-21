@@ -509,7 +509,6 @@ add_grob <- function(
 
 #' @title Check CI environment
 #'
-#' @md
 #' @return
 #' A logical value.
 #'
