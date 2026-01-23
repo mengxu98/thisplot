@@ -990,11 +990,6 @@ cc$visual_colors(
 </table>
 </div>
 
-To keep the GitHub README lightweight, the HTML swatch output is hidden
-here. View the full palette at
-<https://mengxu98.github.io/thisplot/reference/visual_colors.html> or
-run `cc$visual_colors()` locally.
-
 ``` r
 get_colors("Paired")
 #> 
