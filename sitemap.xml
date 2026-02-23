@@ -9,6 +9,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/BlendRGBList.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/ChineseColors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/RGBA2RGB.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/StatPlot.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/add_grob.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/adjcolors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/adjustlayout.html</loc></url>
@@ -21,6 +22,11 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/col2hex.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/drop_data.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/extractgrobs.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/geom_alluvial.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/geom_sankey.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/geom_sankey_label.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_chinese_palettes.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_colors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/get_legend.html</loc></url>
@@ -28,6 +34,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/grid_draw.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/head.colors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/index.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/make_long.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/mestimate.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/palette_colors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/palette_list.html</loc></url>
@@ -42,6 +49,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/slim_data.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/standardise.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/theme_blank.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/theme_sankey.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/theme_this.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/thisplot-package.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/thisplot_logo.html</loc></url>

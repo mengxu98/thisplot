@@ -30,8 +30,8 @@ A character vector of hexadecimal color codes.
 
 ``` r
 simple_colors()
-#>  [1] "#EB3C70" "#5CB3CC" "#F0C2A2" "#2F2F35" "#602641" "#C8ADC4" "#EDF1BB"
-#>  [8] "#223E36" "#E9DDB6" "#5AA4AE"
+#>  [1] "#1C2938" "#F2CE2B" "#E1C199" "#FDF371" "#C8B5B3" "#003371" "#1E131D"
+#>  [8] "#E07B37" "#964D22" "#91828F"
 
 show_palettes(simple_colors(n = 5))
 
@@ -39,12 +39,12 @@ show_palettes(simple_colors(n = 5))
 
 # Get colors from a specific palette
 simple_colors(n = 10, palette = "Paired")
-#>  [1] "#A6CEE3" "#CAB2D6" "#1F78B4" "#FDBF6F" "#E31A1C" "#B15928" "#33A02C"
-#>  [8] "#B2DF8A" "#FF7F00" "#FFFF99"
+#>  [1] "#1F78B4" "#FDBF6F" "#33A02C" "#A6CEE3" "#E31A1C" "#FF7F00" "#6A3D9A"
+#>  [8] "#FFFF99" "#B15928" "#B2DF8A"
 simple_colors(n = 10, palette = "ChineseBlue")
-#>  [1] "#D0DFE6" "#106898" "#131824" "#BCD4E7" "#101F30" "#126BAE" "#66A9C9"
-#>  [8] "#22A2C3" "#1C2938" "#45465E"
+#>  [1] "#1661AB" "#535164" "#126BAE" "#5698C3" "#454659" "#2376B7" "#1C2938"
+#>  [8] "#003D74" "#C3D7DF" "#93D5DC"
 simple_colors(n = 10, palette = "Spectral")
-#>  [1] "#66C2A5" "#F46D43" "#3288BD" "#FDAE61" "#5E4FA2" "#ABDDA4" "#FEE08B"
-#>  [8] "#9E0142" "#D53E4F" "#E6F598"
+#>  [1] "#9E0142" "#ABDDA4" "#66C2A5" "#F46D43" "#D53E4F" "#FDAE61" "#FFFFBF"
+#>  [8] "#E6F598" "#FEE08B" "#3288BD"
 ```

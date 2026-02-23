@@ -187,6 +187,32 @@ Please reference
 - [`visual_colors()`](https://mengxu98.github.io/thisplot/reference/visual_colors.md)
   : Visualize colors in HTML widget
 
+### Statistic plot
+
+- [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md)
+  : Statistic Plot
+
+### Sankey and alluvial
+
+- [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md)
+  : Make a long data frame for sankey plot
+- [`geom_sankey()`](https://mengxu98.github.io/thisplot/reference/geom_sankey.md)
+  : geom_sankey
+- [`geom_sankey_label()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md)
+  [`geom_sankey_text()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md)
+  : geom_sankey_label
+- [`geom_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.md)
+  : geom_sankey_bump
+- [`theme_sankey()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
+  [`theme_alluvial()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
+  [`theme_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
+  : Themes for sankey plot
+- [`geom_alluvial()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial.md)
+  : geom_alluvial
+- [`geom_alluvial_text()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md)
+  [`geom_alluvial_label()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md)
+  : geom_alluvial_label
+
 ### Theme functions
 
 - [`theme_blank()`](https://mengxu98.github.io/thisplot/reference/theme_blank.md)

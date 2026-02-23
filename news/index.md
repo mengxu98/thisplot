@@ -1,5 +1,49 @@
 # Changelog
 
+## thisplot 0.3.5
+
+- **func** (Sankey):
+  - [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md):
+    Converts a wide data frame to long format for `geom_sankey` /
+    `geom_alluvial`, with optional `value` column for weights.
+  - [`geom_sankey()`](https://mengxu98.github.io/thisplot/reference/geom_sankey.md):
+    Sankey diagram layer (nodes and flows).
+  - [`geom_sankey_label()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md),
+    [`geom_sankey_text()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md):
+    Sankey node label layers.
+  - [`geom_alluvial()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial.md):
+    Alluvial diagram layer.
+  - [`geom_alluvial_label()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md),
+    [`geom_alluvial_text()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md):
+    Alluvial label layers.
+  - [`geom_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.md):
+    Sankey bump diagram layer.
+  - [`theme_sankey()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md),
+    [`theme_alluvial()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md),
+    [`theme_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md):
+    Themes for sankey/alluvial plots.
+
+## thisplot 0.3.4
+
+- **func**:
+  - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md):
+    New function to visualize data using various plot types including
+    bar plots, rose plots, ring plots, pie charts, trend plots, area
+    plots, dot plots, sankey plots, chord plots, venn diagrams, and
+    upset plots. Supports grouping, splitting, background coloring, and
+    extensive customization options.
+- **docs**:
+  - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md):
+    Added comprehensive parameter documentation for all function
+    arguments including `group.by`, `split.by`, `palette`, `palcolor`,
+    `title`, `subtitle`, `xlab`, `ylab`, `legend.position`,
+    `legend.direction`, `theme_use`, `theme_args`, `combine`, `nrow`,
+    `ncol`, `byrow`, `force`, and `seed`.
+  - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md):
+    Updated examples to use generic test data instead of single-cell
+    specific datasets, making the function more accessible as a
+    general-purpose plotting tool.
+
 ## thisplot 0.3.2
 
 CRAN release: 2026-01-11

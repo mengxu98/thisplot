@@ -155,5 +155,5 @@ object.size(
     units = "cm"
   )
 )
-#> 1375808 bytes
+#> 1376144 bytes
 ```
