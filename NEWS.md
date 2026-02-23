@@ -1,5 +1,25 @@
 # thisplot
 
+# thisplot 0.3.5
+
+* **func** (Sankey):
+  * `make_long()`: Converts a wide data frame to long format for `geom_sankey` / `geom_alluvial`, with optional `value` column for weights.
+  * `geom_sankey()`: Sankey diagram layer (nodes and flows).
+  * `geom_sankey_label()`, `geom_sankey_text()`: Sankey node label layers.
+  * `geom_alluvial()`: Alluvial diagram layer.
+  * `geom_alluvial_label()`, `geom_alluvial_text()`: Alluvial label layers.
+  * `geom_sankey_bump()`: Sankey bump diagram layer.
+  * `theme_sankey()`, `theme_alluvial()`, `theme_sankey_bump()`: Themes for sankey/alluvial plots.
+
+# thisplot 0.3.4
+
+* **func**:
+  * `StatPlot()`: New function to visualize data using various plot types including bar plots, rose plots, ring plots, pie charts, trend plots, area plots, dot plots, sankey plots, chord plots, venn diagrams, and upset plots. Supports grouping, splitting, background coloring, and extensive customization options.
+
+* **docs**:
+  * `StatPlot()`: Added comprehensive parameter documentation for all function arguments including `group.by`, `split.by`, `palette`, `palcolor`, `title`, `subtitle`, `xlab`, `ylab`, `legend.position`, `legend.direction`, `theme_use`, `theme_args`, `combine`, `nrow`, `ncol`, `byrow`, `force`, and `seed`.
+  * `StatPlot()`: Updated examples to use generic test data instead of single-cell specific datasets, making the function more accessible as a general-purpose plotting tool.
+
 # thisplot 0.3.2
 
 * **docs**:
