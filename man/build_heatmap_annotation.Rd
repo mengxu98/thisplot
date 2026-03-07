@@ -22,7 +22,7 @@ build_heatmap_annotation(
 
 \item{annotation_name_side}{Side for annotation names.}
 
-\item{border}{Border flag passed to \link[ComplexHeatmap:HeatmapAnnotation]{ComplexHeatmap::HeatmapAnnotation}.}
+\item{border}{Whether to draw a rectangle border around the block.}
 
 \item{params}{Additional user parameters; duplicated keys are ignored if already set explicitly.}
 }

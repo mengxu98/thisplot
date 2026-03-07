@@ -46,6 +46,44 @@ reference:
   - get_chinese_palettes
   - print.ChineseColors
 
+- subtitle: "Statistic plot"
+- contents:
+  - StatPlot
+
+- subtitle: "Sankey and alluvial"
+- contents:
+  - make_long
+  - geom_sankey
+  - geom_sankey_label
+  - geom_sankey_bump
+  - theme_sankey
+  - geom_alluvial
+  - geom_alluvial_label
+
+- subtitle: "Heatmap functions"
+- contents:
+  - annotation_block_fill_graphics
+  - annotation_block_graphics
+  - annotation_graphics
+  - build_heatmap_annotation
+  - cluster_within_group2
+  - heatmap_fixsize
+  - heatmap_rendersize
+  - normalize_drawable
+
+- subtitle: "Plot manipulation"
+- contents:
+  - add_grob
+  - as_grob
+  - as_gtable
+  - build_patchwork
+  - extractgrobs
+  - get_legend
+  - get_vars
+  - grid_draw
+  - patchwork_grob
+  - segements_df
+
 - subtitle: "Color functions"
 - contents:
   - adjcolors
@@ -61,37 +99,10 @@ reference:
   - simple_colors
   - visual_colors
 
-- subtitle: "Statistic plot"
-- contents:
-  - StatPlot
-
-- subtitle: "Sankey and alluvial"
-- contents:
-  - make_long
-  - geom_sankey
-  - geom_sankey_label
-  - geom_sankey_bump
-  - theme_sankey
-  - geom_alluvial
-  - geom_alluvial_label
-
 - subtitle: "Theme functions"
 - contents:
   - theme_blank
   - theme_this
-
-- subtitle: "Plot manipulation"
-- contents:
-  - add_grob
-  - as_grob
-  - as_gtable
-  - build_patchwork
-  - extractgrobs
-  - get_legend
-  - get_vars
-  - grid_draw
-  - patchwork_grob
-  - segements_df
 
 - subtitle: "Panel and layout control"
 - contents:
@@ -111,4 +122,3 @@ reference:
   - mestimate
   - print.thisplot_logo
   - print.colors
-  - check_ci_env

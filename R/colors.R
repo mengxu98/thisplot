@@ -195,8 +195,7 @@ Blend2Color <- function(C1, C2, mode = "blend") {
 #' @title Blend a list of colors
 #'
 #' @description
-#' Blend multiple colors with alpha channels into a single color using
-#' a specified blending mode.
+#' Blend multiple colors with alpha channels into a single color using a specified blending mode.
 #'
 #' @md
 #' @param Clist A list of colors, where each color is a list containing
@@ -245,13 +244,10 @@ BlendRGBList <- function(
 
 #' @title Simple random color selection
 #'
-#' @description
-#' Randomly select a specified number of colors from ChineseColors or other palettes.
-#'
 #' @md
 #' @param n The number of colors to return. Default is `10`.
 #' @param palette The name of the palette to use.
-#' If `NULL` (default), colors will be selected from ChineseColors.
+#' Default is `NULL`, colors will be selected from ChineseColors.
 #' Otherwise, colors will be selected from the specified palette.
 #' Available palette names can be queried with [show_palettes].
 #'
@@ -271,7 +267,7 @@ BlendRGBList <- function(
 simple_colors <- function(n = 10, palette = NULL) {
   if (!is.numeric(n) || n < 1) {
     log_message(
-      "Parameter 'n' must be a positive integer",
+      "{.arg n} must be a positive integer",
       message_type = "error"
     )
   }
@@ -291,7 +287,7 @@ simple_colors <- function(n = 10, palette = NULL) {
 
     if (is.null(cc_obj)) {
       log_message(
-        "Cannot access ChineseColors. Please specify a palette name.",
+        "Cannot access ChineseColors. Please specify a palette name",
         message_type = "error"
       )
     }
@@ -304,10 +300,9 @@ simple_colors <- function(n = 10, palette = NULL) {
       )
     }
 
-    # Randomly sample colors
     if (n > length(all_colors)) {
       log_message(
-        "Requested {.val {n}} colors but only {.val {length(all_colors)}} available. Returning all colors.",
+        "Requested {.val {n}} colors but only {.val {length(all_colors)}} available. Returning all colors",
         message_type = "warning"
       )
       return(sample(all_colors, length(all_colors)))
@@ -315,7 +310,6 @@ simple_colors <- function(n = 10, palette = NULL) {
 
     return(sample(all_colors, n))
   } else {
-    # Get colors from specified palette
     palette_list <- c(
       thisplot::palette_list,
       get_chinese_palettes()
@@ -324,7 +318,7 @@ simple_colors <- function(n = 10, palette = NULL) {
     if (!palette %in% names(palette_list)) {
       log_message(
         "The palette {.val {palette}} is invalid.\n",
-        "Check the available palette names with {.fn show_palettes}.",
+        "Check the available palette names with {.fn show_palettes}",
         message_type = "error"
       )
     }
@@ -337,10 +331,9 @@ simple_colors <- function(n = 10, palette = NULL) {
       )
     }
 
-    # Randomly sample colors
     if (n > length(palette_colors)) {
       log_message(
-        "Requested {.val {n}} colors but only {.val {length(palette_colors)}} available in palette {.val {palette}}. Returning all colors.",
+        "Requested {.val {n}} colors but only {.val {length(palette_colors)}} available in palette {.val {palette}}. Returning all colors",
         message_type = "warning"
       )
       return(sample(palette_colors, length(palette_colors)))
