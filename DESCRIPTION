@@ -1,8 +1,8 @@
 Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
-Version: 0.3.5
-Date: 2026-02-23
+Version: 0.3.6
+Date: 2026-03-07
 Authors@R:
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054"))
 Maintainer: Meng Xu <mengxu98@qq.com>
@@ -14,6 +14,7 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
+    dendextend,
     geomtextpath,
     ggrepel,
     ggplot2,
@@ -22,17 +23,20 @@ Imports:
     methods,
     patchwork,
     stats,
-    thisutils (>= 0.3.6),
+    thisutils (>= 0.4.3),
     utils
 Suggests:
     circlize,
+    ComplexHeatmap,
     dplyr,
     ggupset,
     ggVennDiagram,
     grDevices,
     grid,
     htmltools,
+    Matrix,
     png,
+    proxyC,
     purrr,
     ragg,
     scales,
