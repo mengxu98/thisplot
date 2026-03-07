@@ -43,7 +43,7 @@
 #' @param split.by The column name in `meta.data` specifying the variable to split plots by.
 #' Default is `NULL`.
 #' @param palette The name of the color palette to use.
-#' Default is `"Paired"`.
+#' Default is `"Chinese"`.
 #' @param palcolor Custom colors to use instead of palette.
 #' Default is `NULL`.
 #' @param title The title of the plot.
@@ -178,10 +178,10 @@ StatPlot <- function(
   ),
   stat_type = c("percent", "count"),
   position = c("stack", "dodge"),
-  palette = "Paired",
+  palette = "Chinese",
   palcolor = NULL,
   alpha = 1,
-  bg_palette = "Paired",
+  bg_palette = "Chinese",
   bg_palcolor = NULL,
   bg_alpha = 0.2,
   label = FALSE,
@@ -977,7 +977,7 @@ StatPlot <- function(
             segment.colour = "black"
           ) +
           scale_fill_identity() +
-          coord_equal() +
+          coord_fixed(ratio = 1, clip = "off") +
           theme(
             plot.title = element_text(hjust = 0.5),
             plot.background = element_blank(),
