@@ -21,6 +21,5 @@ Default is \code{c(1, 1, 1)} (white).}
 A numeric vector of RGB values.
 }
 \description{
-Blend multiple colors with alpha channels into a single color using
-a specified blending mode.
+Blend multiple colors with alpha channels into a single color using a specified blending mode.
 }

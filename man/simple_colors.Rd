@@ -10,7 +10,7 @@ simple_colors(n = 10, palette = NULL)
 \item{n}{The number of colors to return. Default is \code{10}.}
 
 \item{palette}{The name of the palette to use.
-If \code{NULL} (default), colors will be selected from ChineseColors.
+Default is \code{NULL}, colors will be selected from ChineseColors.
 Otherwise, colors will be selected from the specified palette.
 Available palette names can be queried with \link{show_palettes}.}
 }
@@ -18,7 +18,7 @@ Available palette names can be queried with \link{show_palettes}.}
 A character vector of hexadecimal color codes.
 }
 \description{
-Randomly select a specified number of colors from ChineseColors or other palettes.
+Simple random color selection
 }
 \examples{
 simple_colors()
