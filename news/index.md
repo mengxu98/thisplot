@@ -1,31 +1,50 @@
 # Changelog
 
+## thisplot 0.3.6
+
+- **feat**:
+  - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md):
+    Optimized venn plot rendering by using
+    `coord_fixed(ratio = 1, clip = "off")`.
+  - Heatmap functions:
+    - [`annotation_block_fill_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_block_fill_graphics.md)
+    - [`annotation_block_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_block_graphics.md)
+    - [`annotation_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_graphics.md)
+    - [`build_heatmap_annotation()`](https://mengxu98.github.io/thisplot/reference/build_heatmap_annotation.md)
+    - [`cluster_within_group2()`](https://mengxu98.github.io/thisplot/reference/cluster_within_group2.md)
+    - [`heatmap_fixsize()`](https://mengxu98.github.io/thisplot/reference/heatmap_fixsize.md)
+    - [`heatmap_rendersize()`](https://mengxu98.github.io/thisplot/reference/heatmap_rendersize.md)
+    - [`normalize_drawable()`](https://mengxu98.github.io/thisplot/reference/normalize_drawable.md)
+
 ## thisplot 0.3.5
 
-- **func** (Sankey):
-  - [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md):
-    Converts a wide data frame to long format for `geom_sankey` /
-    `geom_alluvial`, with optional `value` column for weights.
-  - [`geom_sankey()`](https://mengxu98.github.io/thisplot/reference/geom_sankey.md):
-    Sankey diagram layer (nodes and flows).
-  - [`geom_sankey_label()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md),
-    [`geom_sankey_text()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md):
-    Sankey node label layers.
-  - [`geom_alluvial()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial.md):
-    Alluvial diagram layer.
-  - [`geom_alluvial_label()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md),
-    [`geom_alluvial_text()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md):
-    Alluvial label layers.
-  - [`geom_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.md):
-    Sankey bump diagram layer.
-  - [`theme_sankey()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md),
-    [`theme_alluvial()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md),
-    [`theme_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md):
-    Themes for sankey/alluvial plots.
+CRAN release: 2026-02-23
+
+- **feat**:
+  - Sankey
+    - [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md):
+      Converts a wide data frame to long format for `geom_sankey` /
+      `geom_alluvial`, with optional `value` column for weights.
+    - [`geom_sankey()`](https://mengxu98.github.io/thisplot/reference/geom_sankey.md):
+      Sankey diagram layer (nodes and flows).
+    - [`geom_sankey_label()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md),
+      [`geom_sankey_text()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md):
+      Sankey node label layers.
+    - [`geom_alluvial()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial.md):
+      Alluvial diagram layer.
+    - [`geom_alluvial_label()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md),
+      [`geom_alluvial_text()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md):
+      Alluvial label layers.
+    - [`geom_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.md):
+      Sankey bump diagram layer.
+    - [`theme_sankey()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md),
+      [`theme_alluvial()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md),
+      [`theme_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md):
+      Themes for sankey/alluvial plots.
 
 ## thisplot 0.3.4
 
-- **func**:
+- **feat**:
   - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md):
     New function to visualize data using various plot types including
     bar plots, rose plots, ring plots, pie charts, trend plots, area
@@ -57,16 +76,14 @@ CRAN release: 2026-01-11
 
 CRAN release: 2025-12-17
 
-- **func**:
-  - [`check_ci_env()`](https://mengxu98.github.io/thisplot/reference/check_ci_env.md):
-    New function to detect if the current environment supports browsable
-    HTML output. Now detects local pkgdown builds via `IN_PKGDOWN`
-    environment variable and knitr HTML output contexts.
+- **feat**:
+  - `check_ci_env()`: New function to detect if the current environment
+    supports browsable HTML output. Now detects local pkgdown builds via
+    `IN_PKGDOWN` environment variable and knitr HTML output contexts.
   - [`head.colors()`](https://mengxu98.github.io/thisplot/reference/head.colors.md):
     New S3 method for `colors` objects, allowing the use of
     [`head()`](https://rdrr.io/r/utils/head.html) function to limit the
     number of displayed rows (default `n = 6L`).
-- **enhancement**:
   - [`visual_colors()`](https://mengxu98.github.io/thisplot/reference/visual_colors.md):
     Integrated
     [`htmltools::browsable`](https://rstudio.github.io/htmltools/reference/browsable.html)
@@ -87,7 +104,7 @@ CRAN release: 2025-12-17
 
 ## thisplot 0.3.0
 
-- **func**:
+- **feat**:
   - [`get_colors()`](https://mengxu98.github.io/thisplot/reference/get_colors.md):
     New function to search for colors in the Chinese colors dataset and
     all available palettes. Supports searching by palette names, color
@@ -96,12 +113,11 @@ CRAN release: 2025-12-17
   - [`print.colors()`](https://mengxu98.github.io/thisplot/reference/print.colors.md):
     New print method for colors objects to display color information
     with ANSI color support in terminal.
-- **enhancement**:
   - Updated Chinese color system with improved functionality.
 
 ## thisplot 0.2.0
 
-- **func**:
+- **feat**:
   - Chinese traditional color system
     - [`ChineseColors()`](https://mengxu98.github.io/thisplot/reference/ChineseColors.md):
       New function to create a Chinese traditional color system object

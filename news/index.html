@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,9 +37,28 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3.5" id="thisplot-035">thisplot 0.3.5<a class="anchor" aria-label="anchor" href="#thisplot-035"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3.6" id="thisplot-036">thisplot 0.3.6<a class="anchor" aria-label="anchor" href="#thisplot-036"></a></h2>
 <ul><li>
-<strong>func</strong> (Sankey):
+<strong>feat</strong>:
+<ul><li>
+<code><a href="../reference/StatPlot.html">StatPlot()</a></code>: Optimized venn plot rendering by using <code>coord_fixed(ratio = 1, clip = "off")</code>.</li>
+<li>Heatmap functions:
+<ul><li><code><a href="../reference/annotation_block_fill_graphics.html">annotation_block_fill_graphics()</a></code></li>
+<li><code><a href="../reference/annotation_block_graphics.html">annotation_block_graphics()</a></code></li>
+<li><code><a href="../reference/annotation_graphics.html">annotation_graphics()</a></code></li>
+<li><code><a href="../reference/build_heatmap_annotation.html">build_heatmap_annotation()</a></code></li>
+<li><code><a href="../reference/cluster_within_group2.html">cluster_within_group2()</a></code></li>
+<li><code><a href="../reference/heatmap_fixsize.html">heatmap_fixsize()</a></code></li>
+<li><code><a href="../reference/heatmap_rendersize.html">heatmap_rendersize()</a></code></li>
+<li><code><a href="../reference/normalize_drawable.html">normalize_drawable()</a></code></li>
+</ul></li>
+</ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.5" id="thisplot-035">thisplot 0.3.5<a class="anchor" aria-label="anchor" href="#thisplot-035"></a></h2><p class="text-muted">CRAN release: 2026-02-23</p>
+<ul><li>
+<strong>feat</strong>:
+<ul><li>Sankey
 <ul><li>
 <code><a href="../reference/make_long.html">make_long()</a></code>: Converts a wide data frame to long format for <code>geom_sankey</code> / <code>geom_alluvial</code>, with optional <code>value</code> column for weights.</li>
 <li>
@@ -55,11 +74,12 @@
 <li>
 <code><a href="../reference/theme_sankey.html">theme_sankey()</a></code>, <code><a href="../reference/theme_sankey.html">theme_alluvial()</a></code>, <code><a href="../reference/theme_sankey.html">theme_sankey_bump()</a></code>: Themes for sankey/alluvial plots.</li>
 </ul></li>
+</ul></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.4" id="thisplot-034">thisplot 0.3.4<a class="anchor" aria-label="anchor" href="#thisplot-034"></a></h2>
 <ul><li>
-<strong>func</strong>:
+<strong>feat</strong>:
 <ul><li>
 <code><a href="../reference/StatPlot.html">StatPlot()</a></code>: New function to visualize data using various plot types including bar plots, rose plots, ring plots, pie charts, trend plots, area plots, dot plots, sankey plots, chord plots, venn diagrams, and upset plots. Supports grouping, splitting, background coloring, and extensive customization options.</li>
 </ul></li>
@@ -82,15 +102,12 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.1" id="thisplot-031">thisplot 0.3.1<a class="anchor" aria-label="anchor" href="#thisplot-031"></a></h2><p class="text-muted">CRAN release: 2025-12-17</p>
 <ul><li>
-<strong>func</strong>:
+<strong>feat</strong>:
 <ul><li>
-<code><a href="../reference/check_ci_env.html">check_ci_env()</a></code>: New function to detect if the current environment supports browsable HTML output. Now detects local pkgdown builds via <code>IN_PKGDOWN</code> environment variable and knitr HTML output contexts.</li>
+<code>check_ci_env()</code>: New function to detect if the current environment supports browsable HTML output. Now detects local pkgdown builds via <code>IN_PKGDOWN</code> environment variable and knitr HTML output contexts.</li>
 <li>
 <code><a href="../reference/head.colors.html">head.colors()</a></code>: New S3 method for <code>colors</code> objects, allowing the use of <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> function to limit the number of displayed rows (default <code>n = 6L</code>).</li>
-</ul></li>
 <li>
-<strong>enhancement</strong>:
-<ul><li>
 <code><a href="../reference/visual_colors.html">visual_colors()</a></code>: Integrated <code><a href="https://rstudio.github.io/htmltools/reference/browsable.html" class="external-link">htmltools::browsable</a></code> functionality. Added <code>browsable</code> parameter (default <code>NULL</code> for auto-detection) to automatically display widgets in appropriate environments. Automatically detects interactive sessions and GitHub Actions pkgdown workflow, while preventing browser opening during CRAN checks.</li>
 <li>
 <code>ChineseColors$visual_colors()</code>: Added <code>browsable</code> parameter support, consistent with the global <code><a href="../reference/visual_colors.html">visual_colors()</a></code> function.</li>
@@ -101,21 +118,18 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="thisplot-030">thisplot 0.3.0<a class="anchor" aria-label="anchor" href="#thisplot-030"></a></h2>
 <ul><li>
-<strong>func</strong>:
+<strong>feat</strong>:
 <ul><li>
 <code><a href="../reference/get_colors.html">get_colors()</a></code>: New function to search for colors in the Chinese colors dataset and all available palettes. Supports searching by palette names, color names (pinyin or Chinese), numbers, or hex codes. Automatically reports which palette(s) contain the found colors.</li>
 <li>
 <code><a href="../reference/print.colors.html">print.colors()</a></code>: New print method for colors objects to display color information with ANSI color support in terminal.</li>
-</ul></li>
-<li>
-<strong>enhancement</strong>:
-<ul><li>Updated Chinese color system with improved functionality.</li>
+<li>Updated Chinese color system with improved functionality.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="thisplot-020">thisplot 0.2.0<a class="anchor" aria-label="anchor" href="#thisplot-020"></a></h2>
 <ul><li>
-<strong>func</strong>:
+<strong>feat</strong>:
 <ul><li>Chinese traditional color system
 <ul><li>
 <code><a href="../reference/ChineseColors.html">ChineseColors()</a></code>: New function to create a Chinese traditional color system object with 1058 representative colors extracted from traditional Chinese color charts. Supports accessing colors by name (pinyin or Chinese), number, or hex code, creating color palettes, and generating segmented colormaps.</li>

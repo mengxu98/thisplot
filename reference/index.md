@@ -24,6 +24,74 @@
 
   Print `ChineseColors` object
 
+### Statistic plot
+
+- [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md)
+  : Statistic Plot
+
+### Sankey and alluvial
+
+- [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md)
+  : Make a long data frame for sankey plot
+- [`geom_sankey()`](https://mengxu98.github.io/thisplot/reference/geom_sankey.md)
+  : geom_sankey
+- [`geom_sankey_label()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md)
+  [`geom_sankey_text()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md)
+  : geom_sankey_label
+- [`geom_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.md)
+  : geom_sankey_bump
+- [`theme_sankey()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
+  [`theme_alluvial()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
+  [`theme_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
+  : Themes for sankey plot
+- [`geom_alluvial()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial.md)
+  : geom_alluvial
+- [`geom_alluvial_text()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md)
+  [`geom_alluvial_label()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md)
+  : geom_alluvial_label
+
+### Heatmap functions
+
+- [`annotation_block_fill_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_block_fill_graphics.md)
+  : Build block fill panel function
+- [`annotation_block_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_block_graphics.md)
+  : Build block panel function
+- [`annotation_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_graphics.md)
+  : Build graphics callback list for anno_customize
+- [`build_heatmap_annotation()`](https://mengxu98.github.io/thisplot/reference/build_heatmap_annotation.md)
+  : Build HeatmapAnnotation with safe parameter merge
+- [`cluster_within_group2()`](https://mengxu98.github.io/thisplot/reference/cluster_within_group2.md)
+  : Cluster within group
+- [`heatmap_fixsize()`](https://mengxu98.github.io/thisplot/reference/heatmap_fixsize.md)
+  : Compute fixed heatmap device size
+- [`heatmap_rendersize()`](https://mengxu98.github.io/thisplot/reference/heatmap_rendersize.md)
+  : Estimate heatmap render size
+- [`normalize_drawable()`](https://mengxu98.github.io/thisplot/reference/normalize_drawable.md)
+  : Normalize drawable objects to grobs
+
+### Plot manipulation
+
+- [`add_grob()`](https://mengxu98.github.io/thisplot/reference/add_grob.md)
+  : Add a grob to a gtable
+- [`as_grob()`](https://mengxu98.github.io/thisplot/reference/as_grob.md)
+  : Convert a plot object to a grob
+- [`as_gtable()`](https://mengxu98.github.io/thisplot/reference/as_gtable.md)
+  : Convert a plot object to a gtable
+- [`build_patchwork()`](https://mengxu98.github.io/thisplot/reference/build_patchwork.md)
+  : Build a patchwork gtable
+- [`extractgrobs()`](https://mengxu98.github.io/thisplot/reference/extractgrobs.md)
+  : Extract grobs from a list
+- [`get_legend()`](https://mengxu98.github.io/thisplot/reference/get_legend.md)
+  : Extract legend from a plot
+- [`get_vars()`](https://mengxu98.github.io/thisplot/reference/get_vars.md)
+  : Get used vars in a ggplot object
+- [`grid_draw()`](https://mengxu98.github.io/thisplot/reference/grid_draw.md)
+  : Draw grobs at specified positions
+- [`patchwork_grob()`](https://mengxu98.github.io/thisplot/reference/patchwork_grob.md)
+  : Convert a patchwork object to a grob
+- [`segements_df()`](https://mengxu98.github.io/thisplot/reference/segements_df.md)
+  : Shorten and offset the segment
+
 ### Color functions
 
 - [`adjcolors()`](https://mengxu98.github.io/thisplot/reference/adjcolors.md)
@@ -51,61 +119,12 @@
 - [`visual_colors()`](https://mengxu98.github.io/thisplot/reference/visual_colors.md)
   : Visualize colors in HTML widget
 
-### Statistic plot
-
-- [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md)
-  : Statistic Plot
-
-### Sankey and alluvial
-
-- [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md)
-  : Make a long data frame for sankey plot
-- [`geom_sankey()`](https://mengxu98.github.io/thisplot/reference/geom_sankey.md)
-  : geom_sankey
-- [`geom_sankey_label()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md)
-  [`geom_sankey_text()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_label.md)
-  : geom_sankey_label
-- [`geom_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/geom_sankey_bump.md)
-  : geom_sankey_bump
-- [`theme_sankey()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
-  [`theme_alluvial()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
-  [`theme_sankey_bump()`](https://mengxu98.github.io/thisplot/reference/theme_sankey.md)
-  : Themes for sankey plot
-- [`geom_alluvial()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial.md)
-  : geom_alluvial
-- [`geom_alluvial_text()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md)
-  [`geom_alluvial_label()`](https://mengxu98.github.io/thisplot/reference/geom_alluvial_label.md)
-  : geom_alluvial_label
-
 ### Theme functions
 
 - [`theme_blank()`](https://mengxu98.github.io/thisplot/reference/theme_blank.md)
   : Blank theme
 - [`theme_this()`](https://mengxu98.github.io/thisplot/reference/theme_this.md)
   : The default theme for scop plot function.
-
-### Plot manipulation
-
-- [`add_grob()`](https://mengxu98.github.io/thisplot/reference/add_grob.md)
-  : Add a grob to a gtable
-- [`as_grob()`](https://mengxu98.github.io/thisplot/reference/as_grob.md)
-  : Convert a plot object to a grob
-- [`as_gtable()`](https://mengxu98.github.io/thisplot/reference/as_gtable.md)
-  : Convert a plot object to a gtable
-- [`build_patchwork()`](https://mengxu98.github.io/thisplot/reference/build_patchwork.md)
-  : Build a patchwork gtable
-- [`extractgrobs()`](https://mengxu98.github.io/thisplot/reference/extractgrobs.md)
-  : Extract grobs from a list
-- [`get_legend()`](https://mengxu98.github.io/thisplot/reference/get_legend.md)
-  : Extract legend from a plot
-- [`get_vars()`](https://mengxu98.github.io/thisplot/reference/get_vars.md)
-  : Get used vars in a ggplot object
-- [`grid_draw()`](https://mengxu98.github.io/thisplot/reference/grid_draw.md)
-  : Draw grobs at specified positions
-- [`patchwork_grob()`](https://mengxu98.github.io/thisplot/reference/patchwork_grob.md)
-  : Convert a patchwork object to a grob
-- [`segements_df()`](https://mengxu98.github.io/thisplot/reference/segements_df.md)
-  : Shorten and offset the segment
 
 ### Panel and layout control
 
@@ -134,5 +153,3 @@
   : Print logo
 - [`print(`*`<colors>`*`)`](https://mengxu98.github.io/thisplot/reference/print.colors.md)
   : Print colors object
-- [`check_ci_env()`](https://mengxu98.github.io/thisplot/reference/check_ci_env.md)
-  : Check CI environment
