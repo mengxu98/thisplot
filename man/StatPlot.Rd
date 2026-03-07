@@ -20,10 +20,10 @@ StatPlot(
     "venn", "upset"),
   stat_type = c("percent", "count"),
   position = c("stack", "dodge"),
-  palette = "Paired",
+  palette = "Chinese",
   palcolor = NULL,
   alpha = 1,
-  bg_palette = "Paired",
+  bg_palette = "Chinese",
   bg_palcolor = NULL,
   bg_alpha = 0.2,
   label = FALSE,
@@ -89,7 +89,7 @@ Can be one of \code{"percent"} or \code{"count"}.}
 Can be one of \code{"stack"} or \code{"dodge"}.}
 
 \item{palette}{The name of the color palette to use.
-Default is \code{"Paired"}.}
+Default is \code{"Chinese"}.}
 
 \item{palcolor}{Custom colors to use instead of palette.
 Default is \code{NULL}.}
