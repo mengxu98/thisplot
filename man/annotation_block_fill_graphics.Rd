@@ -9,7 +9,7 @@ annotation_block_fill_graphics(
   palette = NULL,
   palcolor = NULL,
   fill_values = NULL,
-  border = FALSE
+  border = TRUE
 )
 }
 \arguments{

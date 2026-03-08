@@ -368,7 +368,6 @@ heatmap_rendersize <- function(
 #' dend
 #' plot(dend)
 cluster_within_group2 <- function(mat, factor) {
-  check_r("dendextend", verbose = FALSE)
   if (!is.factor(factor)) {
     factor <- factor(factor, levels = unique(factor))
   }
@@ -574,7 +573,7 @@ annotation_block_fill_graphics <- function(
   palette = NULL,
   palcolor = NULL,
   fill_values = NULL,
-  border = FALSE
+  border = TRUE
 ) {
   if (is.null(fill_values)) {
     fill_values <- palette_colors(
@@ -604,11 +603,11 @@ annotation_block_fill_graphics <- function(
 #' @title Build HeatmapAnnotation with safe parameter merge
 #'
 #' @md
+#' @inheritParams annotation_block_graphics
 #' @param annotations Named list of annotation components (for example, `anno_simple`, `anno_block`, `anno_customize`).
 #' @param which Annotation direction (`"row"` or `"column"`).
 #' @param show_annotation_name Whether to show annotation names.
 #' @param annotation_name_side Side for annotation names.
-#' @param border Border flag passed to [ComplexHeatmap::HeatmapAnnotation].
 #' @param params Additional user parameters; duplicated keys are ignored if already set explicitly.
 #'
 #' @return A [ComplexHeatmap::HeatmapAnnotation] object.
