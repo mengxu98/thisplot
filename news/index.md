@@ -2,6 +2,8 @@
 
 ## thisplot 0.3.6
 
+CRAN release: 2026-03-07
+
 - **feat**:
   - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md):
     Optimized venn plot rendering by using

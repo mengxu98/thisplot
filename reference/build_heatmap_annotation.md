@@ -36,8 +36,7 @@ build_heatmap_annotation(
 
 - border:
 
-  Border flag passed to
-  [ComplexHeatmap::HeatmapAnnotation](https://rdrr.io/pkg/ComplexHeatmap/man/HeatmapAnnotation.html).
+  Whether to draw a rectangle border around the block.
 
 - params:
 
