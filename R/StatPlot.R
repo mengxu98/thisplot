@@ -258,7 +258,8 @@ StatPlot <- function(
   } else {
     for (g in group.by) {
       bg_map[[g]] <- stats::setNames(
-        levels(meta.data[[g]]), levels(meta.data[[g]])
+        levels(meta.data[[g]]),
+        levels(meta.data[[g]])
       )
     }
   }
@@ -445,7 +446,8 @@ StatPlot <- function(
     )
 
     plist <- lapply(
-      stats::setNames(rownames(comb), rownames(comb)), function(i) {
+      stats::setNames(rownames(comb), rownames(comb)),
+      function(i) {
         stat.by <- comb[i, "stat_name"]
         sp <- comb[i, "split_name"]
         g <- comb[i, "group_name"]
@@ -654,22 +656,31 @@ StatPlot <- function(
             if (position == "stack") {
               y_total <- stats::aggregate(
                 dat[["value"]],
-                by = list(dat[[g]]), FUN = sum, na.rm = TRUE
+                by = list(dat[[g]]),
+                FUN = sum,
+                na.rm = TRUE
               )
             } else {
               y_total <- stats::aggregate(
                 dat[["value"]],
-                by = list(dat[[g]]), FUN = max, na.rm = TRUE
+                by = list(dat[[g]]),
+                FUN = max,
+                na.rm = TRUE
               )
             }
             colnames(y_total) <- c("group", "y_max")
-            y_total <- y_total[y_total[["group"]] %in% group_levels, , drop = FALSE]
+            y_total <- y_total[
+              y_total[["group"]] %in% group_levels,
+              ,
+              drop = FALSE
+            ]
             y_max_global <- max(y_total[["y_max"]], na.rm = TRUE)
             y_outer <- y_max_global * 1.15
             npt <- 40
             path_margin <- 0.04
             path_df <- do.call(
-              rbind, lapply(seq_along(group_levels), function(idx) {
+              rbind,
+              lapply(seq_along(group_levels), function(idx) {
                 lev <- group_levels[idx]
                 x_idx <- which(levels(dat[[g]]) == lev)
                 x_start <- x_idx - 0.5 + path_margin
@@ -694,11 +705,19 @@ StatPlot <- function(
               )
               y_lim_max <- max(
                 y_outer * 1.05,
-                if (position == "dodge") max(dat[["value"]], na.rm = TRUE) * 1.1 else max(dat[["value"]], na.rm = TRUE)
+                if (position == "dodge") {
+                  max(dat[["value"]], na.rm = TRUE) * 1.1
+                } else {
+                  max(dat[["value"]], na.rm = TRUE)
+                }
               )
               scaley <- scale_y_continuous(
                 limits = c(0, y_lim_max),
-                labels = if (stat_type == "count") scales::number else scales::percent,
+                labels = if (stat_type == "count") {
+                  scales::number
+                } else {
+                  scales::percent
+                },
                 expand = c(0, 0)
               )
             }
@@ -816,12 +835,18 @@ StatPlot <- function(
           }
         }
         if (plot_type %in% c("rose")) {
-          axis_text_x <- if (!is.null(textpath_layer)) element_blank() else element_text()
+          axis_text_x <- if (!is.null(textpath_layer)) {
+            element_blank()
+          } else {
+            element_text()
+          }
         } else if (plot_type %in% c("ring", "pie")) {
           axis_text_x <- element_text()
         } else {
           axis_text_x <- element_text(
-            angle = 45, hjust = 1, vjust = 1
+            angle = 45,
+            hjust = 1,
+            vjust = 1
           )
         }
         title <- title %||% sp
@@ -841,7 +866,9 @@ StatPlot <- function(
             axis.text.x = axis_text_x,
             legend.position = legend.position,
             legend.direction = legend.direction,
-            panel.grid.major = if (plot_type == "trend" & stat_type == "percent") {
+            panel.grid.major = if (
+              plot_type == "trend" & stat_type == "percent"
+            ) {
               element_blank()
             } else {
               element_line(colour = "grey80", linetype = 2)
@@ -891,7 +918,8 @@ StatPlot <- function(
         dat_list <- as.list(dat_use[, stat.by])
         dat_list <- lapply(
           stats::setNames(
-            names(dat_list), names(dat_list)
+            names(dat_list),
+            names(dat_list)
           ),
           function(x) {
             lg <- dat_list[[x]]
@@ -931,7 +959,8 @@ StatPlot <- function(
 
         venn_regionedge_data <- ggVennDiagram::venn_regionedge(data)
         venn_regionedge_data[["colors"]] <- dat_venn_region[["colors"]][match(
-          venn_regionedge_data[["id"]], dat_venn_region[["id"]]
+          venn_regionedge_data[["id"]],
+          dat_venn_region[["id"]]
         )]
 
         p <- ggplot() +
@@ -949,9 +978,16 @@ StatPlot <- function(
           ) +
           ggrepel::geom_text_repel(
             data = ggVennDiagram::venn_setlabel(data),
-            aes(X, Y, label = paste0(
-              name, "\n(", count, ")"
-            )),
+            aes(
+              X,
+              Y,
+              label = paste0(
+                name,
+                "\n(",
+                count,
+                ")"
+              )
+            ),
             fontface = "bold",
             colour = label.fg,
             size = label.size + 0.5,
@@ -999,11 +1035,13 @@ StatPlot <- function(
           )
         }
         dat_use <- dat_use[
-          sapply(dat_use[["intersection"]], length) > 0, ,
+          sapply(dat_use[["intersection"]], length) > 0,
+          ,
           drop = FALSE
         ]
         p <- ggplot(
-          dat_use, aes(x = intersection)
+          dat_use,
+          aes(x = intersection)
         ) +
           geom_bar(
             aes(fill = after_stat(count)),
