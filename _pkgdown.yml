@@ -50,6 +50,10 @@ reference:
 - contents:
   - StatPlot
 
+- subtitle: "Graph plot"
+- contents:
+  - GraphPlot
+
 - subtitle: "Sankey and alluvial"
 - contents:
   - make_long

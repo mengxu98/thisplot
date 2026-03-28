@@ -17,6 +17,7 @@ Imports:
     dendextend,
     geomtextpath,
     ggrepel,
+    ggnewscale,
     ggplot2,
     grDevices,
     grid,
@@ -25,6 +26,7 @@ Imports:
     methods,
     patchwork,
     proxyC,
+    reshape2,
     stats,
     thisutils (>= 0.4.3),
     utils
