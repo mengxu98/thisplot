@@ -29,6 +29,11 @@
 - [`StatPlot()`](https://mengxu98.github.io/thisplot/reference/StatPlot.md)
   : Statistic Plot
 
+### Graph plot
+
+- [`GraphPlot()`](https://mengxu98.github.io/thisplot/reference/GraphPlot.md)
+  : Graph Plot
+
 ### Sankey and alluvial
 
 - [`make_long()`](https://mengxu98.github.io/thisplot/reference/make_long.md)

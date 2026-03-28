@@ -8,7 +8,7 @@ This function creates a color palette for a given vector of values.
 palette_colors(
   x,
   n = 100,
-  palette = "Paired",
+  palette = "Chinese",
   palcolor = NULL,
   type = c("auto", "discrete", "continuous"),
   matched = FALSE,
