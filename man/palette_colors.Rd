@@ -7,7 +7,7 @@
 palette_colors(
   x,
   n = 100,
-  palette = "Paired",
+  palette = "Chinese",
   palcolor = NULL,
   type = c("auto", "discrete", "continuous"),
   matched = FALSE,
