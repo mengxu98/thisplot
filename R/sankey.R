@@ -63,7 +63,9 @@ sigmoid <- function(x_from, x_to, y_from, y_to, smooth = 5, n = 300) {
 #'
 #' @export
 make_long <- function(.df, ..., value = NULL) {
-  if ("..r" %in% names(.df)) stop("The column name '..r' is not allowed")
+  if ("..r" %in% names(.df)) {
+    stop("The column name '..r' is not allowed")
+  }
   .vars <- dplyr::quos(...)
 
   if (!missing(value)) {
@@ -118,96 +120,116 @@ make_long <- function(.df, ..., value = NULL) {
 #'
 #' @export
 theme_sankey <-
-  function(base_size = 11,
-           base_family = "",
-           base_line_size = base_size / 22,
-           base_rect_size = base_size / 22) {{ ggplot2::theme_bw(
-    base_size = base_size,
-    base_family = base_family,
-    base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      axis.line = ggplot2::element_line(
-        colour = "black",
-        linewidth = ggplot2::rel(1)
-      ),
-      legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(
-        fill = "white",
-        colour = "transparent",
-        linewidth = ggplot2::rel(2)
-      ),
-      complete = TRUE,
-      axis.line.y = ggplot2::element_blank(),
-      axis.line.x = ggplot2::element_blank(),
-      axis.text.y = ggplot2::element_blank(),
-      axis.ticks.y = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
-    ) }}
+  function(
+    base_size = 11,
+    base_family = "",
+    base_line_size = base_size / 22,
+    base_rect_size = base_size / 22
+  ) {
+    {
+      ggplot2::theme_bw(
+        base_size = base_size,
+        base_family = base_family,
+        base_line_size = base_line_size,
+        base_rect_size = base_rect_size
+      ) %+replace%
+        ggplot2::theme(
+          panel.border = ggplot2::element_blank(),
+          panel.grid.major = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank(),
+          axis.line = ggplot2::element_line(
+            colour = "black",
+            linewidth = ggplot2::rel(1)
+          ),
+          legend.key = ggplot2::element_blank(),
+          strip.background = ggplot2::element_rect(
+            fill = "white",
+            colour = "transparent",
+            linewidth = ggplot2::rel(2)
+          ),
+          complete = TRUE,
+          axis.line.y = ggplot2::element_blank(),
+          axis.line.x = ggplot2::element_blank(),
+          axis.text.y = ggplot2::element_blank(),
+          axis.ticks.y = ggplot2::element_blank(),
+          axis.ticks.x = ggplot2::element_blank()
+        )
+    }
+  }
 
 #' @rdname theme_sankey
 #' @export
 theme_alluvial <-
-  function(base_size = 11,
-           base_family = "",
-           base_line_size = base_size / 22,
-           base_rect_size = base_size / 22) {{ ggplot2::theme_bw(
-    base_size = base_size,
-    base_family = base_family,
-    base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      axis.line = ggplot2::element_blank(),
-      legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(
-        fill = "white",
-        colour = "transparent",
-        linewidth = ggplot2::rel(2)
-      ),
-      complete = TRUE,
-      axis.line.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
-    ) }}
+  function(
+    base_size = 11,
+    base_family = "",
+    base_line_size = base_size / 22,
+    base_rect_size = base_size / 22
+  ) {
+    {
+      ggplot2::theme_bw(
+        base_size = base_size,
+        base_family = base_family,
+        base_line_size = base_line_size,
+        base_rect_size = base_rect_size
+      ) %+replace%
+        ggplot2::theme(
+          panel.border = ggplot2::element_blank(),
+          panel.grid.major = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank(),
+          axis.line = ggplot2::element_blank(),
+          legend.key = ggplot2::element_blank(),
+          strip.background = ggplot2::element_rect(
+            fill = "white",
+            colour = "transparent",
+            linewidth = ggplot2::rel(2)
+          ),
+          complete = TRUE,
+          axis.line.x = ggplot2::element_blank(),
+          axis.ticks.x = ggplot2::element_blank()
+        )
+    }
+  }
 
 #' @rdname theme_sankey
 #' @export
 theme_sankey_bump <-
-  function(base_size = 11,
-           base_family = "",
-           base_line_size = base_size / 22,
-           base_rect_size = base_size / 22) {{ ggplot2::theme_bw(
-    base_size = base_size,
-    base_family = base_family,
-    base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major.x = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      axis.line = ggplot2::element_blank(),
-      legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(
-        fill = "white",
-        colour = "transparent",
-        linewidth = ggplot2::rel(2)
-      ),
-      complete = TRUE,
-      axis.line.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank(),
-      panel.grid.major.y = ggplot2::element_line("gray90")
-    ) }}
+  function(
+    base_size = 11,
+    base_family = "",
+    base_line_size = base_size / 22,
+    base_rect_size = base_size / 22
+  ) {
+    {
+      ggplot2::theme_bw(
+        base_size = base_size,
+        base_family = base_family,
+        base_line_size = base_line_size,
+        base_rect_size = base_rect_size
+      ) %+replace%
+        ggplot2::theme(
+          panel.border = ggplot2::element_blank(),
+          panel.grid.major.x = ggplot2::element_blank(),
+          panel.grid.minor = ggplot2::element_blank(),
+          axis.line = ggplot2::element_blank(),
+          legend.key = ggplot2::element_blank(),
+          strip.background = ggplot2::element_rect(
+            fill = "white",
+            colour = "transparent",
+            linewidth = ggplot2::rel(2)
+          ),
+          complete = TRUE,
+          axis.line.x = ggplot2::element_blank(),
+          axis.ticks.x = ggplot2::element_blank(),
+          panel.grid.major.y = ggplot2::element_line("gray90")
+        )
+    }
+  }
 
 # FLOW LAYER ---------
-StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
+StatSankeyFlow <- ggplot2::ggproto(
+  "StatSankeyFlow",
+  ggplot2::Stat,
   extra_params = c("n_grid", "na.rm", "type", "width", "space", "smooth"),
   setup_data = function(data, params) {
     purrr::map_dfr(
@@ -237,14 +259,21 @@ StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
           flow_data <- data |>
             dplyr::mutate(group = 1) |>
             dplyr::group_by(n_x, node, n_next_x, next_node) |>
-            dplyr::summarise(flow_freq = sum(value, na.rm = TRUE), .groups = "keep") |>
+            dplyr::summarise(
+              flow_freq = sum(value, na.rm = TRUE),
+              .groups = "keep"
+            ) |>
             dplyr::ungroup()
 
           data <- data |>
             dplyr::mutate(group = 1) |>
             dplyr::select(-n_next_x, -next_node, -next_x) |>
             dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) |>
-            dplyr::summarise(freq = sum(value, na.rm = TRUE), , .groups = "keep") |>
+            dplyr::summarise(
+              freq = sum(value, na.rm = TRUE),
+              ,
+              .groups = "keep"
+            ) |>
             dplyr::ungroup()
         }
 
@@ -286,22 +315,29 @@ StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
         df <- data |>
           dplyr::left_join(flow_data, by = c("n_x", "node"))
 
-
         flows <- df |>
           dplyr::left_join(
             df |>
               dplyr::select(
-                n_x, node,
-                ymin_end = ymin, ymax_end = ymax,
-                xmin_end = xmin, xmax_end = xmax
+                n_x,
+                node,
+                ymin_end = ymin,
+                ymax_end = ymax,
+                xmin_end = xmin,
+                xmax_end = xmax
               ) |>
               dplyr::distinct(),
             by = c("n_next_x" = "n_x", "next_node" = "node")
           ) |>
           tidyr::drop_na(
-            n_x, node, next_node,
-            n_next_x, ymax_end, ymin_end,
-            xmax_end, xmin_end
+            n_x,
+            node,
+            next_node,
+            n_next_x,
+            ymax_end,
+            ymin_end,
+            xmax_end,
+            xmin_end
           ) |>
           dplyr::mutate(r = dplyr::row_number()) |>
           dplyr::arrange(n_x, -r) |>
@@ -327,10 +363,20 @@ StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
 
         flows <- flows |>
           dplyr::select(
-            -n_x, -node, -freq, -ymax, -ymin,
-            -xmin, -n_next_x, -next_node, -flow_freq,
-            -ymin_end, -ymax_end, -xmax_end,
-            -cum_flow_freq, -cum_flow_freq_end
+            -n_x,
+            -node,
+            -freq,
+            -ymax,
+            -ymin,
+            -xmin,
+            -n_next_x,
+            -next_node,
+            -flow_freq,
+            -ymin_end,
+            -ymax_end,
+            -xmax_end,
+            -cum_flow_freq,
+            -cum_flow_freq_end
           ) |>
           dplyr::mutate(group = dplyr::row_number())
 
@@ -342,13 +388,17 @@ StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
   },
   compute_group = function(data, scales) {
     out1 <- sigmoid(
-      data$xmax, data$xmin_end,
-      data$flow_start_ymax, data$flow_end_ymax,
+      data$xmax,
+      data$xmin_end,
+      data$flow_start_ymax,
+      data$flow_end_ymax,
       smooth = data$smooth
     )
     out2 <- sigmoid(
-      data$xmin_end, data$xmax,
-      data$flow_end_ymin, data$flow_start_ymin,
+      data$xmin_end,
+      data$xmax,
+      data$flow_end_ymin,
+      data$flow_start_ymin,
       smooth = data$smooth
     )
     dplyr::bind_rows(out1, out2)
@@ -356,7 +406,9 @@ StatSankeyFlow <- ggplot2::ggproto("StatSankeyFlow", ggplot2::Stat,
 )
 
 # FLOW SANKEYBUMP LAYER ---------
-StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
+StatSankeyBumpFlow <- ggplot2::ggproto(
+  "StatSankeyBumpFlow",
+  ggplot2::Stat,
   extra_params = c("na.rm", "type", "space", "smooth"),
   setup_data = function(data, params) {
     purrr::map_dfr(
@@ -403,7 +455,8 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
             dplyr::mutate(group = 1) |>
             dplyr::group_by(n_x, node, n_next_x, next_node) |>
             dplyr::summarise(
-              flow_freq = sum(value, na.rm = TRUE), .groups = "keep"
+              flow_freq = sum(value, na.rm = TRUE),
+              .groups = "keep"
             ) |>
             dplyr::ungroup()
 
@@ -412,7 +465,8 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
             dplyr::select(-n_next_x, -next_node) |>
             dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) |>
             dplyr::summarise(
-              freq = sum(value, na.rm = TRUE), .groups = "keep"
+              freq = sum(value, na.rm = TRUE),
+              .groups = "keep"
             ) |>
             dplyr::ungroup()
         }
@@ -455,18 +509,26 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
           dplyr::left_join(
             df |>
               dplyr::select(
-                n_x, node,
-                ymin_end = ymin, ymax_end = ymax,
-                xmin_end = xmin, xmax_end = xmax,
+                n_x,
+                node,
+                ymin_end = ymin,
+                ymax_end = ymax,
+                xmin_end = xmin,
+                xmax_end = xmax,
                 flow_freq_end = flow_freq
               ) |>
               dplyr::distinct(),
             by = c("n_next_x" = "n_x", "next_node" = "node")
           ) |>
           tidyr::drop_na(
-            n_x, node, next_node,
-            n_next_x, ymax_end, ymin_end,
-            xmax_end, xmin_end
+            n_x,
+            node,
+            next_node,
+            n_next_x,
+            ymax_end,
+            ymin_end,
+            xmax_end,
+            xmin_end
           ) |>
           dplyr::mutate(r = dplyr::row_number()) |>
           dplyr::arrange(n_x, -r) |>
@@ -483,7 +545,9 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
         flows <- flows |>
           dplyr::arrange(n_x, n_next_x, next_node) |>
           dplyr::group_by(n_next_x, next_node) |>
-          dplyr::mutate(cum_flow_freq_end = cumsum(flow_freq_end) - flow_freq_end) |>
+          dplyr::mutate(
+            cum_flow_freq_end = cumsum(flow_freq_end) - flow_freq_end
+          ) |>
           dplyr::mutate(
             flow_end_ymax = ymax_end - cum_flow_freq_end,
             flow_end_ymin = flow_end_ymax - flow_freq_end
@@ -492,16 +556,28 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
 
         flows <- flows |>
           dplyr::select(
-            -n_x, -node, -freq, -ymax, -ymin,
-            -xmin, -n_next_x, -next_node,
-            -flow_freq, -ymin_end, -ymax_end, -xmax_end,
-            -cum_flow_freq, -cum_flow_freq_end
+            -n_x,
+            -node,
+            -freq,
+            -ymax,
+            -ymin,
+            -xmin,
+            -n_next_x,
+            -next_node,
+            -flow_freq,
+            -ymin_end,
+            -ymax_end,
+            -xmax_end,
+            -cum_flow_freq,
+            -cum_flow_freq_end
           ) |>
           dplyr::mutate(group = dplyr::row_number())
 
         flows |>
           rowwise() |>
-          dplyr::mutate(..groupqq = stringr::str_remove(nodes, as.character(x))) |>
+          dplyr::mutate(
+            ..groupqq = stringr::str_remove(nodes, as.character(x))
+          ) |>
           dplyr::ungroup() |>
           dplyr::group_by(..groupqq) |>
           dplyr::mutate(group = dplyr::cur_group_id()) |>
@@ -513,19 +589,33 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
     )
   },
   compute_group = function(data, scales) {
-    out1 <- purrr::map_dfr(1:nrow(data), ~ {
-      datat <- data |> dplyr::slice(.x)
-      sigmoid(datat$xmax, datat$xmin_end, datat$flow_start_ymax, datat$flow_end_ymax,
-        smooth = datat$smooth
-      )
-    }) |>
+    out1 <- purrr::map_dfr(
+      1:nrow(data),
+      ~ {
+        datat <- data |> dplyr::slice(.x)
+        sigmoid(
+          datat$xmax,
+          datat$xmin_end,
+          datat$flow_start_ymax,
+          datat$flow_end_ymax,
+          smooth = datat$smooth
+        )
+      }
+    ) |>
       dplyr::arrange(x)
-    out2 <- purrr::map_dfr(1:nrow(data), ~ {
-      datat <- data |> dplyr::slice(.x)
-      sigmoid(datat$xmin_end, datat$xmax, datat$flow_end_ymin, datat$flow_start_ymin,
-        smooth = datat$smooth
-      )
-    }) |>
+    out2 <- purrr::map_dfr(
+      1:nrow(data),
+      ~ {
+        datat <- data |> dplyr::slice(.x)
+        sigmoid(
+          datat$xmin_end,
+          datat$xmax,
+          datat$flow_end_ymin,
+          datat$flow_start_ymin,
+          smooth = datat$smooth
+        )
+      }
+    ) |>
       dplyr::arrange(-x)
 
     dplyr::bind_rows(out1, out2)
@@ -533,7 +623,9 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
 )
 
 # TEXT LAYER -------
-StatSankeyText <- ggplot2::ggproto("StatSankeyText", ggplot2::Stat,
+StatSankeyText <- ggplot2::ggproto(
+  "StatSankeyText",
+  ggplot2::Stat,
   extra_params = c("n_grid", "na.rm", "type", "width", "space"),
   setup_data = function(data, params) {
     purrr::map_dfr(
@@ -542,7 +634,11 @@ StatSankeyText <- ggplot2::ggproto("StatSankeyText", ggplot2::Stat,
         data <- data |> dplyr::filter(PANEL == .x)
 
         data <- data |>
-          dplyr::mutate(dplyr::across(c(x, next_x), ~ as.numeric(.), .names = ("n_{.col}")))
+          dplyr::mutate(dplyr::across(
+            c(x, next_x),
+            ~ as.numeric(.),
+            .names = ("n_{.col}")
+          ))
 
         if (!("value" %in% names(data))) {
           data <- data |>
@@ -556,7 +652,10 @@ StatSankeyText <- ggplot2::ggproto("StatSankeyText", ggplot2::Stat,
             dplyr::mutate(group = 1) |>
             dplyr::select(-n_next_x, -next_node) |>
             dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) |>
-            dplyr::summarise(freq = sum(value, na.rm = TRUE), .groups = "keep") |>
+            dplyr::summarise(
+              freq = sum(value, na.rm = TRUE),
+              .groups = "keep"
+            ) |>
             dplyr::ungroup()
         }
 
@@ -601,7 +700,6 @@ StatSankeyText <- ggplot2::ggproto("StatSankeyText", ggplot2::Stat,
             dplyr::mutate(dplyr::across(dplyr::contains("y"), ~ . + shift))
         }
 
-
         return(as.data.frame(data))
       }
     )
@@ -612,7 +710,9 @@ StatSankeyText <- ggplot2::ggproto("StatSankeyText", ggplot2::Stat,
 )
 
 # NODE LAYER -------
-StatSankeyNode <- ggplot2::ggproto("StatSankeyNode", ggplot2::Stat,
+StatSankeyNode <- ggplot2::ggproto(
+  "StatSankeyNode",
+  ggplot2::Stat,
   extra_params = c("n_grid", "na.rm", "type", "width", "space", "smooth"),
   setup_data = function(data, params) {
     purrr::map_dfr(
@@ -620,7 +720,11 @@ StatSankeyNode <- ggplot2::ggproto("StatSankeyNode", ggplot2::Stat,
       ~ {
         data <- data |> dplyr::filter(PANEL == .x)
         data <- data |>
-          dplyr::mutate(dplyr::across(c(x, next_x), ~ as.numeric(.), .names = ("n_{.col}")))
+          dplyr::mutate(dplyr::across(
+            c(x, next_x),
+            ~ as.numeric(.),
+            .names = ("n_{.col}")
+          ))
 
         if (!("value" %in% names(data))) {
           data <- data |>
@@ -634,7 +738,10 @@ StatSankeyNode <- ggplot2::ggproto("StatSankeyNode", ggplot2::Stat,
             dplyr::mutate(group = 1) |>
             dplyr::select(-n_next_x, -next_node, -next_x) |>
             dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) |>
-            dplyr::summarise(freq = sum(value, na.rm = TRUE), .groups = "keep") |>
+            dplyr::summarise(
+              freq = sum(value, na.rm = TRUE),
+              .groups = "keep"
+            ) |>
             dplyr::ungroup()
         }
 
