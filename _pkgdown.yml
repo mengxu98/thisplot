@@ -81,6 +81,7 @@ reference:
   - as_grob
   - as_gtable
   - build_patchwork
+  - compute_velocity_on_grid
   - extractgrobs
   - get_legend
   - get_vars
