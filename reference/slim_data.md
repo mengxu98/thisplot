@@ -44,7 +44,7 @@ colnames(p$data)
 #> [11] "carb"
 
 p_slim <- slim_data(p)
-#> ℹ [2026-03-28 15:27:38] Vars_used: "mpg", "cyl", and "wt"
+#> ℹ [2026-04-01 14:13:13] Vars_used: "mpg", "cyl", and "wt"
 #> ℹ                       vars_notused: "disp", "hp", "drat", "qsec", "vs", "am", "gear", and "carb"
 object.size(p_slim)
 #> 364944 bytes

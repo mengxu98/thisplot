@@ -84,6 +84,8 @@
   : Convert a plot object to a gtable
 - [`build_patchwork()`](https://mengxu98.github.io/thisplot/reference/build_patchwork.md)
   : Build a patchwork gtable
+- [`compute_velocity_on_grid()`](https://mengxu98.github.io/thisplot/reference/compute_velocity_on_grid.md)
+  : Compute velocity on grid
 - [`extractgrobs()`](https://mengxu98.github.io/thisplot/reference/extractgrobs.md)
   : Extract grobs from a list
 - [`get_legend()`](https://mengxu98.github.io/thisplot/reference/get_legend.md)
