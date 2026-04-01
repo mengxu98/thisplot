@@ -58,20 +58,28 @@
 #' )
 #'
 #' names(velocity_grid)
+#' dim(velocity_grid$x_grid)
+#' dim(velocity_grid$v_grid)
 #' head(velocity_grid$x_grid)
 #' head(velocity_grid$v_grid)
 #'
+#' grid_df <- expand.grid(
+#'   x = velocity_grid$x_grid[1, ],
+#'   y = velocity_grid$x_grid[2, ]
+#' )
+#'
 #' plot_df <- data.frame(
-#'   x = velocity_grid$x_grid[, 1],
-#'   y = velocity_grid$x_grid[, 2],
-#'   xend = velocity_grid$x_grid[, 1] + velocity_grid$v_grid[, 1] * 0.2,
-#'   yend = velocity_grid$x_grid[, 2] + velocity_grid$v_grid[, 2] * 0.2
+#'   x = grid_df$x,
+#'   y = grid_df$y,
+#'   xend = grid_df$x + c(velocity_grid$v_grid[1, , ]) * 0.2,
+#'   yend = grid_df$y + c(velocity_grid$v_grid[2, , ]) * 0.2
 #' )
 #'
 #' ggplot2::ggplot(plot_df) +
 #'   ggplot2::geom_segment(
 #'     ggplot2::aes(x = x, y = y, xend = xend, yend = yend),
-#'     arrow = grid::arrow(length = grid::unit(0.12, "inches"))
+#'     arrow = grid::arrow(length = grid::unit(0.12, "inches")),
+#'     na.rm = TRUE
 #'   ) +
 #'   ggplot2::coord_equal()
 compute_velocity_on_grid <- function(
