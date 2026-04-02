@@ -1,5 +1,26 @@
 # Changelog
 
+## thisplot 0.3.7
+
+- **feat**:
+  - [`GraphPlot()`](https://mengxu98.github.io/thisplot/reference/GraphPlot.md):
+    New function for graph visualization with node/edge layers, optional
+    transition arrows, highlighting, labels, palettes, and theme
+    customization.
+  - [`compute_velocity_on_grid()`](https://mengxu98.github.io/thisplot/reference/compute_velocity_on_grid.md):
+    New function to compute smoothed velocity vectors on an embedding
+    grid, with optional adjustment for stream-style visualization.
+  - [`palette_colors()`](https://mengxu98.github.io/thisplot/reference/palette_colors.md):
+    Changed the default `palette` from `"Paired"` to `"Chinese"`.
+- **docs**:
+  - Heatmap helpers:
+    - Refined documentation for
+      [`annotation_block_fill_graphics()`](https://mengxu98.github.io/thisplot/reference/annotation_block_fill_graphics.md)
+      and
+      [`build_heatmap_annotation()`](https://mengxu98.github.io/thisplot/reference/build_heatmap_annotation.md).
+- **deps**:
+  - Added `ggnewscale` and `reshape2` to `Imports`.
+
 ## thisplot 0.3.6
 
 CRAN release: 2026-03-07

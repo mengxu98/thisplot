@@ -108,6 +108,10 @@ velocity_grid <- compute_velocity_on_grid(
 
 names(velocity_grid)
 #> [1] "x_grid" "v_grid"
+dim(velocity_grid$x_grid)
+#> [1] 2 5
+dim(velocity_grid$v_grid)
+#> [1] 2 5 5
 head(velocity_grid$x_grid)
 #>      [,1] [,2] [,3] [,4] [,5]
 #> [1,]    0 0.25  0.5 0.75    1
@@ -144,19 +148,23 @@ head(velocity_grid$v_grid)
 #> [2,]    0 4.860706e-08 0.001070642 4.319277e-01 1.000000e+00
 #> 
 
-plot_df <- data.frame(
-  x = velocity_grid$x_grid[, 1],
-  y = velocity_grid$x_grid[, 2],
-  xend = velocity_grid$x_grid[, 1] + velocity_grid$v_grid[, 1] * 0.2,
-  yend = velocity_grid$x_grid[, 2] + velocity_grid$v_grid[, 2] * 0.2
+grid_df <- expand.grid(
+  x = velocity_grid$x_grid[1, ],
+  y = velocity_grid$x_grid[2, ]
 )
-#> Error in velocity_grid$v_grid[, 1]: incorrect number of dimensions
+
+plot_df <- data.frame(
+  x = grid_df$x,
+  y = grid_df$y,
+  xend = grid_df$x + c(velocity_grid$v_grid[1, , ]) * 0.2,
+  yend = grid_df$y + c(velocity_grid$v_grid[2, , ]) * 0.2
+)
 
 ggplot2::ggplot(plot_df) +
   ggplot2::geom_segment(
     ggplot2::aes(x = x, y = y, xend = xend, yend = yend),
-    arrow = grid::arrow(length = grid::unit(0.12, "inches"))
+    arrow = grid::arrow(length = grid::unit(0.12, "inches")),
+    na.rm = TRUE
   ) +
   ggplot2::coord_equal()
-#> Error: object 'plot_df' not found
 ```
