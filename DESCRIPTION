@@ -8,7 +8,7 @@ Authors@R:
 Maintainer: Meng Xu <mengxu98@qq.com>
 Description: Provides utility functions for plotting. Includes functions for color manipulation, plot customization, panel size control, data optimization for plots, and layout adjustments.
 License: MIT+ file LICENSE
-URL: https://mengxu98.github.io/thisplot/, https://github.com/mengxu98/thisplot
+URL: https://mengxu98.github.io/thisplot/
 BugReports: https://github.com/mengxu98/thisplot/issues
 Depends:
     R (>= 4.1.0)
