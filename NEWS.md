@@ -1,4 +1,16 @@
-# thisplot
+# thisplot 0.3.7
+
+* **feat**:
+  * `GraphPlot()`: New function for graph visualization with node/edge layers, optional transition arrows, highlighting, labels, palettes, and theme customization.
+  * `compute_velocity_on_grid()`: New function to compute smoothed velocity vectors on an embedding grid, with optional adjustment for stream-style visualization.
+  * `palette_colors()`: Changed the default `palette` from `"Paired"` to `"Chinese"`.
+
+* **docs**:
+  * Heatmap helpers:
+    * Refined documentation for `annotation_block_fill_graphics()` and `build_heatmap_annotation()`.
+
+* **deps**:
+  * Added `ggnewscale` and `reshape2` to `Imports`.
 
 # thisplot 0.3.6
 
