@@ -65,6 +65,11 @@
 #' Default is `"theme_this"`.
 #' @param theme_args Additional arguments to pass to the theme function.
 #' Default is `list()`.
+#' @param grid_major Whether to show major panel grid lines.
+#' Default is `TRUE`.
+#' @param grid_major_colour Color of major panel grid lines.
+#' @param grid_major_linetype Linetype of major panel grid lines.
+#' @param grid_major_linewidth Line width of major panel grid lines.
 #' @param combine Whether to combine multiple plots into one.
 #' Default is `TRUE`.
 #' @param nrow Number of rows when combining plots.
@@ -198,6 +203,10 @@ StatPlot <- function(
   legend.direction = "vertical",
   theme_use = "theme_this",
   theme_args = list(),
+  grid_major = TRUE,
+  grid_major_colour = "grey80",
+  grid_major_linetype = 2,
+  grid_major_linewidth = 0.3,
   combine = TRUE,
   nrow = NULL,
   ncol = NULL,
@@ -210,6 +219,16 @@ StatPlot <- function(
   stat_type <- match.arg(stat_type)
   plot_type <- match.arg(plot_type)
   position <- match.arg(position)
+
+  grid_major_element <- if (isTRUE(grid_major)) {
+    element_line(
+      colour = grid_major_colour,
+      linetype = grid_major_linetype,
+      linewidth = grid_major_linewidth
+    )
+  } else {
+    element_blank()
+  }
 
   if (nrow(meta.data) == 0) {
     log_message(
@@ -871,7 +890,7 @@ StatPlot <- function(
             ) {
               element_blank()
             } else {
-              element_line(colour = "grey80", linetype = 2)
+              grid_major_element
             }
           ) +
           guides(
@@ -1074,7 +1093,7 @@ StatPlot <- function(
           ) +
           theme_this(
             aspect.ratio = 0.6,
-            panel.grid.major = element_line(colour = "grey80", linetype = 2)
+            panel.grid.major = grid_major_element
           ) +
           ggupset::theme_combmatrix(
             combmatrix.label.text = element_text(size = 12, color = "black"),
