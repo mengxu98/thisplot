@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,26 +71,26 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> num  name       name_ch  rgb           hex      category  category_ch   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #1C1C1C;">1    ganglan    钢蓝     (15, 20, 35)  #0F1423  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #1C1C1C;">2    yanhanlan  燕颔蓝   (19, 24, 36)  #131824  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">3    anlan      暗蓝     (16, 31, 48)  #101F30  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">4    gangqing   钢青     (20, 35, 52)  #142334  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">5    qilin      骐驎     (18, 38, 79)  #12264F  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">6    gelan      鸽蓝     (28, 41, 56)  #1C2938  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> num  name        name_ch  rgb              hex      category  category_ch   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">1    shuilan     水蓝     (210, 240, 244)  #D2F0F4  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">2    haitianlan  海天蓝   (198, 230, 232)  #C6E6E8  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7D7FF;">3    hushuilan   湖水蓝   (176, 213, 223)  #B0D5DF  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7FF;">4    yunmen      云门     (162, 210, 226)  #A2D2E2  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7FF;">5    piaose      缥色     (133, 192, 219)  #85C0DB  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7D7;">6    qiubolan    秋波蓝   (138, 188, 209)  #8ABCD1  blue      蓝           </span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="get_colors.html">get_colors</a></span><span class="op">(</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> num  name        name_ch  rgb           hex      category  category_ch   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #1C1C1C;">1    ganglan     钢蓝     (15, 20, 35)  #0F1423  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #1C1C1C;">2    yanhanlan   燕颔蓝   (19, 24, 36)  #131824  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">3    anlan       暗蓝     (16, 31, 48)  #101F30  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">4    gangqing    钢青     (20, 35, 52)  #142334  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">5    qilin       骐驎     (18, 38, 79)  #12264F  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">6    gelan       鸽蓝     (28, 41, 56)  #1C2938  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #005F5F;">7    shenhuilan  深灰蓝   (19, 44, 51)  #132C33  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00005F;">8    huaqing     花青     (26, 40, 71)  #1A2847  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #005F87;">9    dishiqing   帝释青   (0, 52, 96)   #003460  blue      蓝           </span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #005F87;">10   futouqing   佛头青   (25, 50, 95)  #19325F  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> num  name           name_ch   rgb              hex      category  category_ch   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">1    shuilan        水蓝      (210, 240, 244)  #D2F0F4  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFFF;">2    haitianlan     海天蓝    (198, 230, 232)  #C6E6E8  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7D7FF;">3    hushuilan      湖水蓝    (176, 213, 223)  #B0D5DF  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7FF;">4    yunmen         云门      (162, 210, 226)  #A2D2E2  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7FF;">5    piaose         缥色      (133, 192, 219)  #85C0DB  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7D7;">6    qiubolan       秋波蓝    (138, 188, 209)  #8ABCD1  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7D7;">7    qingshanlan    晴山蓝    (143, 178, 201)  #8FB2C9  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7D7;">8    xinglan        星蓝      (147, 181, 207)  #93B5CF  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7D7;">9    pinyue         品月      (138, 171, 204)  #8AABCC  blue      蓝           </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFAFD7;">10   dongfangjibai  东方既白  (139, 163, 199)  #8BA3C7  blue      蓝           </span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

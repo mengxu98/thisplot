@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.7</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.8</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,40 @@
       <small>Source: <a href="https://github.com/mengxu98/thisplot/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.8" id="thisplot-038">thisplot 0.3.8<a class="anchor" aria-label="anchor" href="#thisplot-038"></a></h2>
+<ul><li>
+<strong>feat</strong>:
+<ul><li>Add migration helpers:
+<ul><li>
+<code><a href="../reference/to_percent.html">to_percent()</a></code>: convert values to percentages after unit-sum normalization.</li>
+<li>
+<code><a href="../reference/annotate_quadrants.html">annotate_quadrants()</a></code>: add quadrant guide lines and percentage labels to scatter plots.</li>
+<li>
+<code><a href="../reference/clip_symmetric_range.html">clip_symmetric_range()</a></code>: clip values to symmetric lower and upper limits.</li>
+<li>
+<code><a href="../reference/jitter_highlighted_points.html">jitter_highlighted_points()</a></code>: deterministically jitter highlighted points for stable plotting output.</li>
+</ul></li>
+<li>
+<code><a href="../reference/visual_colors.html">visual_colors()</a></code>: add adaptive label layout via <code>label_mode</code>, with tighter HTML rendering for Chinese, pinyin, RGB, and hex labels.</li>
+<li>
+<code>ChineseColors$visual_colors()</code>: pass <code>name_type</code> through to the layout mode so different label types use matching display rules.</li>
+<li>
+<code><a href="../reference/get_chinese_palettes.html">get_chinese_palettes()</a></code>: use <code>color_sets$Chinese</code> as the default Chinese palette and add a fallback palette definition when the dataset metadata is incomplete.</li>
+</ul></li>
+<li>
+<strong>docs</strong>:
+<ul><li>Add runnable examples for the migration helper functions.</li>
+<li>Add documentation entries for <code><a href="../reference/annotate_quadrants.html">annotate_quadrants()</a></code>, <code><a href="../reference/clip_symmetric_range.html">clip_symmetric_range()</a></code>, <code><a href="../reference/jitter_highlighted_points.html">jitter_highlighted_points()</a></code>, and <code><a href="../reference/to_percent.html">to_percent()</a></code>.</li>
+<li>Expand Chinese color examples to show the default <code>color_sets$Chinese</code> palette.</li>
+<li>Update <code><a href="../reference/visual_colors.html">visual_colors()</a></code> documentation for the new adaptive label layout mode.</li>
+</ul></li>
+<li>
+<strong>data</strong>:
+<ul><li>Refresh the Chinese color palette metadata and dataset defaults used by <code><a href="../reference/ChineseColors.html">ChineseColors()</a></code>.</li>
+<li>Improve Chinese color ordering and default palette selection used for generated palette sets.</li>
+</ul></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.7" id="thisplot-037">thisplot 0.3.7<a class="anchor" aria-label="anchor" href="#thisplot-037"></a></h2><p class="text-muted">CRAN release: 2026-04-02</p>
 <ul><li>

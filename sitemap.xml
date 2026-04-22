@@ -14,6 +14,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/add_grob.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/adjcolors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/adjustlayout.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/annotate_quadrants.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/annotation_block_fill_graphics.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/annotation_block_graphics.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/annotation_graphics.html</loc></url>
@@ -23,6 +24,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/build_heatmap_annotation.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/build_patchwork.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/chinese_colors.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/clip_symmetric_range.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/cluster_within_group2.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/col2hex.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/compute_velocity_on_grid.html</loc></url>
@@ -42,9 +44,11 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/heatmap_fixsize.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/heatmap_rendersize.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/index.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/jitter_highlighted_points.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/make_long.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/mestimate.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/normalize_drawable.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/normalize_to_sum.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/palette_colors.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/palette_list.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/panel_fix.html</loc></url>
@@ -62,6 +66,7 @@
 <url><loc>https://mengxu98.github.io/thisplot/reference/theme_this.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/thisplot-package.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/thisplot_logo.html</loc></url>
+<url><loc>https://mengxu98.github.io/thisplot/reference/to_percent.html</loc></url>
 <url><loc>https://mengxu98.github.io/thisplot/reference/visual_colors.html</loc></url>
 </urlset>
 
