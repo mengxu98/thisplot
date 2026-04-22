@@ -154,7 +154,8 @@ ChineseColors <- function() {
         colors = color_col,
         names = display_name,
         num_per_row = num_per_row,
-        title = title
+        title = title,
+        label_mode = name_type
       )
     )
   }
