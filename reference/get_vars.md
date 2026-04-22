@@ -37,11 +37,11 @@ p <- ggplot(
 ) +
   geom_point()
 get_vars(p)
-#> ℹ [2026-04-02 02:41:10] Vars_used: "mpg", "cyl", and "wt"
+#> ℹ [2026-04-22 06:33:31] Vars_used: "mpg", "cyl", and "wt"
 #> ℹ                       vars_notused: "disp", "hp", "drat", "qsec", "vs", "am", "gear", and "carb"
 #> [1] "mpg" "cyl" "wt" 
 get_vars(p, reverse = TRUE)
-#> ℹ [2026-04-02 02:41:10] Vars_used: "mpg", "cyl", and "wt"
+#> ℹ [2026-04-22 06:33:31] Vars_used: "mpg", "cyl", and "wt"
 #> ℹ                       vars_notused: "disp", "hp", "drat", "qsec", "vs", "am", "gear", and "carb"
 #> [1] "disp" "hp"   "drat" "qsec" "vs"   "am"   "gear" "carb"
 ```

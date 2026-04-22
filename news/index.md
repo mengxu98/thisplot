@@ -2,6 +2,8 @@
 
 ## thisplot 0.3.7
 
+CRAN release: 2026-04-02
+
 - **feat**:
   - [`GraphPlot()`](https://mengxu98.github.io/thisplot/reference/GraphPlot.md):
     New function for graph visualization with node/edge layers, optional
