@@ -17,3 +17,7 @@ assets/
 *.csv
 *.pyc
 README.html
+
+.codex
+config.toml
+.config.toml.lock

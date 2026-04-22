@@ -1,8 +1,8 @@
 Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
-Version: 0.3.7
-Date: 2026-04-01
+Version: 0.3.8
+Date: 2026-04-22
 Authors@R:
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054"))
 Maintainer: Meng Xu <mengxu98@qq.com>
@@ -44,6 +44,7 @@ Suggests:
     ragg,
     scales,
     stringr,
+    testthat (>= 3.0.0),
     tidyr
 Config/Needs/website: mengxu98/thistemplate
 Config/testthat/edition: 3
