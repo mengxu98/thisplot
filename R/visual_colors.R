@@ -198,9 +198,9 @@ visual_colors <- function(
         rotate = TRUE,
         white_space = "nowrap",
         font_weight = 500,
-        min_height = 48,
+        min_height = 56,
         max_height = 104,
-        width_factor = 0.62
+        width_factor = 0.72
       ),
       rgb = make_layout(
         font_size = 6.8,
@@ -209,9 +209,9 @@ visual_colors <- function(
         rotate = TRUE,
         white_space = "nowrap",
         font_weight = 500,
-        min_height = 54,
+        min_height = 60,
         max_height = 90,
-        width_factor = 0.52
+        width_factor = 0.62
       ),
       hex = make_layout(
         font_size = 7.2,
@@ -220,9 +220,9 @@ visual_colors <- function(
         rotate = TRUE,
         white_space = "nowrap",
         font_weight = 600,
-        min_height = 42,
+        min_height = 46,
         max_height = 70,
-        width_factor = 0.62
+        width_factor = 0.68
       ),
       make_layout(
         font_size = 6.8,
@@ -285,7 +285,12 @@ visual_colors <- function(
         paste0(
           base_style,
           "display:inline-block;",
-          "white-space:", label_layout$white_space, ";"
+          "white-space:", label_layout$white_space, ";",
+          if (isTRUE(label_layout$rotate)) {
+            "transform:rotate(-90deg);transform-origin:center center;"
+          } else {
+            ""
+          }
         )
       )
     }
@@ -307,15 +312,9 @@ visual_colors <- function(
           "width:100%;",
           "height:100%;",
           "box-sizing:border-box;",
-          "padding:2px 0;"
+          "padding:2px 0;",
+          "overflow:visible;"
         )
-        if (isTRUE(label_layout$rotate)) {
-          container_style <- paste0(
-            container_style,
-            "transform:rotate(-90deg);",
-            "transform-origin:center center;"
-          )
-        }
 
         htmltools::tags$td(
           style = paste0(
