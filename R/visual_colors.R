@@ -13,8 +13,8 @@
 #' @param title Optional title for the visualization.
 #' Default is `NULL`.
 #' @param label_mode Label layout mode. Default is `"auto"`, which detects
-#' the label type from `names`. Use `"chinese"`, `"pinyin"`, `"rgb"`, or
-#' `"hex"` to force a layout optimized for that label style.
+#' the label type from `names`. Use `"chinese"`, `"pinyin"`, `"rgb"`,
+#' or `"hex"` to force a layout optimized for that label style.
 #'
 #' @return
 #' An HTML widget.

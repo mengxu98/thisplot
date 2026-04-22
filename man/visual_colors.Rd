@@ -26,8 +26,8 @@ Default is \code{30}.}
 Default is \code{NULL}.}
 
 \item{label_mode}{Label layout mode. Default is \code{"auto"}, which detects
-the label type from \code{names}. Use \code{"chinese"}, \code{"pinyin"},
-\code{"rgb"}, or \code{"hex"} to force a layout optimized for that label style.}
+the label type from \code{names}. Use \code{"chinese"}, \code{"pinyin"}, \code{"rgb"},
+or \code{"hex"} to force a layout optimized for that label style.}
 }
 \value{
 An HTML widget.
