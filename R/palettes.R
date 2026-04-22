@@ -409,7 +409,23 @@ get_chinese_palettes <- function(
   }
 
   color_sets <- attr(thisplot::chinese_colors, "color_sets", exact = TRUE)
-  chinese_default <- color_sets$ChineseSet8
+  chinese_default <- color_sets[["Chinese"]]
+  if (is.null(chinese_default) || length(chinese_default) == 0) {
+    fallback_names <- c(
+      "hushuilan", "qunqing", "jialingshuilv", "baoshilv",
+      "yangfei", "he", "zhizi", "qianlaohuang",
+      "chengse", "feise", "xueqing", "biandouzi"
+    )
+    fallback_idx <- match(fallback_names, thisplot::chinese_colors$name)
+    if (anyNA(fallback_idx)) {
+      missing_names <- fallback_names[is.na(fallback_idx)]
+      log_message(
+        "Missing default Chinese color definitions for {.val {missing_names}}",
+        message_type = "error"
+      )
+    }
+    chinese_default <- thisplot::chinese_colors$hex[fallback_idx]
+  }
   for (set_name in names(color_sets)) {
     palettes[[set_name]] <- color_sets[[set_name]]
   }

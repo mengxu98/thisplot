@@ -32,6 +32,21 @@ BASE_CHINESE_COLORS = [
     "#8076A3",  # 藤萝紫  紫 - elegant purple (low saturation but acceptable)
 ]
 
+DEFAULT_CHINESE_COLORS = [
+    "#B0D5DF",  # 湖水蓝 - light blue
+    "#1772B4",  # 群青 - deep blue
+    "#ADD5A2",  # 嘉陵水绿 - light green
+    "#41AE3C",  # 宝石绿 - deep green
+    "#F091A0",  # 杨妃 - light red
+    "#C91F37",  # 赫 - deep red
+    "#FEDA5A",  # 栀子 - light yellow
+    "#F9BD10",  # 浅烙黄 - deep yellow
+    "#FA8C35",  # 橙色 - light orange
+    "#ED5736",  # 妃色 - deep orange
+    "#B0A4E3",  # 雪青 - light purple
+    "#A35C8F",  # 扁豆紫 - deep purple
+]
+
 
 def chinese_to_pinyin(chinese_text):
     """Convert Chinese text to pinyin without tones."""
@@ -613,18 +628,138 @@ def interpolate_colors_from_set8(base_set8, all_colors, target_size):
     return ordered_colors[:target_size]
 
 
+def _category_hue_center(category_name):
+    centers = {
+        "red": 340.0,
+        "orange": 74.0,
+        "yellow": 94.0,
+        "green": 138.0,
+        "cyan": 188.0,
+        "blue": 215.0,
+        "purple": 285.0,
+        "gray_brown": 35.0,
+    }
+    return centers.get(category_name, 0.0)
+
+
+def _circular_hue_distance(angle1, angle2):
+    distance = abs(angle1 - angle2) % 360.0
+    return min(distance, 360.0 - distance)
+
+
+def _category_sort_config(category_name):
+    default = {
+        "start_chroma_weight": 0.30,
+        "start_hue_weight": 0.45,
+        "hue_weight": 0.18,
+        "lightness_weight": 0.12,
+        "chroma_weight": 0.06,
+    }
+    configs = {
+        "blue": {
+            "start_chroma_weight": 0.18,
+            "start_hue_weight": 0.80,
+            "hue_weight": 0.22,
+            "lightness_weight": 0.14,
+            "chroma_weight": 0.06,
+        },
+        "cyan": {
+            "start_chroma_weight": 0.22,
+            "start_hue_weight": 0.70,
+            "hue_weight": 0.20,
+            "lightness_weight": 0.13,
+            "chroma_weight": 0.06,
+        },
+        "green": {
+            "start_chroma_weight": 0.26,
+            "start_hue_weight": 0.55,
+            "hue_weight": 0.18,
+            "lightness_weight": 0.12,
+            "chroma_weight": 0.06,
+        },
+        "yellow": {
+            "start_chroma_weight": 0.42,
+            "start_hue_weight": 0.30,
+            "hue_weight": 0.12,
+            "lightness_weight": 0.10,
+            "chroma_weight": 0.05,
+        },
+        "orange": {
+            "start_chroma_weight": 0.38,
+            "start_hue_weight": 0.28,
+            "hue_weight": 0.14,
+            "lightness_weight": 0.10,
+            "chroma_weight": 0.05,
+        },
+        "red": {
+            "start_chroma_weight": 0.34,
+            "start_hue_weight": 0.40,
+            "hue_weight": 0.16,
+            "lightness_weight": 0.11,
+            "chroma_weight": 0.05,
+        },
+        "purple": {
+            "start_chroma_weight": 0.24,
+            "start_hue_weight": 0.55,
+            "hue_weight": 0.18,
+            "lightness_weight": 0.12,
+            "chroma_weight": 0.06,
+        },
+        "gray_brown": {
+            "start_chroma_weight": 0.08,
+            "start_hue_weight": 0.25,
+            "hue_weight": 0.08,
+            "lightness_weight": 0.14,
+            "chroma_weight": 0.10,
+        },
+    }
+    return configs.get(category_name, default)
+
+
+def _transition_cost(item1, item2, category_name):
+    cfg = _category_sort_config(category_name)
+    lab1 = item1[1]
+    lab2 = item2[1]
+    delta_e = math.sqrt(
+        (lab2[0] - lab1[0]) ** 2
+        + (lab2[1] - lab1[1]) ** 2
+        + (lab2[2] - lab1[2]) ** 2
+    )
+    lightness_gap = abs(lab2[0] - lab1[0])
+    chroma_gap = abs(item2[2] - item1[2])
+    hue_gap = _circular_hue_distance(item1[3], item2[3])
+    return (
+        delta_e
+        + cfg["hue_weight"] * hue_gap
+        + cfg["lightness_weight"] * lightness_gap
+        + cfg["chroma_weight"] * chroma_gap
+    )
+
+
+def _adjacent_path_cost(items, category_name):
+    if len(items) <= 1:
+        return 0.0
+
+    return sum(
+        _transition_cost(items[i], items[i + 1], category_name)
+        for i in range(len(items) - 1)
+    )
+
+
 def sort_colors_by_lab_improved(rows, category_name):
     """
-    Improved color sorting using multiple LAB dimensions.
-    Sorts by:
-    1. Lightness (L*) - primary sort
-    2. Chroma (saturation) - secondary sort for similar lightness
-    3. Hue angle (atan2(b, a)) - tertiary sort for similar lightness and chroma
-    This ensures visually smooth transitions while keeping bright colors together.
+    Sort colors for smoother visual continuity inside each category.
+
+    Strategy:
+    1. Pick a clean category anchor instead of starting from a muddy extreme.
+    2. Build a greedy path in LAB space with small hue/lightness penalties.
+    3. Apply a local swap optimization to reduce remaining adjacent jumps.
     """
     if len(rows) <= 1:
         return rows
 
+    cfg = _category_sort_config(category_name)
+    center = _category_hue_center(category_name)
     lab_data = []
     for idx, row in enumerate(rows):
         hex_color = row["hex"]
@@ -640,11 +775,46 @@ def sort_colors_by_lab_improved(rows, category_name):
         if hue_angle < 0:
             hue_angle += 360
 
-        lab_data.append((idx, lab, chroma, hue_angle, row))
+        anchor_score = (
+            L
+            + cfg["start_chroma_weight"] * chroma
+            - cfg["start_hue_weight"] * _circular_hue_distance(hue_angle, center)
+        )
 
-    lab_data.sort(key=lambda x: (x[1][0], -x[2], x[3]))
+        lab_data.append((idx, lab, chroma, hue_angle, anchor_score, row))
 
-    return [item[4] for item in lab_data]
+    start_idx = max(range(len(lab_data)), key=lambda i: lab_data[i][4])
+    ordered = [lab_data[start_idx]]
+    remaining = lab_data[:start_idx] + lab_data[start_idx + 1 :]
+
+    while remaining:
+        last_item = ordered[-1]
+        best_next_idx = min(
+            range(len(remaining)),
+            key=lambda i: _transition_cost(last_item, remaining[i], category_name),
+        )
+        ordered.append(remaining.pop(best_next_idx))
+
+    for _ in range(4):
+        improved = False
+        for i in range(len(ordered) - 1):
+            current = ordered[:]
+            swapped = ordered[:]
+            swapped[i], swapped[i + 1] = swapped[i + 1], swapped[i]
+
+            left = max(0, i - 2)
+            right = min(len(ordered), i + 4)
+            current_cost = _adjacent_path_cost(current[left:right], category_name)
+            swapped_cost = _adjacent_path_cost(swapped[left:right], category_name)
+
+            if swapped_cost + 1e-6 < current_cost:
+                ordered = swapped
+                improved = True
+
+        if not improved:
+            break
+
+    return [item[5] for item in ordered]
 
 
 def main(delete_csv=False, filter_colors=False):
@@ -1018,7 +1188,9 @@ def main(delete_csv=False, filter_colors=False):
 
     color_sets = {}
     color_sets["ChineseSet8"] = BASE_CHINESE_COLORS.copy()
+    color_sets["Chinese"] = DEFAULT_CHINESE_COLORS.copy()
     print(f"  ChineseSet8: {len(color_sets['ChineseSet8'])} colors (base colors)")
+    print(f"  Chinese: {len(color_sets['Chinese'])} colors (default palette)")
 
     print(f"    Base colors:")
     for hex_color in BASE_CHINESE_COLORS:

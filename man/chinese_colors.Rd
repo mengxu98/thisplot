@@ -21,6 +21,7 @@ data(chinese_colors)
 color_sets <- attr(chinese_colors, "color_sets")
 show_palettes(
   list(
+    color_sets$Chinese,
     color_sets$ChineseSet8,
     color_sets$ChineseSet16,
     color_sets$ChineseSet32
