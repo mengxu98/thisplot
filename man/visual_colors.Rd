@@ -4,7 +4,13 @@
 \alias{visual_colors}
 \title{Visualize colors in HTML widget}
 \usage{
-visual_colors(colors, names = NULL, num_per_row = 30, title = NULL)
+visual_colors(
+  colors,
+  names = NULL,
+  num_per_row = 30,
+  title = NULL,
+  label_mode = c("auto", "chinese", "pinyin", "rgb", "hex")
+)
 }
 \arguments{
 \item{colors}{A character vector of hex color codes.}
@@ -18,6 +24,10 @@ Default is \code{30}.}
 
 \item{title}{Optional title for the visualization.
 Default is \code{NULL}.}
+
+\item{label_mode}{Label layout mode. Default is \code{"auto"}, which detects
+the label type from \code{names}. Use \code{"chinese"}, \code{"pinyin"}, \code{"rgb"},
+or \code{"hex"} to force a layout optimized for that label style.}
 }
 \value{
 An HTML widget.

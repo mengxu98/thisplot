@@ -1,3 +1,25 @@
+# thisplot 0.3.8
+
+* **feat**:
+  * Add migration helpers:
+    * `to_percent()`: convert values to percentages after unit-sum normalization.
+    * `annotate_quadrants()`: add quadrant guide lines and percentage labels to scatter plots.
+    * `clip_symmetric_range()`: clip values to symmetric lower and upper limits.
+    * `jitter_highlighted_points()`: deterministically jitter highlighted points for stable plotting output.
+  * `visual_colors()`: add adaptive label layout via `label_mode`, with tighter HTML rendering for Chinese, pinyin, RGB, and hex labels.
+  * `ChineseColors$visual_colors()`: pass `name_type` through to the layout mode so different label types use matching display rules.
+  * `get_chinese_palettes()`: use `color_sets$Chinese` as the default Chinese palette and add a fallback palette definition when the dataset metadata is incomplete.
+
+* **docs**:
+  * Add runnable examples for the migration helper functions.
+  * Add documentation entries for `annotate_quadrants()`, `clip_symmetric_range()`, `jitter_highlighted_points()`, and `to_percent()`.
+  * Expand Chinese color examples to show the default `color_sets$Chinese` palette.
+  * Update `visual_colors()` documentation for the new adaptive label layout mode.
+
+* **data**:
+  * Refresh the Chinese color palette metadata and dataset defaults used by `ChineseColors()`.
+  * Improve Chinese color ordering and default palette selection used for generated palette sets.
+
 # thisplot 0.3.7
 
 * **feat**:

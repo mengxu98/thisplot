@@ -1,4 +1,5 @@
 destination: docs
+llm-docs: false
 
 toc:
   depth: 3
@@ -78,16 +79,20 @@ reference:
 - subtitle: "Plot manipulation"
 - contents:
   - add_grob
+  - annotate_quadrants
   - as_grob
   - as_gtable
   - build_patchwork
+  - clip_symmetric_range
   - compute_velocity_on_grid
   - extractgrobs
   - get_legend
   - get_vars
   - grid_draw
+  - jitter_highlighted_points
   - patchwork_grob
   - segements_df
+  - to_percent
 
 - subtitle: "Color functions"
 - contents:
