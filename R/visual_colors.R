@@ -192,48 +192,52 @@ visual_colors <- function(
         max_height = 50
       ),
       pinyin = make_layout(
-        font_size = if (label_units > 14) 6.6 else 7,
+        cell_width = 21,
+        font_size = 6.4,
         line_height = 1,
-        letter_spacing = "0.15px",
+        letter_spacing = "0px",
         rotate = TRUE,
         white_space = "nowrap",
         font_weight = 500,
-        min_height = 56,
-        max_height = 104,
-        width_factor = 0.72
+        min_height = 54,
+        max_height = 54,
+        width_factor = 0.48
       ),
       rgb = make_layout(
+        cell_width = 21,
+        font_size = 6.2,
+        line_height = 1,
+        letter_spacing = "0px",
+        rotate = TRUE,
+        white_space = "nowrap",
+        font_weight = 500,
+        min_height = 54,
+        max_height = 54,
+        width_factor = 0.48
+      ),
+      hex = make_layout(
+        cell_width = 21,
+        font_size = 6.8,
+        line_height = 1,
+        letter_spacing = "0px",
+        rotate = TRUE,
+        white_space = "nowrap",
+        font_weight = 600,
+        min_height = 50,
+        max_height = 50,
+        width_factor = 0.54
+      ),
+      make_layout(
+        cell_width = 21,
         font_size = 6.8,
         line_height = 1,
         letter_spacing = "0px",
         rotate = TRUE,
         white_space = "nowrap",
         font_weight = 500,
-        min_height = 60,
-        max_height = 90,
-        width_factor = 0.62
-      ),
-      hex = make_layout(
-        font_size = 7.2,
-        line_height = 1,
-        letter_spacing = "0.2px",
-        rotate = TRUE,
-        white_space = "nowrap",
-        font_weight = 600,
-        min_height = 46,
-        max_height = 70,
-        width_factor = 0.68
-      ),
-      make_layout(
-        font_size = 6.8,
-        line_height = 1,
-        letter_spacing = "0.1px",
-        rotate = TRUE,
-        white_space = "nowrap",
-        font_weight = 500,
-        min_height = 48,
-        max_height = 96,
-        width_factor = 0.58
+        min_height = 52,
+        max_height = 52,
+        width_factor = 0.5
       )
     )
   }
@@ -281,16 +285,27 @@ visual_colors <- function(
         )
       )
     } else {
+      if (isTRUE(label_layout$rotate)) {
+        return(
+          paste0(
+            base_style,
+            "display:block;",
+            "position:absolute;",
+            "top:50%;",
+            "left:50%;",
+            "white-space:", label_layout$white_space, ";",
+            "transform:translate(-50%,-50%) rotate(-90deg);",
+            "transform-origin:center center;"
+          )
+        )
+      }
       return(
         paste0(
           base_style,
-          "display:inline-block;",
-          "white-space:", label_layout$white_space, ";",
-          if (isTRUE(label_layout$rotate)) {
-            "transform:rotate(-90deg);transform-origin:center center;"
-          } else {
-            ""
-          }
+          "display:block;",
+          "text-align:center;",
+          "width:100%;",
+          "white-space:", label_layout$white_space, ";"
         )
       )
     }
@@ -305,16 +320,26 @@ visual_colors <- function(
         text_color <- text_color_for(colors[i])
         text_style <- get_text_style(display_names[i], text_color)
         text_content <- format_text_display(display_names[i])
-        container_style <- paste0(
-          "display:flex;",
-          "align-items:center;",
-          "justify-content:center;",
-          "width:100%;",
-          "height:100%;",
-          "box-sizing:border-box;",
-          "padding:2px 0;",
-          "overflow:visible;"
-        )
+        container_style <- if (isTRUE(label_layout$rotate)) {
+          paste0(
+            "width:100%;",
+            "height:100%;",
+            "position:relative;",
+            "box-sizing:border-box;",
+            "overflow:hidden;"
+          )
+        } else {
+          paste0(
+            "display:flex;",
+            "align-items:center;",
+            "justify-content:center;",
+            "width:100%;",
+            "height:100%;",
+            "box-sizing:border-box;",
+            "padding:2px 0;",
+            "overflow:hidden;"
+          )
+        }
 
         htmltools::tags$td(
           style = paste0(
