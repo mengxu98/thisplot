@@ -124,10 +124,16 @@ visual_colors <- function(
 
   get_label_layout <- function(mode, texts) {
     valid_texts <- texts[!is.na(texts)]
-    max_chars <- if (length(valid_texts) == 0) {
+    label_units <- if (length(valid_texts) == 0) {
       0
     } else {
-      max(nchar(valid_texts, type = "width"), na.rm = TRUE)
+      max(
+        nchar(
+          valid_texts,
+          type = if (identical(mode, "chinese")) "chars" else "width"
+        ),
+        na.rm = TRUE
+      )
     }
 
     make_layout <- function(
@@ -150,10 +156,10 @@ visual_colors <- function(
       }
 
       content_extent <- if (isTRUE(rotate)) {
-        max_chars * font_size * width_factor +
-          max(0, max_chars - 1) * letter_spacing_px
+        label_units * font_size * width_factor +
+          max(0, label_units - 1) * letter_spacing_px
       } else {
-        max_chars * font_size * line_height
+        label_units * font_size * line_height
       }
 
       cell_height <- ceiling(
@@ -175,17 +181,18 @@ visual_colors <- function(
     switch(
       mode,
       chinese = make_layout(
+        cell_width = 21,
         font_size = 8,
         line_height = 1.08,
-        letter_spacing = "0.1px",
+        letter_spacing = "0.2px",
         rotate = FALSE,
         white_space = "normal",
         font_weight = 500,
-        min_height = 40,
-        max_height = 72
+        min_height = 50,
+        max_height = 50
       ),
       pinyin = make_layout(
-        font_size = if (max_chars > 14) 6.6 else 7,
+        font_size = if (label_units > 14) 6.6 else 7,
         line_height = 1,
         letter_spacing = "0.15px",
         rotate = TRUE,

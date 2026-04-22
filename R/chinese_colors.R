@@ -36,6 +36,8 @@
 #'
 #' # Chinese names
 #' cc$visual_colors(
+#'   loc_range = c(1, 180),
+#'   num_per_row = 30,
 #'   title = "Chinese Traditional Colors",
 #'   name_type = "chinese"
 #' )
