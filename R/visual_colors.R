@@ -123,121 +123,57 @@ visual_colors <- function(
   }
 
   get_label_layout <- function(mode, texts) {
-    valid_texts <- texts[!is.na(texts)]
-    label_units <- if (length(valid_texts) == 0) {
-      0
-    } else {
-      max(
-        nchar(
-          valid_texts,
-          type = if (identical(mode, "chinese")) "chars" else "width"
-        ),
-        na.rm = TRUE
-      )
-    }
-
-    make_layout <- function(
-      cell_width = 24,
-      font_size,
-      line_height,
-      letter_spacing,
-      rotate,
-      white_space,
-      font_weight,
-      min_height,
-      max_height = Inf,
-      width_factor = 0.62
-    ) {
-      letter_spacing_px <- suppressWarnings(
-        as.numeric(sub("px$", "", letter_spacing))
-      )
-      if (is.na(letter_spacing_px)) {
-        letter_spacing_px <- 0
-      }
-
-      content_extent <- if (isTRUE(rotate)) {
-        label_units * font_size * width_factor +
-          max(0, label_units - 1) * letter_spacing_px
-      } else {
-        label_units * font_size * line_height
-      }
-
-      cell_height <- ceiling(
-        min(max_height, max(min_height, content_extent + 6))
-      )
-
-      list(
-        cell_width = cell_width,
-        cell_height = cell_height,
-        font_size = font_size,
-        line_height = line_height,
-        letter_spacing = letter_spacing,
-        rotate = rotate,
-        white_space = white_space,
-        font_weight = font_weight
-      )
-    }
-
     switch(
       mode,
-      chinese = make_layout(
+      chinese = list(
         cell_width = 21,
-        font_size = 8,
+        cell_height = 50,
+        font_size = 8.5,
         line_height = 1.08,
         letter_spacing = "0.2px",
         rotate = FALSE,
         white_space = "normal",
-        font_weight = 500,
-        min_height = 50,
-        max_height = 50
+        font_weight = 500
       ),
-      pinyin = make_layout(
+      pinyin = list(
         cell_width = 21,
-        font_size = 6.4,
+        cell_height = 50,
+        font_size = 9,
         line_height = 1,
         letter_spacing = "0px",
-        rotate = TRUE,
+        rotate = FALSE,
         white_space = "nowrap",
-        font_weight = 500,
-        min_height = 54,
-        max_height = 54,
-        width_factor = 0.48
+        font_weight = 500
       ),
-      rgb = make_layout(
+      rgb = list(
         cell_width = 21,
-        font_size = 6.2,
+        cell_height = 50,
+        font_size = 8.8,
         line_height = 1,
         letter_spacing = "0px",
-        rotate = TRUE,
+        rotate = FALSE,
         white_space = "nowrap",
-        font_weight = 500,
-        min_height = 54,
-        max_height = 54,
-        width_factor = 0.48
+        font_weight = 500
       ),
-      hex = make_layout(
+      hex = list(
         cell_width = 21,
-        font_size = 6.8,
+        cell_height = 50,
+        font_size = 9,
         line_height = 1,
         letter_spacing = "0px",
-        rotate = TRUE,
+        rotate = FALSE,
         white_space = "nowrap",
-        font_weight = 600,
-        min_height = 50,
-        max_height = 50,
-        width_factor = 0.54
+        font_weight = 600
       ),
-      make_layout(
+      list(
         cell_width = 21,
-        font_size = 6.8,
+        cell_height = 50,
+        font_size = 8.8,
         line_height = 1,
         letter_spacing = "0px",
-        rotate = TRUE,
+        rotate = FALSE,
         white_space = "nowrap",
-        font_weight = 500,
-        min_height = 52,
-        max_height = 52,
-        width_factor = 0.5
+        font_weight = 500
       )
     )
   }
@@ -253,14 +189,13 @@ visual_colors <- function(
 
   format_text_display <- function(text) {
     if (identical(layout_mode, "chinese") && is_chinese(text)) {
-      chars <- strsplit(text, "")[[1]]
+      chars <- strsplit(text, "", fixed = TRUE)[[1]]
       if (length(chars) == 1) {
         return(chars[1])
       }
-      html_str <- paste(chars, collapse = "<br>")
-      return(htmltools::HTML(html_str))
+      htmltools::HTML(paste(chars, collapse = "<br>"))
     } else {
-      return(text)
+      text
     }
   }
 
@@ -275,38 +210,23 @@ visual_colors <- function(
     )
 
     if (identical(layout_mode, "chinese") && is_chinese(text)) {
-      return(
-        paste0(
-          base_style,
-          "display:block;",
-          "text-align:center;",
-          "width:100%;",
-          "white-space:normal;"
-        )
+      paste0(
+        base_style,
+        "display:block;",
+        "text-align:center;",
+        "width:100%;",
+        "white-space:normal;"
       )
     } else {
-      if (isTRUE(label_layout$rotate)) {
-        return(
-          paste0(
-            base_style,
-            "display:block;",
-            "position:absolute;",
-            "top:50%;",
-            "left:50%;",
-            "white-space:", label_layout$white_space, ";",
-            "transform:translate(-50%,-50%) rotate(-90deg);",
-            "transform-origin:center center;"
-          )
-        )
-      }
-      return(
-        paste0(
-          base_style,
-          "display:block;",
-          "text-align:center;",
-          "width:100%;",
-          "white-space:", label_layout$white_space, ";"
-        )
+      paste0(
+        base_style,
+        "display:block;",
+        "white-space:", label_layout$white_space, ";",
+        "writing-mode:vertical-rl;",
+        "text-orientation:mixed;",
+        "transform:rotate(180deg);",
+        "transform-origin:center center;",
+        "text-align:center;"
       )
     }
   }
@@ -320,30 +240,21 @@ visual_colors <- function(
         text_color <- text_color_for(colors[i])
         text_style <- get_text_style(display_names[i], text_color)
         text_content <- format_text_display(display_names[i])
-        container_style <- if (isTRUE(label_layout$rotate)) {
-          paste0(
-            "width:100%;",
-            "height:100%;",
-            "position:relative;",
-            "box-sizing:border-box;",
-            "overflow:hidden;"
-          )
-        } else {
-          paste0(
-            "display:flex;",
-            "align-items:center;",
-            "justify-content:center;",
-            "width:100%;",
-            "height:100%;",
-            "box-sizing:border-box;",
-            "padding:2px 0;",
-            "overflow:hidden;"
-          )
-        }
+        container_base <- paste0(
+          "display:flex;",
+          "align-items:center;",
+          "justify-content:center;",
+          "width:100%;",
+          "height:100%;",
+          "box-sizing:border-box;",
+          "padding:2px 0;",
+          "overflow:hidden;"
+        )
+        container_style <- container_base
 
         htmltools::tags$td(
           style = paste0(
-            "padding:1px;",
+            "padding:2px 2px;",
             "width:", cell_width_px, "px;",
             "min-width:", cell_width_px, "px;",
             "max-width:", cell_width_px, "px;",
@@ -373,7 +284,7 @@ visual_colors <- function(
           num_per_row - length(cells),
           htmltools::tags$td(
             style = paste0(
-              "padding:1px;",
+              "padding:2px 2px;",
               "width:", cell_width_px, "px;",
               "min-width:", cell_width_px, "px;",
               "max-width:", cell_width_px, "px;",
