@@ -51,6 +51,10 @@ reference:
 - contents:
   - StatPlot
 
+- subtitle: "Dimensional plot"
+- contents:
+  - DimDataPlot
+
 - subtitle: "Graph plot"
 - contents:
   - GraphPlot
