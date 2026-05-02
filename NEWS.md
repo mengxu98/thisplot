@@ -1,3 +1,13 @@
+# thisplot 0.3.9
+
+* **feat**:
+  * `DimDataPlot()`: New lightweight helper for plotting supplied 2D coordinates from data frames, with grouping, splitting, shape mapping, labels, palettes, theme controls, and optional group marks.
+  * `StatPlot()`: Added configurable major panel grid lines via `grid_major`, `grid_major_colour`, `grid_major_linetype`, and `grid_major_linewidth`.
+
+* **docs**:
+  * Added documentation and examples for `DimDataPlot()`.
+  * Updated `StatPlot()` documentation for the new major grid controls.
+ 
 # thisplot 0.3.8
 
 * **feat**:
