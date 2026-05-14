@@ -16,8 +16,8 @@ StatPlot(
   keep_empty = FALSE,
   individual = FALSE,
   stat_level = NULL,
-  plot_type = c("bar", "rose", "ring", "pie", "trend", "area", "dot", "sankey", "chord",
-    "venn", "upset"),
+  plot_type = c("bar", "rose", "ring", "pie", "trend", "trend_alluvial", "area",
+    "dot", "sankey", "chord", "venn", "upset"),
   stat_type = c("percent", "count"),
   position = c("stack", "dodge"),
   palette = "Chinese",
@@ -84,7 +84,8 @@ Default is \code{NULL}.}
 
 \item{plot_type}{The type of plot to create.
 Can be one of \code{"bar"}, \code{"rose"}, \code{"ring"}, \code{"pie"}, \code{"trend"},
-\code{"area"}, \code{"dot"}, \code{"sankey"}, \code{"chord"}, \code{"venn"}, or \code{"upset"}.}
+\code{"trend_alluvial"}, \code{"area"}, \code{"dot"}, \code{"sankey"}, \code{"chord"},
+\code{"venn"}, or \code{"upset"}.}
 
 \item{stat_type}{The type of statistic to compute for the plot.
 Can be one of \code{"percent"} or \code{"count"}.}
@@ -248,5 +249,12 @@ StatPlot(
   group.by = "Group",
   stat_type = "count",
   plot_type = "trend"
+)
+
+StatPlot(
+  meta_data,
+  stat.by = "Type",
+  group.by = "Group",
+  plot_type = "trend_alluvial"
 )
 }

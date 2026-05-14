@@ -39,6 +39,7 @@ Suggests:
     ComplexHeatmap,
     dplyr,
     forcats,
+    ggalluvial,
     ggupset,
     ggVennDiagram,
     htmltools,
