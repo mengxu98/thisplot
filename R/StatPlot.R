@@ -22,7 +22,8 @@
 #' Default is `NULL`.
 #' @param plot_type The type of plot to create.
 #' Can be one of `"bar"`, `"rose"`, `"ring"`, `"pie"`, `"trend"`,
-#' `"area"`, `"dot"`, `"sankey"`, `"chord"`, `"venn"`, or `"upset"`.
+#' `"trend_alluvial"`, `"area"`, `"dot"`, `"sankey"`, `"chord"`,
+#' `"venn"`, or `"upset"`.
 #' @param stat_type The type of statistic to compute for the plot.
 #' Can be one of `"percent"` or `"count"`.
 #' @param position The position adjustment for the plot.
@@ -156,6 +157,13 @@
 #'   stat_type = "count",
 #'   plot_type = "trend"
 #' )
+#'
+#' StatPlot(
+#'   meta_data,
+#'   stat.by = "Type",
+#'   group.by = "Group",
+#'   plot_type = "trend_alluvial"
+#' )
 StatPlot <- function(
   meta.data,
   stat.by,
@@ -174,6 +182,7 @@ StatPlot <- function(
     "ring",
     "pie",
     "trend",
+    "trend_alluvial",
     "area",
     "dot",
     "sankey",
@@ -219,6 +228,17 @@ StatPlot <- function(
   stat_type <- match.arg(stat_type)
   plot_type <- match.arg(plot_type)
   position <- match.arg(position)
+
+  if (identical(plot_type, "trend_alluvial")) {
+    check_r("ggalluvial", verbose = FALSE)
+    if (identical(position, "dodge")) {
+      log_message(
+        "{.arg position} is forcibly set to {.val stack} when {.arg plot_type = 'trend_alluvial'}",
+        message_type = "warning"
+      )
+      position <- "stack"
+    }
+  }
 
   grid_major_element <- if (isTRUE(grid_major)) {
     element_line(
@@ -404,7 +424,9 @@ StatPlot <- function(
 
   dat_split <- split.data.frame(dat_all, dat_all[[split.by]])
   plist <- list()
-  if (plot_type %in% c("bar", "rose", "ring", "pie", "trend", "area", "dot")) {
+  if (plot_type %in% c(
+    "bar", "rose", "ring", "pie", "trend", "trend_alluvial", "area", "dot"
+  )) {
     xlab <- xlab %||% group.by
     ylab <- ylab %||% ifelse(stat_type == "count", "Count", "Percentage")
     if (identical(theme_use, "theme_blank")) {
@@ -559,6 +581,14 @@ StatPlot <- function(
             position_use <- position_stack(vjust = 0.5)
             scalex <- scale_x_discrete(drop = !keep_empty, expand = c(0, 0))
             scaley <- scale_y_continuous(
+              limits = if (
+                identical(plot_type, "trend_alluvial") &&
+                  identical(stat_type, "percent")
+              ) {
+                c(0, 1)
+              } else {
+                NULL
+              },
               labels = if (stat_type == "count") {
                 scales::number
               } else {
@@ -661,6 +691,47 @@ StatPlot <- function(
               color = "black",
               alpha = alpha,
               position = position_use
+            ) +
+            scalex +
+            scaley
+        }
+        if (plot_type == "trend_alluvial") {
+          p <- ggplot(
+            dat,
+            aes(
+              x = .data[[g]],
+              y = value
+            )
+          ) +
+            bg_layer +
+            geom_col(
+              aes(fill = .data[[stat.by]]),
+              width = 0.6,
+              color = NA,
+              alpha = alpha,
+              position = position_use
+            ) +
+            ggalluvial::geom_flow(
+              aes(
+                fill = .data[[stat.by]],
+                stratum = .data[[stat.by]],
+                alluvium = .data[[stat.by]]
+              ),
+              width = 0.6,
+              alpha = alpha * 0.22,
+              knot.pos = 0.35,
+              color = "white"
+            ) +
+            ggalluvial::geom_alluvium(
+              aes(
+                stratum = .data[[stat.by]],
+                alluvium = .data[[stat.by]]
+              ),
+              width = 0.6,
+              alpha = alpha,
+              knot.pos = 0.35,
+              fill = NA,
+              color = "white"
             ) +
             scalex +
             scaley
@@ -886,7 +957,8 @@ StatPlot <- function(
             legend.position = legend.position,
             legend.direction = legend.direction,
             panel.grid.major = if (
-              plot_type == "trend" & stat_type == "percent"
+              plot_type %in% c("trend", "trend_alluvial") &
+                stat_type == "percent"
             ) {
               element_blank()
             } else {
