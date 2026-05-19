@@ -700,33 +700,26 @@ StatPlot <- function(
             dat,
             aes(
               x = .data[[g]],
-              y = value
+              y = value,
+              fill = .data[[stat.by]],
+              stratum = .data[[stat.by]],
+              alluvium = .data[[stat.by]]
             )
           ) +
             bg_layer +
             geom_col(
-              aes(fill = .data[[stat.by]]),
               width = 0.6,
               color = NA,
               alpha = alpha,
               position = position_use
             ) +
             ggalluvial::geom_flow(
-              aes(
-                fill = .data[[stat.by]],
-                stratum = .data[[stat.by]],
-                alluvium = .data[[stat.by]]
-              ),
               width = 0.6,
               alpha = alpha * 0.22,
               knot.pos = 0.35,
               color = "white"
             ) +
             ggalluvial::geom_alluvium(
-              aes(
-                stratum = .data[[stat.by]],
-                alluvium = .data[[stat.by]]
-              ),
               width = 0.6,
               alpha = alpha,
               knot.pos = 0.35,
