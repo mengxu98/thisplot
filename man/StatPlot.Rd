@@ -16,8 +16,8 @@ StatPlot(
   keep_empty = FALSE,
   individual = FALSE,
   stat_level = NULL,
-  plot_type = c("bar", "rose", "ring", "pie", "trend", "trend_alluvial", "area",
-    "dot", "sankey", "chord", "venn", "upset"),
+  plot_type = c("bar", "rose", "ring", "pie", "trend", "trend_alluvial", "area", "dot",
+    "sankey", "chord", "venn", "upset"),
   stat_type = c("percent", "count"),
   position = c("stack", "dodge"),
   palette = "Chinese",
@@ -249,12 +249,5 @@ StatPlot(
   group.by = "Group",
   stat_type = "count",
   plot_type = "trend"
-)
-
-StatPlot(
-  meta_data,
-  stat.by = "Type",
-  group.by = "Group",
-  plot_type = "trend_alluvial"
 )
 }

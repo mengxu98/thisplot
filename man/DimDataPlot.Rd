@@ -70,7 +70,7 @@ Default is \code{NULL}.}
 or \code{shape.by} as an explicit \code{"NA"} level. Default is \code{FALSE}.}
 
 \item{palette}{Color palette name. Available palettes can be found in
-\code{\link[=show_palettes]{show_palettes}}. Default is \code{"Chinese"}.}
+\link{show_palettes}. Default is \code{"Chinese"}.}
 
 \item{palcolor}{Custom colors used to create a color palette.
 Default is \code{NULL}.}
@@ -87,7 +87,7 @@ Default is \code{NULL}.}
 
 \item{mark_type}{Type of mark to add around groups.
 One of \code{"hull"}, \code{"ellipse"}, \code{"rect"}, or \code{"circle"}.
-Default is \code{"hull"}. \code{"ellipse"} uses \code{\link[ggplot2:stat_ellipse]{ggplot2::stat_ellipse}}
+Default is \code{"hull"}. \code{"ellipse"} uses \link[ggplot2:stat_ellipse]{ggplot2::stat_ellipse}
 with \code{type = "norm"} and \code{level = 0.95}; the other mark types use ggforce marks.}
 
 \item{mark_expand}{Expansion of the mark around each group.
