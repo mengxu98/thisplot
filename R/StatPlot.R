@@ -157,13 +157,6 @@
 #'   stat_type = "count",
 #'   plot_type = "trend"
 #' )
-#'
-#' StatPlot(
-#'   meta_data,
-#'   stat.by = "Type",
-#'   group.by = "Group",
-#'   plot_type = "trend_alluvial"
-#' )
 StatPlot <- function(
   meta.data,
   stat.by,

@@ -250,11 +250,4 @@ StatPlot(
   stat_type = "count",
   plot_type = "trend"
 )
-
-StatPlot(
-  meta_data,
-  stat.by = "Type",
-  group.by = "Group",
-  plot_type = "trend_alluvial"
-)
 }
