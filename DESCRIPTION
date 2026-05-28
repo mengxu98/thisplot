@@ -50,7 +50,8 @@ Suggests:
     scales,
     stringr,
     testthat (>= 3.0.0),
-    tidyr
+    tidyr,
+    venny
 Config/Needs/website: mengxu98/thistemplate
 Config/testthat/edition: 3
 Encoding: UTF-8
