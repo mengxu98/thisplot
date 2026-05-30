@@ -24,6 +24,14 @@
 #' Can be one of `"bar"`, `"rose"`, `"ring"`, `"pie"`, `"trend"`,
 #' `"trend_alluvial"`, `"area"`, `"dot"`, `"sankey"`, `"chord"`,
 #' `"venn"`, or `"upset"`.
+#' @param venn_engine The engine used when `plot_type = "venn"`.
+#' Can be one of `"ggVennDiagram"` or `"venny"`.
+#' Default is `"ggVennDiagram"`.
+#' The `"venny"` engine supports 2 to 4 sets.
+#' @param venn_args A list of additional arguments passed to
+#' [venny::venny()] when `plot_type = "venn"` and
+#' `venn_engine = "venny"`.
+#' The `data` argument is generated internally and cannot be supplied here.
 #' @param stat_type The type of statistic to compute for the plot.
 #' Can be one of `"percent"` or `"count"`.
 #' @param position The position adjustment for the plot.
@@ -157,6 +165,18 @@
 #'   stat_type = "count",
 #'   plot_type = "trend"
 #' )
+#'
+#' meta_data$A <- meta_data$Type == "A"
+#' meta_data$B <- meta_data$Group == "X"
+#' meta_data$C <- meta_data$Batch == "B1"
+#' StatPlot(
+#'   meta_data,
+#'   stat.by = c("A", "B", "C"),
+#'   stat_level = TRUE,
+#'   plot_type = "venn",
+#'   venn_engine = "venny",
+#'   venn_args = list(detail = TRUE)
+#' )
 StatPlot <- function(
   meta.data,
   stat.by,
@@ -183,6 +203,8 @@ StatPlot <- function(
     "venn",
     "upset"
   ),
+  venn_engine = c("ggVennDiagram", "venny"),
+  venn_args = list(),
   stat_type = c("percent", "count"),
   position = c("stack", "dodge"),
   palette = "Chinese",
@@ -220,7 +242,9 @@ StatPlot <- function(
 
   stat_type <- match.arg(stat_type)
   plot_type <- match.arg(plot_type)
+  venn_engine <- match.arg(venn_engine)
   position <- match.arg(position)
+  venn_args <- venn_args %||% list()
 
   if (identical(plot_type, "trend_alluvial")) {
     check_r("ggalluvial", verbose = FALSE)
@@ -335,6 +359,27 @@ StatPlot <- function(
         message_type = "error"
       )
     }
+  }
+  if (identical(plot_type, "venn") && identical(venn_engine, "venny")) {
+    if (!is.list(venn_args)) {
+      log_message(
+        "{.arg venn_args} must be a list",
+        message_type = "error"
+      )
+    }
+    if ("data" %in% names(venn_args)) {
+      log_message(
+        "{.arg venn_args} cannot contain {.arg data}; it is generated internally",
+        message_type = "error"
+      )
+    }
+    if (length(stat.by) < 2 || length(stat.by) > 4) {
+      log_message(
+        "{.arg stat.by} must contain 2 to 4 sets when {.arg venn_engine = 'venny'}",
+        message_type = "error"
+      )
+    }
+    check_r("venny", verbose = FALSE)
   }
 
   levels <- unique(
@@ -968,6 +1013,7 @@ StatPlot <- function(
     colors <- palette_colors(stat.by, palette = palette, palcolor = palcolor)
     nlev <- nlevels(dat_all[[split.by]])
     chord_use_temp <- plot_type == "chord" && isTRUE(combine) && nlev > 1L
+    venny_details <- list()
     if (plot_type == "chord" && isTRUE(combine)) {
       if (chord_use_temp) {
         temp <- tempfile(fileext = "png")
@@ -1005,101 +1051,136 @@ StatPlot <- function(
             cellkeep
           }
         )
-        venn <- ggVennDiagram::Venn(dat_list)
-        data <- ggVennDiagram::process_data(venn)
-        dat_venn_region <- ggVennDiagram::venn_region(data)
-        idname <- dat_venn_region[["name"]][
-          dat_venn_region[["name"]] %in% stat.by
-        ]
-        names(idname) <- dat_venn_region[["id"]][
-          dat_venn_region[["name"]] %in% stat.by
-        ]
-        idcomb <- strsplit(dat_venn_region[["id"]], split = "")
-        colorcomb <- lapply(idcomb, function(x) colors[idname[as.character(x)]])
-        dat_venn_region[["colors"]] <- sapply(
-          colorcomb,
-          function(x) blendcolors(x, mode = "blend")
-        )
-        dat_venn_region[["label"]] <- paste0(
-          dat_venn_region[["count"]],
-          "\n",
-          round(
-            dat_venn_region[["count"]] / sum(dat_venn_region[["count"]]) * 100,
-            1
-          ),
-          "%"
-        )
-        dat_venn_setedge <- ggVennDiagram::venn_setedge(data)
-        dat_venn_setedge[["colors"]] <- colors[stat.by[as.numeric(
-          dat_venn_setedge[["id"]]
-        )]]
-
-        venn_regionedge_data <- ggVennDiagram::venn_regionedge(data)
-        venn_regionedge_data[["colors"]] <- dat_venn_region[["colors"]][match(
-          venn_regionedge_data[["id"]],
-          dat_venn_region[["id"]]
-        )]
-
-        p <- ggplot() +
-          geom_polygon(
-            data = venn_regionedge_data,
-            aes(X, Y, fill = colors, group = id),
-            alpha = alpha
-          ) +
-          geom_path(
-            data = dat_venn_setedge,
-            aes(X, Y, group = id),
-            color = "black",
-            linewidth = 1,
-            show.legend = FALSE
-          ) +
-          ggrepel::geom_text_repel(
-            data = ggVennDiagram::venn_setlabel(data),
-            aes(
-              X,
-              Y,
-              label = paste0(
-                name,
-                "\n(",
-                count,
-                ")"
-              )
-            ),
-            fontface = "bold",
-            colour = label.fg,
-            size = label.size + 0.5,
-            bg.color = label.bg,
-            bg.r = label.bg.r,
-            point.size = NA,
-            max.overlaps = 100,
-            force = 0,
-            min.segment.length = 0,
-            segment.colour = "black"
-          ) +
-          ggrepel::geom_text_repel(
-            data = ggVennDiagram::venn_regionlabel(data),
-            aes(X, Y, label = count),
-            colour = label.fg,
-            size = label.size,
-            bg.color = label.bg,
-            bg.r = label.bg.r,
-            point.size = NA,
-            max.overlaps = 100,
-            force = 0,
-            min.segment.length = 0,
-            segment.colour = "black"
-          ) +
-          scale_fill_identity() +
-          coord_fixed(ratio = 1, clip = "off") +
-          theme(
-            plot.title = element_text(hjust = 0.5),
-            plot.background = element_blank(),
-            panel.background = element_blank(),
-            axis.title.y = element_blank(),
-            axis.text = element_blank(),
-            axis.ticks = element_blank()
+        if (identical(venn_engine, "venny")) {
+          venny_result <- do.call(
+            venny::venny,
+            c(list(data = dat_list), venn_args)
           )
-        p <- p + labs(x = sp, title = title, subtitle = subtitle)
+          venny_detail <- NULL
+          if (
+            is.list(venny_result) &&
+              !inherits(venny_result, c("gg", "ggplot")) &&
+              !is.null(venny_result[["venn"]])
+          ) {
+            venny_detail <- venny_result
+            p <- venny_result[["venn"]]
+          } else {
+            p <- venny_result
+          }
+          if (!inherits(p, c("gg", "ggplot"))) {
+            log_message(
+              "{.fun venny::venny} must return a ggplot object or a list containing {.arg venn}",
+              message_type = "error"
+            )
+          }
+          p <- p + labs(x = sp, title = title, subtitle = subtitle)
+          if (!is.null(venny_detail)) {
+            attr(p, "venny_detail") <- venny_detail
+            venny_details[[sp]] <- venny_detail
+          }
+        } else {
+          venn <- ggVennDiagram::Venn(dat_list)
+          data <- ggVennDiagram::process_data(venn)
+          dat_venn_region <- ggVennDiagram::venn_region(data)
+          idname <- dat_venn_region[["name"]][
+            dat_venn_region[["name"]] %in% stat.by
+          ]
+          names(idname) <- dat_venn_region[["id"]][
+            dat_venn_region[["name"]] %in% stat.by
+          ]
+          idcomb <- strsplit(dat_venn_region[["id"]], split = "")
+          colorcomb <- lapply(
+            idcomb,
+            function(x) colors[idname[as.character(x)]]
+          )
+          dat_venn_region[["colors"]] <- sapply(
+            colorcomb,
+            function(x) blendcolors(x, mode = "blend")
+          )
+          dat_venn_region[["label"]] <- paste0(
+            dat_venn_region[["count"]],
+            "\n",
+            round(
+              dat_venn_region[["count"]] /
+                sum(dat_venn_region[["count"]]) * 100,
+              1
+            ),
+            "%"
+          )
+          dat_venn_setedge <- ggVennDiagram::venn_setedge(data)
+          dat_venn_setedge[["colors"]] <- colors[stat.by[as.numeric(
+            dat_venn_setedge[["id"]]
+          )]]
+
+          venn_regionedge_data <- ggVennDiagram::venn_regionedge(data)
+          venn_regionedge_data[["colors"]] <- dat_venn_region[["colors"]][
+            match(
+              venn_regionedge_data[["id"]],
+              dat_venn_region[["id"]]
+            )
+          ]
+
+          p <- ggplot() +
+            geom_polygon(
+              data = venn_regionedge_data,
+              aes(X, Y, fill = colors, group = id),
+              alpha = alpha
+            ) +
+            geom_path(
+              data = dat_venn_setedge,
+              aes(X, Y, group = id),
+              color = "black",
+              linewidth = 1,
+              show.legend = FALSE
+            ) +
+            ggrepel::geom_text_repel(
+              data = ggVennDiagram::venn_setlabel(data),
+              aes(
+                X,
+                Y,
+                label = paste0(
+                  name,
+                  "\n(",
+                  count,
+                  ")"
+                )
+              ),
+              fontface = "bold",
+              colour = label.fg,
+              size = label.size + 0.5,
+              bg.color = label.bg,
+              bg.r = label.bg.r,
+              point.size = NA,
+              max.overlaps = 100,
+              force = 0,
+              min.segment.length = 0,
+              segment.colour = "black"
+            ) +
+            ggrepel::geom_text_repel(
+              data = ggVennDiagram::venn_regionlabel(data),
+              aes(X, Y, label = count),
+              colour = label.fg,
+              size = label.size,
+              bg.color = label.bg,
+              bg.r = label.bg.r,
+              point.size = NA,
+              max.overlaps = 100,
+              force = 0,
+              min.segment.length = 0,
+              segment.colour = "black"
+            ) +
+            scale_fill_identity() +
+            coord_fixed(ratio = 1, clip = "off") +
+            theme(
+              plot.title = element_text(hjust = 0.5),
+              plot.background = element_blank(),
+              panel.background = element_blank(),
+              axis.title.y = element_blank(),
+              axis.text = element_blank(),
+              axis.ticks = element_blank()
+            )
+          p <- p + labs(x = sp, title = title, subtitle = subtitle)
+        }
       }
 
       if (plot_type == "upset") {
@@ -1315,6 +1396,13 @@ StatPlot <- function(
         ncol = ncol,
         byrow = byrow
       )
+      if (
+        identical(plot_type, "venn") &&
+          identical(venn_engine, "venny") &&
+          length(venny_details) > 0
+      ) {
+        attr(plot, "venny_detail") <- venny_details
+      }
     } else {
       plot <- plist[[1]]
     }
