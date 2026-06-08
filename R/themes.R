@@ -199,10 +199,10 @@ theme_blank <- function(
         ),
         grid::textGrob(
           label = xlab,
-          x = grid::unit(xlen_npc / 2, "npc"),
-          y = grid::unit(0, "npc") - grid::unit(0.8, "lines"),
+          x = grid::unit(xlen_npc, "npc") + grid::unit(0.5, "lines"),
+          y = grid::unit(-1.2, "lines"),
           vjust = 1,
-          hjust = 0.5,
+          hjust = 0,
           gp = grid::gpar(fontsize = lab_size)
         ),
         grid::linesGrob(
@@ -212,9 +212,10 @@ theme_blank <- function(
           gp = grid::gpar(lwd = 2)
         ),
         grid::textGrob(
-          label = ylab, x = grid::unit(0, "npc") - grid::unit(0.8, "lines"),
-          y = grid::unit(ylen_npc / 2, "npc"),
-          vjust = 0,
+          label = ylab,
+          x = grid::unit(-2, "lines"),
+          y = grid::unit(ylen_npc, "npc") + grid::unit(0.5, "lines"),
+          vjust = 0.5,
           hjust = 0.5,
           rot = 90,
           gp = grid::gpar(fontsize = lab_size)
