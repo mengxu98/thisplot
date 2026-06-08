@@ -158,10 +158,10 @@ theme_blank <- function(
     legend.margin = margin(0, 0, 0, 0),
     legend.key.size = grid::unit(10, "pt"),
     plot.margin = margin(
-      lab_size + 2,
-      lab_size + 2,
-      lab_size + 2,
-      lab_size + 2,
+      lab_size + 8,
+      lab_size + 8,
+      lab_size + 8,
+      lab_size + 8,
       unit = "points"
     )
   )
@@ -199,10 +199,10 @@ theme_blank <- function(
         ),
         grid::textGrob(
           label = xlab,
-          x = grid::unit(0, "npc"),
-          y = grid::unit(0, "npc"),
-          vjust = 4 / 3,
-          hjust = 0,
+          x = grid::unit(xlen_npc / 2, "npc"),
+          y = grid::unit(0, "npc") - grid::unit(0.8, "lines"),
+          vjust = 1,
+          hjust = 0.5,
           gp = grid::gpar(fontsize = lab_size)
         ),
         grid::linesGrob(
@@ -212,10 +212,10 @@ theme_blank <- function(
           gp = grid::gpar(lwd = 2)
         ),
         grid::textGrob(
-          label = ylab, x = grid::unit(0, "npc"),
-          y = grid::unit(0, "npc"),
-          vjust = -2 / 3,
-          hjust = 0,
+          label = ylab, x = grid::unit(0, "npc") - grid::unit(0.8, "lines"),
+          y = grid::unit(ylen_npc / 2, "npc"),
+          vjust = 0,
+          hjust = 0.5,
           rot = 90,
           gp = grid::gpar(fontsize = lab_size)
         )
