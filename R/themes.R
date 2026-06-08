@@ -199,8 +199,8 @@ theme_blank <- function(
         ),
         grid::textGrob(
           label = xlab,
-          x = grid::unit(xlen_npc, "npc") + grid::unit(0.15, "lines"),
-          y = grid::unit(-1.05, "lines"),
+          x = grid::unit(xlen_npc, "npc") + grid::unit(0.35, "lines"),
+          y = grid::unit(-1.2, "lines"),
           vjust = 0,
           hjust = 0,
           gp = grid::gpar(fontsize = lab_size)
