@@ -42,6 +42,7 @@ StatPlot(
   legend.direction = "vertical",
   theme_use = "theme_this",
   theme_args = list(),
+  x_text_angle = 45,
   grid_major = TRUE,
   grid_major_colour = "grey80",
   grid_major_linetype = 2,
@@ -158,6 +159,9 @@ Default is \code{"theme_this"}.}
 
 \item{theme_args}{Additional arguments to pass to the theme function.
 Default is \code{list()}.}
+
+\item{x_text_angle}{Rotation angle for x-axis labels.
+Default is \code{45}.}
 
 \item{grid_major}{Whether to show major panel grid lines.
 Default is \code{TRUE}.}
