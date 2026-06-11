@@ -74,6 +74,8 @@
 #' Default is `"theme_this"`.
 #' @param theme_args Additional arguments to pass to the theme function.
 #' Default is `list()`.
+#' @param x_text_angle Rotation angle for x-axis labels.
+#' Default is `45`.
 #' @param grid_major Whether to show major panel grid lines.
 #' Default is `TRUE`.
 #' @param grid_major_colour Color of major panel grid lines.
@@ -227,6 +229,7 @@ StatPlot <- function(
   legend.direction = "vertical",
   theme_use = "theme_this",
   theme_args = list(),
+  x_text_angle = 45,
   grid_major = TRUE,
   grid_major_colour = "grey80",
   grid_major_linetype = 2,
@@ -965,7 +968,7 @@ StatPlot <- function(
           axis_text_x <- element_text()
         } else {
           axis_text_x <- element_text(
-            angle = 45,
+            angle = x_text_angle,
             hjust = 1,
             vjust = 1
           )
