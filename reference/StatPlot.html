@@ -87,6 +87,7 @@ dot plots, sankey plots, chord plots, venn diagrams, and upset plots.</p>
 <span>  legend.direction <span class="op">=</span> <span class="st">"vertical"</span>,</span>
 <span>  theme_use <span class="op">=</span> <span class="st">"theme_this"</span>,</span>
 <span>  theme_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  x_text_angle <span class="op">=</span> <span class="fl">45</span>,</span>
 <span>  grid_major <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  grid_major_colour <span class="op">=</span> <span class="st">"grey80"</span>,</span>
 <span>  grid_major_linetype <span class="op">=</span> <span class="fl">2</span>,</span>
@@ -280,6 +281,11 @@ Default is <code>"theme_this"</code>.</p></dd>
 Default is <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>.</p></dd>
 
 
+<dt id="arg-x-text-angle">x_text_angle<a class="anchor" aria-label="anchor" href="#arg-x-text-angle"></a></dt>
+<dd><p>Rotation angle for x-axis labels.
+Default is <code>45</code>.</p></dd>
+
+
 <dt id="arg-grid-major">grid_major<a class="anchor" aria-label="anchor" href="#arg-grid-major"></a></dt>
 <dd><p>Whether to show major panel grid lines.
 Default is <code>TRUE</code>.</p></dd>
@@ -421,7 +427,7 @@ Default is <code>11</code>.</p></dd>
 <span class="r-in"><span>  venn_engine <span class="op">=</span> <span class="st">"venny"</span>,</span></span>
 <span class="r-in"><span>  venn_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>detail <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> [2026-06-09 02:20:49] `stat_type` is forcibly set to <span style="color: #0000BB;">"count"</span> when plot <span style="color: #0000BB;">"sankey"</span>, <span style="color: #0000BB;">"chord"</span>, <span style="color: #0000BB;">"venn"</span>, and <span style="color: #0000BB;">"upset"</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #BBBB00;">!</span> [2026-06-11 16:02:50] `stat_type` is forcibly set to <span style="color: #0000BB;">"count"</span> when plot <span style="color: #0000BB;">"sankey"</span>, <span style="color: #0000BB;">"chord"</span>, <span style="color: #0000BB;">"venn"</span>, and <span style="color: #0000BB;">"upset"</span></span>
 <span class="r-plt img"><img src="StatPlot-8.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
