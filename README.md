@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/thisplot)](https://CRAN.R-project.org/package=thisplot)
+[![Conda Version](https://img.shields.io/conda/vn/conda-forge/r-thisplot?color=green)](https://anaconda.org/conda-forge/r-thisplot)
 [![version](https://img.shields.io/github/r-package/v/mengxu98/thisplot?label=version&color=blue)](https://github.com/mengxu98/thisplot/blob/main/DESCRIPTION)
 [![R-CMD-check](https://github.com/mengxu98/thisplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mengxu98/thisplot/actions/workflows/R-CMD-check.yaml)
 [![test-coverage](https://github.com/mengxu98/thisplot/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/mengxu98/thisplot/actions/workflows/test-coverage.yaml)
