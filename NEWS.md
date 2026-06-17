@@ -1,3 +1,12 @@
+# thisplot 0.4.1
+
+* **feat**:
+  * `StatPlot()`: Added direct x-axis label rotation control via `x_text_angle`.
+  * `StatPlot()`: Major panel grid settings now consistently control percent trend plots.
+
+* **docs**:
+  * Documented `x_text_angle` validation and updated release metadata.
+
 # thisplot 0.3.9
 
 * **feat**:

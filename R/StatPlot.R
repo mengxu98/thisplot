@@ -75,7 +75,7 @@
 #' @param theme_args Additional arguments to pass to the theme function.
 #' Default is `list()`.
 #' @param x_text_angle Rotation angle for x-axis labels.
-#' Default is `45`.
+#' Default is `45`. Must be a finite number.
 #' @param grid_major Whether to show major panel grid lines.
 #' Default is `TRUE`.
 #' @param grid_major_colour Color of major panel grid lines.
@@ -247,6 +247,16 @@ StatPlot <- function(
   plot_type <- match.arg(plot_type)
   venn_engine <- match.arg(venn_engine)
   position <- match.arg(position)
+  x_text_angle <- tryCatch(
+    suppressWarnings(as.numeric(x_text_angle)),
+    error = function(e) NA_real_
+  )
+  if (length(x_text_angle) != 1L || !is.finite(x_text_angle)) {
+    log_message(
+      "{.arg x_text_angle} must be a finite number",
+      message_type = "error"
+    )
+  }
   venn_args <- venn_args %||% list()
 
   if (identical(plot_type, "trend_alluvial")) {
@@ -990,14 +1000,7 @@ StatPlot <- function(
             axis.text.x = axis_text_x,
             legend.position = legend.position,
             legend.direction = legend.direction,
-            panel.grid.major = if (
-              plot_type %in% c("trend", "trend_alluvial") &
-                stat_type == "percent"
-            ) {
-              element_blank()
-            } else {
-              grid_major_element
-            }
+            panel.grid.major = grid_major_element
           ) +
           guides(
             fill = guide_legend(

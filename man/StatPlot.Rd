@@ -161,7 +161,7 @@ Default is \code{"theme_this"}.}
 Default is \code{list()}.}
 
 \item{x_text_angle}{Rotation angle for x-axis labels.
-Default is \code{45}.}
+Default is \code{45}. Must be a finite number.}
 
 \item{grid_major}{Whether to show major panel grid lines.
 Default is \code{TRUE}.}
