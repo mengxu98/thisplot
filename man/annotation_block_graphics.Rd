@@ -4,7 +4,13 @@
 \alias{annotation_block_graphics}
 \title{Build block panel function}
 \usage{
-annotation_block_graphics(subplot, name, border = TRUE)
+annotation_block_graphics(
+  subplot,
+  name,
+  border = TRUE,
+  border_color = "black",
+  border_size = 1
+)
 }
 \arguments{
 \item{subplot}{A single drawable subplot object.}
@@ -12,6 +18,10 @@ annotation_block_graphics(subplot, name, border = TRUE)
 \item{name}{A name assigned to the generated grob.}
 
 \item{border}{Whether to draw a rectangle border around the block.}
+
+\item{border_color}{Border color when \code{border = TRUE}. Default is \code{"black"}.}
+
+\item{border_size}{Border line width when \code{border = TRUE}. Default is \code{1}.}
 }
 \value{
 A function with signature \verb{(index, levels)} suitable for \code{panel_fun} in \link[ComplexHeatmap:anno_block]{ComplexHeatmap::anno_block}.

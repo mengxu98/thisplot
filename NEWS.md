@@ -1,3 +1,9 @@
+# thisplot 0.4.2
+
+* **feat**:
+  * Add `major_grid()` for reusable major-grid control.
+  * Let block heatmap annotations control border colour and line width.
+
 # thisplot 0.4.1
 
 * **feat**:
