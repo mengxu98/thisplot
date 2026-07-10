@@ -9,7 +9,9 @@ annotation_block_fill_graphics(
   palette = NULL,
   palcolor = NULL,
   fill_values = NULL,
-  border = TRUE
+  border = TRUE,
+  border_color = "black",
+  border_size = 1
 )
 }
 \arguments{
@@ -23,6 +25,10 @@ All available palette names can be queried with \link{show_palettes}.}
 \item{fill_values}{Optional named fill vector. Names should match \code{levels}.}
 
 \item{border}{Whether to draw block border.}
+
+\item{border_color}{Border color when \code{border = TRUE}. Default is \code{"black"}.}
+
+\item{border_size}{Border line width when \code{border = TRUE}. Default is \code{1}.}
 }
 \value{
 A function with signature \verb{(index, levels)} suitable for \code{panel_fun} in \link[ComplexHeatmap:anno_block]{ComplexHeatmap::anno_block}.

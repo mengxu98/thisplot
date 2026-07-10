@@ -16,8 +16,8 @@ StatPlot(
   keep_empty = FALSE,
   individual = FALSE,
   stat_level = NULL,
-  plot_type = c("bar", "rose", "ring", "pie", "trend", "trend_alluvial", "area",
-    "dot", "sankey", "chord", "venn", "upset"),
+  plot_type = c("bar", "rose", "ring", "pie", "trend", "trend_alluvial", "area", "dot",
+    "sankey", "chord", "venn", "upset"),
   venn_engine = c("ggVennDiagram", "venny"),
   venn_args = list(),
   stat_type = c("percent", "count"),
@@ -96,7 +96,7 @@ Default is \code{"ggVennDiagram"}.
 The \code{"venny"} engine supports 2 to 4 sets.}
 
 \item{venn_args}{A list of additional arguments passed to
-\link[venny:venny]{venny::venny()} when \code{plot_type = "venn"} and
+\code{\link[venny:venny]{venny::venny()}} when \code{plot_type = "venn"} and
 \code{venn_engine = "venny"}.
 The \code{data} argument is generated internally and cannot be supplied here.}
 
