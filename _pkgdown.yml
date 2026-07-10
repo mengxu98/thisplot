@@ -115,6 +115,7 @@ reference:
 
 - subtitle: "Theme functions"
 - contents:
+  - major_grid
   - theme_blank
   - theme_this
 

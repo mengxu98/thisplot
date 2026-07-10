@@ -510,6 +510,8 @@ annotation_graphics <- function(subplots, prefix) {
 #' @param subplot A single drawable subplot object.
 #' @param name A name assigned to the generated grob.
 #' @param border Whether to draw a rectangle border around the block.
+#' @param border_color Border color when `border = TRUE`. Default is `"black"`.
+#' @param border_size Border line width when `border = TRUE`. Default is `1`.
 #'
 #' @return A function with signature `(index, levels)` suitable for `panel_fun` in [ComplexHeatmap::anno_block].
 #'
@@ -524,7 +526,11 @@ annotation_graphics <- function(subplots, prefix) {
 #' )
 #' ComplexHeatmap::anno_block(panel_fun = panel_fun)
 annotation_block_graphics <- function(
-  subplot, name, border = TRUE
+  subplot,
+  name,
+  border = TRUE,
+  border_color = "black",
+  border_size = 1
 ) {
   p0 <- subplot
   g_name <- name
@@ -542,7 +548,7 @@ annotation_block_graphics <- function(
     )
     if (isTRUE(border)) {
       grid::grid.rect(
-        gp = grid::gpar(fill = "transparent", col = "black")
+        gp = grid::gpar(fill = "transparent", col = border_color, lwd = border_size)
       )
     }
   }
@@ -555,6 +561,8 @@ annotation_block_graphics <- function(
 #' @param levels Character/factor levels used as keys for fill mapping.
 #' @param fill_values Optional named fill vector. Names should match `levels`.
 #' @param border Whether to draw block border.
+#' @param border_color Border color when `border = TRUE`. Default is `"black"`.
+#' @param border_size Border line width when `border = TRUE`. Default is `1`.
 #'
 #' @return A function with signature `(index, levels)` suitable for `panel_fun` in [ComplexHeatmap::anno_block].
 #'
@@ -573,7 +581,9 @@ annotation_block_fill_graphics <- function(
   palette = NULL,
   palcolor = NULL,
   fill_values = NULL,
-  border = TRUE
+  border = TRUE,
+  border_color = "black",
+  border_size = 1
 ) {
   if (is.null(fill_values)) {
     fill_values <- palette_colors(
@@ -594,7 +604,7 @@ annotation_block_fill_graphics <- function(
     }
     grid::grid.rect(
       gp = grid::gpar(
-        fill = fill, col = if (isTRUE(border)) "black" else NA
+        fill = fill, col = if (isTRUE(border)) border_color else NA, lwd = border_size
       )
     )
   }
