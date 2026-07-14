@@ -29,11 +29,27 @@
 #' Default is `"ggVennDiagram"`.
 #' The `"venny"` engine supports 2 to 4 sets.
 #' @param venn_args A list of additional arguments passed to
-#' [venny::venny()] when `plot_type = "venn"` and
-#' `venn_engine = "venny"`.
+#' `venny::venny` when `plot_type = "venn"` and `venn_engine = "venny"`.
 #' The `data` argument is generated internally and cannot be supplied here.
 #' @param stat_type The type of statistic to compute for the plot.
-#' Can be one of `"percent"` or `"count"`.
+#' Can be one of `"percent"`, `"count"`, or `"value"`. Continuous value mode
+#' supports `plot_type = "bar"` and `plot_type = "dot"`.
+#' @param value.by Numeric column used when `stat_type = "value"`.
+#' @param top_n Maximum number of records retained per group and split in value
+#' mode. Default is `Inf`.
+#' @param rank.by Rank continuous values by absolute magnitude or signed value.
+#' @param complete_groups For value dot plots, retain every available group for
+#' a label selected in any group within the same split.
+#' @param value_cutoff Optional minimum absolute value.
+#' @param value_limits Optional continuous colour limits. Symmetric limits are
+#' inferred by default.
+#' @param value_midpoint Midpoint of the continuous colour scale.
+#' @param value_legend_title Legend title for continuous values.
+#' @param bar_fill Optional fixed fill used by value bars.
+#' @param bar_width Width of bars in value mode.
+#' @param point_size Size range for value dot plots.
+#' @param character_width Maximum wrapped label width in value mode.
+#' @param return_data Return the plot and prepared data in value mode.
 #' @param position The position adjustment for the plot.
 #' Can be one of `"stack"` or `"dodge"`.
 #' @param alpha The transparency level for the plot.
@@ -168,16 +184,50 @@
 #'   plot_type = "trend"
 #' )
 #'
-#' meta_data$A <- meta_data$Type == "A"
-#' meta_data$B <- meta_data$Group == "X"
-#' meta_data$C <- meta_data$Batch == "B1"
+#' rank_data <- data.frame(
+#'   Feature = paste0("Feature", 1:12),
+#'   Group = rep(c("Control", "Treatment"), each = 6),
+#'   Value = c(
+#'     -2.4, 1.8, 1.2, -0.8, 0.6, 0.2,
+#'     2.7, -2.1, 1.5, 0.9, -0.5, 0.3
+#'   )
+#' )
+#'
 #' StatPlot(
-#'   meta_data,
-#'   stat.by = c("A", "B", "C"),
-#'   stat_level = TRUE,
-#'   plot_type = "venn",
-#'   venn_engine = "venny",
-#'   venn_args = list(detail = TRUE)
+#'   rank_data,
+#'   stat.by = "Feature",
+#'   value.by = "Value",
+#'   group.by = "Group",
+#'   stat_type = "value",
+#'   plot_type = "bar",
+#'   top_n = 4,
+#'   flip = TRUE,
+#'   palette = "RdBu"
+#' )
+#'
+#' StatPlot(
+#'   rank_data,
+#'   stat.by = "Feature",
+#'   value.by = "Value",
+#'   group.by = "Group",
+#'   stat_type = "value",
+#'   plot_type = "dot",
+#'   top_n = 3,
+#'   palette = "RdBu"
+#' )
+#'
+#' importance_data <- data.frame(
+#'   Variable = paste0("Variable", 1:8),
+#'   Importance = c(0.91, 0.78, 0.64, 0.52, 0.43, 0.31, 0.18, 0.09)
+#' )
+#' StatPlot(
+#'   importance_data,
+#'   stat.by = "Variable",
+#'   value.by = "Importance",
+#'   stat_type = "value",
+#'   top_n = 5,
+#'   flip = TRUE,
+#'   bar_fill = "#3C8DBC"
 #' )
 StatPlot <- function(
   meta.data,
@@ -207,7 +257,20 @@ StatPlot <- function(
   ),
   venn_engine = c("ggVennDiagram", "venny"),
   venn_args = list(),
-  stat_type = c("percent", "count"),
+  stat_type = c("percent", "count", "value"),
+  value.by = NULL,
+  top_n = Inf,
+  rank.by = c("absolute", "value"),
+  complete_groups = NULL,
+  value_cutoff = NULL,
+  value_limits = NULL,
+  value_midpoint = 0,
+  value_legend_title = NULL,
+  bar_fill = NULL,
+  bar_width = 0.8,
+  point_size = c(2.5, 7),
+  character_width = 50,
+  return_data = FALSE,
   position = c("stack", "dodge"),
   palette = "Chinese",
   palcolor = NULL,
@@ -245,6 +308,7 @@ StatPlot <- function(
 
   stat_type <- match.arg(stat_type)
   plot_type <- match.arg(plot_type)
+  rank.by <- match.arg(rank.by)
   venn_engine <- match.arg(venn_engine)
   position <- match.arg(position)
   x_text_angle <- tryCatch(
@@ -258,6 +322,76 @@ StatPlot <- function(
     )
   }
   venn_args <- venn_args %||% list()
+
+  if (identical(stat_type, "value")) {
+    if (!plot_type %in% c("bar", "dot")) {
+      log_message(
+        "{.arg stat_type = 'value'} supports {.arg plot_type} values {.val bar} and {.val dot}",
+        message_type = "error"
+      )
+    }
+    if (length(stat.by) != 1L || length(value.by) != 1L) {
+      log_message(
+        "{.arg stat.by} and {.arg value.by} must each name one column in value mode",
+        message_type = "error"
+      )
+    }
+    if (length(group.by) > 1L) {
+      log_message(
+        "{.arg group.by} must name at most one column in value mode",
+        message_type = "error"
+      )
+    }
+    if (identical(plot_type, "dot") && is.null(group.by)) {
+      group.by <- "All.groups"
+      meta.data[[group.by]] <- factor("")
+      xlab <- xlab %||% ""
+    }
+    complete_groups <- complete_groups %||% identical(plot_type, "dot")
+    grid_major_element <- if (isTRUE(grid_major)) {
+      element_line(
+        colour = grid_major_colour,
+        linetype = grid_major_linetype,
+        linewidth = grid_major_linewidth
+      )
+    } else {
+      element_blank()
+    }
+    return(stat_value_plot(
+      data = meta.data,
+      label = stat.by,
+      score = value.by,
+      group = group.by,
+      facet = split.by,
+      plot_type = plot_type,
+      top_n = top_n,
+      top_by = unique(c(split.by, group.by)),
+      complete_groups = complete_groups,
+      score_cutoff = value_cutoff,
+      sort_by = if (identical(rank.by, "absolute")) "absolute" else "score",
+      palette = palette,
+      palcolor = palcolor,
+      limits = value_limits,
+      midpoint = value_midpoint,
+      bar_fill = bar_fill,
+      bar_width = bar_width,
+      point_size = point_size,
+      alpha = alpha,
+      title = title,
+      xlab = xlab,
+      ylab = ylab %||% value_legend_title %||% value.by,
+      legend_title = value_legend_title %||% value.by,
+      character_width = character_width,
+      flip = flip,
+      theme_use = theme_use,
+      theme_args = theme_args,
+      x_text_angle = x_text_angle,
+      grid_major_element = grid_major_element,
+      legend.position = legend.position,
+      legend.direction = legend.direction,
+      return_data = return_data
+    ))
+  }
 
   if (identical(plot_type, "trend_alluvial")) {
     check_r("ggalluvial", verbose = FALSE)
@@ -1416,4 +1550,284 @@ StatPlot <- function(
   } else {
     return(plist)
   }
+}
+
+stat_value_plot <- function(
+  data,
+  label,
+  score,
+  group = NULL,
+  facet = NULL,
+  plot_type = c("bar", "dot", "comparison"),
+  top_n = Inf,
+  top_by = NULL,
+  complete_groups = identical(plot_type, "comparison"),
+  score_cutoff = NULL,
+  sort_by = c("absolute", "score"),
+  palette = "RdBu",
+  palcolor = NULL,
+  limits = NULL,
+  midpoint = 0,
+  bar_fill = NULL,
+  bar_width = 0.72,
+  point_size = c(2.5, 7),
+  alpha = 1,
+  title = NULL,
+  xlab = NULL,
+  ylab = NULL,
+  legend_title = "Score",
+  character_width = 50,
+  flip = TRUE,
+  theme_use = "theme_this",
+  theme_args = list(),
+  x_text_angle = 45,
+  grid_major_element = element_line(
+    colour = "grey80",
+    linetype = 2,
+    linewidth = 0.3
+  ),
+  legend.position = "right",
+  legend.direction = "vertical",
+  return_data = FALSE
+) {
+  plot_type <- match.arg(plot_type)
+  sort_by <- match.arg(sort_by)
+  if (!is.data.frame(data)) {
+    log_message("{.arg data} must be a data frame", message_type = "error")
+  }
+  columns <- unique(c(label, score, group, facet, top_by))
+  columns <- columns[!is.na(columns) & nzchar(columns)]
+  missing_columns <- setdiff(columns, colnames(data))
+  if (length(missing_columns) > 0L) {
+    log_message(
+      "Columns not found in {.arg data}: {.val {missing_columns}}",
+      message_type = "error"
+    )
+  }
+  if (length(label) != 1L || length(score) != 1L) {
+    log_message(
+      "{.arg label} and {.arg score} must each name one column",
+      message_type = "error"
+    )
+  }
+  if (plot_type %in% c("dot", "comparison") && is.null(group)) {
+    log_message(
+      "{.arg group} is required for grouped dot plots",
+      message_type = "error"
+    )
+  }
+
+  df <- data
+  df[[score]] <- suppressWarnings(as.numeric(df[[score]]))
+  keep <- is.finite(df[[score]]) &
+    !is.na(df[[label]]) &
+    nzchar(as.character(df[[label]]))
+  if (!is.null(score_cutoff)) {
+    keep <- keep & abs(df[[score]]) >= abs(score_cutoff)
+  }
+  df <- df[keep, , drop = FALSE]
+  if (nrow(df) == 0L) {
+    log_message(
+      "No finite scores remain after filtering",
+      message_type = "error"
+    )
+  }
+
+  top_by <- top_by %||% unique(c(facet, group))
+  top_by <- top_by[!is.na(top_by) & nzchar(top_by)]
+  rank_value <- if (identical(sort_by, "absolute")) {
+    abs(df[[score]])
+  } else {
+    df[[score]]
+  }
+  df[[".stat_value_rank"]] <- rank_value
+  df[[".stat_value_row"]] <- seq_len(nrow(df))
+  selected <- stat_value_top_rows(df, top_n = top_n, top_by = top_by)
+
+  if (
+    isTRUE(complete_groups) &&
+      plot_type %in% c("dot", "comparison") &&
+      !is.null(group)
+  ) {
+    selected_keys <- unique(stat_value_key(selected, c(facet, label)))
+    df <- df[
+      stat_value_key(df, c(facet, label)) %in% selected_keys,
+      ,
+      drop = FALSE
+    ]
+  } else {
+    df <- selected
+  }
+  df <- df[
+    order(df[[".stat_value_rank"]], decreasing = TRUE, na.last = NA),
+    ,
+    drop = FALSE
+  ]
+
+  label_text <- as.character(df[[label]])
+  if (requireNamespace("stringr", quietly = TRUE)) {
+    label_text <- stringr::str_wrap(label_text, width = character_width)
+  }
+  df[[".stat_value_label"]] <- factor(
+    label_text,
+    levels = unique(rev(label_text))
+  )
+  df[[".stat_value_abs"]] <- abs(df[[score]])
+
+  if (is.null(limits)) {
+    score_limit <- max(abs(df[[score]] - midpoint), na.rm = TRUE)
+    if (!is.finite(score_limit) || score_limit <= 0) {
+      score_limit <- 1
+    }
+    limits <- midpoint + c(-score_limit, score_limit)
+  }
+  colors <- palette_colors(
+    palette = palette,
+    palcolor = palcolor,
+    matched = FALSE
+  )
+  if (length(colors) < 3L) {
+    colors <- grDevices::colorRampPalette(colors)(3L)
+  }
+  scale_colors <- colors[round(seq(1, length(colors), length.out = 3L))]
+
+  theme_fun <- if (is.function(theme_use)) {
+    theme_use
+  } else {
+    get(theme_use, mode = "function", inherits = TRUE)
+  }
+  facet_columns <- unique(c(
+    facet,
+    if (identical(plot_type, "bar")) group else NULL
+  ))
+  facet_columns <- facet_columns[!is.na(facet_columns) & nzchar(facet_columns)]
+
+  if (identical(plot_type, "bar")) {
+    p <- ggplot(
+      df,
+      aes(x = .data[[".stat_value_label"]], y = .data[[score]])
+    )
+    if (is.null(bar_fill)) {
+      p <- p +
+        geom_col(
+          aes(fill = .data[[score]]),
+          width = bar_width,
+          color = "black",
+          alpha = alpha
+        ) +
+        scale_fill_gradient2(
+          low = scale_colors[[1]],
+          mid = scale_colors[[2]],
+          high = scale_colors[[3]],
+          midpoint = midpoint,
+          limits = limits,
+          name = legend_title
+        )
+    } else {
+      p <- p + geom_col(
+        width = bar_width,
+        fill = bar_fill,
+        color = "black",
+        alpha = alpha
+      )
+    }
+    p <- p +
+      geom_hline(yintercept = midpoint, color = "grey75", linewidth = 0.35) +
+      labs(title = title, x = xlab, y = ylab %||% legend_title)
+    if (isTRUE(flip)) p <- p + coord_flip()
+  } else {
+    p <- ggplot(
+      df,
+      aes(x = .data[[group]], y = .data[[".stat_value_label"]])
+    ) +
+      geom_point(
+        aes(size = .data[[".stat_value_abs"]], fill = .data[[score]]),
+        shape = 21,
+        color = "black",
+        alpha = alpha
+      ) +
+      scale_size_continuous(
+        name = paste0("|", legend_title, "|"),
+        range = point_size
+      ) +
+      scale_fill_gradient2(
+        low = scale_colors[[1]],
+        mid = scale_colors[[2]],
+        high = scale_colors[[3]],
+        midpoint = midpoint,
+        limits = limits,
+        name = legend_title
+      ) +
+      labs(title = title, x = xlab %||% group, y = ylab)
+  }
+  if (length(facet_columns) > 0L) {
+    p <- p +
+      facet_wrap(
+        stats::as.formula(paste("~", paste(facet_columns, collapse = "+"))),
+        scales = if (identical(plot_type, "bar") && isTRUE(flip)) {
+          "free_x"
+        } else {
+          "free_y"
+        }
+      )
+  }
+  p <- p +
+    do.call(theme_fun, theme_args) +
+    theme(
+      legend.position = legend.position,
+      legend.direction = legend.direction,
+      panel.grid.major = grid_major_element,
+      axis.text.x = element_text(
+        angle = if (identical(plot_type, "bar") && isTRUE(flip)) 0 else x_text_angle,
+        hjust = 1,
+        vjust = 1
+      )
+    )
+
+  df[[".stat_value_rank"]] <- NULL
+  df[[".stat_value_row"]] <- NULL
+  df[[".stat_value_label"]] <- NULL
+  df[[".stat_value_abs"]] <- NULL
+  rownames(df) <- NULL
+  if (isTRUE(return_data)) {
+    return(list(plot = p, data = df))
+  }
+  p
+}
+
+stat_value_top_rows <- function(data, top_n, top_by) {
+  if (is.null(top_n) || length(top_n) == 0L || is.infinite(top_n)) {
+    return(data)
+  }
+  if (length(top_n) != 1L || is.na(top_n) || top_n < 1L) {
+    log_message(
+      "{.arg top_n} must be a positive number or {.val Inf}",
+      message_type = "error"
+    )
+  }
+  split_index <- if (length(top_by) == 0L) {
+    list(All = seq_len(nrow(data)))
+  } else {
+    split(seq_len(nrow(data)), stat_value_key(data, top_by), drop = TRUE)
+  }
+  keep <- unlist(
+    lapply(split_index, function(index) {
+      index <- index[order(
+        data[[".stat_value_rank"]][index],
+        decreasing = TRUE,
+        na.last = NA
+      )]
+      utils::head(index, as.integer(top_n))
+    }),
+    use.names = FALSE
+  )
+  data[sort(unique(keep)), , drop = FALSE]
+}
+
+stat_value_key <- function(data, columns) {
+  columns <- columns[!is.na(columns) & nzchar(columns)]
+  if (length(columns) == 0L) {
+    return(rep("All", nrow(data)))
+  }
+  do.call(paste, c(lapply(data[columns], as.character), sep = "\r"))
 }
