@@ -20,7 +20,20 @@ StatPlot(
     "sankey", "chord", "venn", "upset"),
   venn_engine = c("ggVennDiagram", "venny"),
   venn_args = list(),
-  stat_type = c("percent", "count"),
+  stat_type = c("percent", "count", "value"),
+  value.by = NULL,
+  top_n = Inf,
+  rank.by = c("absolute", "value"),
+  complete_groups = NULL,
+  value_cutoff = NULL,
+  value_limits = NULL,
+  value_midpoint = 0,
+  value_legend_title = NULL,
+  bar_fill = NULL,
+  bar_width = 0.8,
+  point_size = c(2.5, 7),
+  character_width = 50,
+  return_data = FALSE,
   position = c("stack", "dodge"),
   palette = "Chinese",
   palcolor = NULL,
@@ -96,12 +109,41 @@ Default is \code{"ggVennDiagram"}.
 The \code{"venny"} engine supports 2 to 4 sets.}
 
 \item{venn_args}{A list of additional arguments passed to
-\code{\link[venny:venny]{venny::venny()}} when \code{plot_type = "venn"} and
-\code{venn_engine = "venny"}.
+\code{venny::venny} when \code{plot_type = "venn"} and \code{venn_engine = "venny"}.
 The \code{data} argument is generated internally and cannot be supplied here.}
 
 \item{stat_type}{The type of statistic to compute for the plot.
-Can be one of \code{"percent"} or \code{"count"}.}
+Can be one of \code{"percent"}, \code{"count"}, or \code{"value"}. Continuous value mode
+supports \code{plot_type = "bar"} and \code{plot_type = "dot"}.}
+
+\item{value.by}{Numeric column used when \code{stat_type = "value"}.}
+
+\item{top_n}{Maximum number of records retained per group and split in value
+mode. Default is \code{Inf}.}
+
+\item{rank.by}{Rank continuous values by absolute magnitude or signed value.}
+
+\item{complete_groups}{For value dot plots, retain every available group for
+a label selected in any group within the same split.}
+
+\item{value_cutoff}{Optional minimum absolute value.}
+
+\item{value_limits}{Optional continuous colour limits. Symmetric limits are
+inferred by default.}
+
+\item{value_midpoint}{Midpoint of the continuous colour scale.}
+
+\item{value_legend_title}{Legend title for continuous values.}
+
+\item{bar_fill}{Optional fixed fill used by value bars.}
+
+\item{bar_width}{Width of bars in value mode.}
+
+\item{point_size}{Size range for value dot plots.}
+
+\item{character_width}{Maximum wrapped label width in value mode.}
+
+\item{return_data}{Return the plot and prepared data in value mode.}
 
 \item{position}{The position adjustment for the plot.
 Can be one of \code{"stack"} or \code{"dodge"}.}
@@ -267,15 +309,49 @@ StatPlot(
   plot_type = "trend"
 )
 
-meta_data$A <- meta_data$Type == "A"
-meta_data$B <- meta_data$Group == "X"
-meta_data$C <- meta_data$Batch == "B1"
+rank_data <- data.frame(
+  Feature = paste0("Feature", 1:12),
+  Group = rep(c("Control", "Treatment"), each = 6),
+  Value = c(
+    -2.4, 1.8, 1.2, -0.8, 0.6, 0.2,
+    2.7, -2.1, 1.5, 0.9, -0.5, 0.3
+  )
+)
+
 StatPlot(
-  meta_data,
-  stat.by = c("A", "B", "C"),
-  stat_level = TRUE,
-  plot_type = "venn",
-  venn_engine = "venny",
-  venn_args = list(detail = TRUE)
+  rank_data,
+  stat.by = "Feature",
+  value.by = "Value",
+  group.by = "Group",
+  stat_type = "value",
+  plot_type = "bar",
+  top_n = 4,
+  flip = TRUE,
+  palette = "RdBu"
+)
+
+StatPlot(
+  rank_data,
+  stat.by = "Feature",
+  value.by = "Value",
+  group.by = "Group",
+  stat_type = "value",
+  plot_type = "dot",
+  top_n = 3,
+  palette = "RdBu"
+)
+
+importance_data <- data.frame(
+  Variable = paste0("Variable", 1:8),
+  Importance = c(0.91, 0.78, 0.64, 0.52, 0.43, 0.31, 0.18, 0.09)
+)
+StatPlot(
+  importance_data,
+  stat.by = "Variable",
+  value.by = "Importance",
+  stat_type = "value",
+  top_n = 5,
+  flip = TRUE,
+  bar_fill = "#3C8DBC"
 )
 }
