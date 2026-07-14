@@ -76,8 +76,7 @@
 #'   plot_data,
 #'   x = "x",
 #'   y = "y",
-#'   group.by = "group",
-#'   add_mark = TRUE
+#'   group.by = "group"
 #' )
 #'
 #' DimDataPlot(
@@ -85,7 +84,6 @@
 #'   x = "x",
 #'   y = "y",
 #'   group.by = "group",
-#'   add_mark = TRUE,
 #'   add_origin = TRUE,
 #'   mark_type = "ellipse"
 #' )
@@ -95,7 +93,6 @@
 #'   x = "x",
 #'   y = "y",
 #'   group.by = "group",
-#'   add_mark = TRUE,
 #'   mark_type = "circle",
 #'   mark_alpha = 0.3,
 #'   mark_expand = grid::unit(1, "mm"),
@@ -272,6 +269,7 @@ DimDataPlot <- function(
 
   mark_layers <- NULL
   if (isTRUE(add_mark)) {
+    check_r("concaveman", verbose = FALSE)
     if (identical(mark_type, "ellipse")) {
       mark_layers <- list(
         ggplot2::stat_ellipse(
