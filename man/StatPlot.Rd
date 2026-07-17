@@ -42,6 +42,7 @@ StatPlot(
   bg_palcolor = NULL,
   bg_alpha = 0.2,
   label = FALSE,
+  label_cutoff = NULL,
   label.size = 3.5,
   label.fg = "black",
   label.bg = "white",
@@ -164,6 +165,12 @@ Default is \code{NULL}.}
 
 \item{label}{Whether to add labels on the plot.
 Default is \code{FALSE}.}
+
+\item{label_cutoff}{Optional minimum plotted value required to show a label.
+Labels are shown only for values strictly greater than this cutoff. For
+percentage plots, use proportions; for example, \code{label_cutoff = 0.1} shows
+labels only for values greater than 10\%. Default is \code{NULL}, which labels all
+values.}
 
 \item{label.size}{The size of the labels.}
 
