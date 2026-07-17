@@ -58,6 +58,11 @@
 #' @param bg_alpha The transparency level for the background color in bar plots.
 #' @param label Whether to add labels on the plot.
 #' Default is `FALSE`.
+#' @param label_cutoff Optional minimum plotted value required to show a label.
+#' Labels are shown only for values strictly greater than this cutoff. For
+#' percentage plots, use proportions; for example, `label_cutoff = 0.1` shows
+#' labels only for values greater than 10%. Default is `NULL`, which labels all
+#' values.
 #' @param label.size The size of the labels.
 #' @param label.fg The foreground color of the labels.
 #' @param label.bg The background color of the labels.
@@ -279,6 +284,7 @@ StatPlot <- function(
   bg_palcolor = NULL,
   bg_alpha = 0.2,
   label = FALSE,
+  label_cutoff = NULL,
   label.size = 3.5,
   label.fg = "black",
   label.bg = "white",
@@ -320,6 +326,18 @@ StatPlot <- function(
       "{.arg x_text_angle} must be a finite number",
       message_type = "error"
     )
+  }
+  if (!is.null(label_cutoff)) {
+    label_cutoff <- tryCatch(
+      suppressWarnings(as.numeric(label_cutoff)),
+      error = function(e) NA_real_
+    )
+    if (length(label_cutoff) != 1L || !is.finite(label_cutoff)) {
+      log_message(
+        "{.arg label_cutoff} must be a finite number or {.code NULL}",
+        message_type = "error"
+      )
+    }
   }
   venn_args <- venn_args %||% list()
 
@@ -829,6 +847,23 @@ StatPlot <- function(
           )
         }
 
+        if (isTRUE(label)) {
+          label_value <- if (is.null(label_cutoff)) {
+            dat[["value"]]
+          } else {
+            ifelse(dat[["value"]] > label_cutoff, dat[["value"]], NA_real_)
+          }
+          dat[[".label_text"]] <- if (stat_type == "count") {
+            label_value
+          } else {
+            ifelse(
+              is.na(label_value),
+              NA_character_,
+              paste0(round(label_value * 100, 1), "%")
+            )
+          }
+        }
+
         if (plot_type == "bar") {
           p <- ggplot(
             dat,
@@ -1057,18 +1092,16 @@ StatPlot <- function(
             guides(size = guide_legend(override.aes = list(fill = "grey30")))
         }
         if (isTRUE(label)) {
+          label_data <- dat[!is.na(dat[[".label_text"]]), , drop = FALSE]
           if (plot_type == "dot") {
             p <- p +
               ggrepel::geom_text_repel(
                 aes(
                   x = .data[[g]],
                   y = .data[[stat.by]],
-                  label = if (stat_type == "count") {
-                    value
-                  } else {
-                    paste0(round(value * 100, 1), "%")
-                  },
+                  label = .data[[".label_text"]],
                 ),
+                data = label_data,
                 colour = label.fg,
                 size = label.size,
                 bg.color = label.bg,
@@ -1083,13 +1116,10 @@ StatPlot <- function(
             p <- p +
               ggrepel::geom_text_repel(
                 aes(
-                  label = if (stat_type == "count") {
-                    value
-                  } else {
-                    paste0(round(value * 100, 1), "%")
-                  },
+                  label = .data[[".label_text"]],
                   y = value
                 ),
+                data = label_data,
                 colour = label.fg,
                 size = label.size,
                 bg.color = label.bg,
