@@ -76,6 +76,12 @@ reference:
   - annotation_graphics
   - build_heatmap_annotation
   - cluster_within_group2
+  - heatmap_border_spec
+  - heatmap_border_enabled
+  - heatmap_border_color
+  - heatmap_border_size_value
+  - heatmap_border_gp
+  - heatmap_legend_border
   - heatmap_fixsize
   - heatmap_rendersize
   - normalize_drawable

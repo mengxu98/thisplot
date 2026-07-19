@@ -7,6 +7,7 @@
 #'
 #' @param border `NULL`, a logical border flag, or a non-empty colour string.
 #' @param palcolor Fallback border colour when `border` is not a colour string.
+#' @param color Fallback border colour used by the `gp` and legend helpers.
 #' @param size Border line width. Invalid or negative values use `1`.
 #'
 #' @return A list with `enabled`, `color`, `size`, `gp`, and `legend_border`.

@@ -27,6 +27,8 @@ heatmap_legend_border(border, color)
 \item{palcolor}{Fallback border colour when `border` is not a colour string.}
 
 \item{size}{Border line width. Invalid or negative values use `1`.}
+
+\item{color}{Fallback border colour used by the `gp` and legend helpers.}
 }
 \value{
 A list with `enabled`, `color`, `size`, `gp`, and `legend_border`.

@@ -19,3 +19,5 @@
 ^scripts$
 ^test$
 .codex
+^\.codegraph$
+^\.reasonix$
