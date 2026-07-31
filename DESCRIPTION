@@ -2,7 +2,7 @@ Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
 Version: 0.4.3
-Date: 2026-07-20
+Date: 2026-08-01
 Authors@R:
     c(
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054")),
@@ -17,6 +17,7 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
+    ComplexHeatmap,
     dendextend,
     ggforce,
     geomtextpath,
@@ -36,7 +37,6 @@ Imports:
     utils
 Suggests:
     circlize,
-    ComplexHeatmap,
     dplyr,
     forcats,
     ggalluvial,
