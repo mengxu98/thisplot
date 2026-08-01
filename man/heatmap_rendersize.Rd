@@ -45,6 +45,7 @@ A list with numeric \code{width_sum} and \code{height_sum} in \code{units}.
 Estimate heatmap render size
 }
 \examples{
+\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 mat <- matrix(rnorm(100), nrow = 10)
 ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
 size <- heatmap_rendersize(
@@ -59,4 +60,5 @@ size <- heatmap_rendersize(
   flip = FALSE
 )
 size
+\dontshow{\}) # examplesIf}
 }
