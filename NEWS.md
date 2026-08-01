@@ -1,3 +1,11 @@
+# thisplot 0.4.4
+
+* **fix**:
+  * Restore `ComplexHeatmap` as an optional dependency so `thisplot` can be
+    installed from repositories that do not package Bioconductor dependencies.
+  * Check for `ComplexHeatmap` when heatmap-specific helpers are used and run
+    their examples only when the optional package is available.
+
 # thisplot 0.4.3
 
 * **feat**:
