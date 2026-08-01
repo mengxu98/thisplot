@@ -18,9 +18,11 @@ A dendrogram with ordered leaves
 Cluster within group
 }
 \examples{
+\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 mat <- matrix(rnorm(100), 10, 10)
 factor <- factor(rep(1:2, each = 5))
 dend <- cluster_within_group2(mat, factor)
 dend
 plot(dend)
+\dontshow{\}) # examplesIf}
 }

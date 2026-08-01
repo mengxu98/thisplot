@@ -37,6 +37,7 @@ A function with signature \verb{(index, levels)} suitable for \code{panel_fun} i
 Build block fill panel function
 }
 \examples{
+\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 library(ggplot2)
 lv <- c("A", "B", "C")
 panel_fun <- annotation_block_fill_graphics(
@@ -44,4 +45,5 @@ panel_fun <- annotation_block_fill_graphics(
   fill_values = c(A = "#1b9e77", B = "#d95f02", C = "#7570b3")
 )
 ComplexHeatmap::anno_block(panel_fun = panel_fun)
+\dontshow{\}) # examplesIf}
 }

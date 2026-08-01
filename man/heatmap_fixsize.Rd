@@ -42,6 +42,7 @@ A list with two converted units: \code{ht_width} and \code{ht_height}.
 Compute fixed heatmap device size
 }
 \examples{
+\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 mat <- matrix(rnorm(100), nrow = 10)
 ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
 lgd <- list(ComplexHeatmap::Legend(title = "expr", at = c(-2, 0, 2)))
@@ -55,4 +56,5 @@ out <- heatmap_fixsize(
   legend_list = lgd
 )
 out
+\dontshow{\}) # examplesIf}
 }

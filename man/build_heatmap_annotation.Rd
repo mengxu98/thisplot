@@ -33,6 +33,7 @@ A \link[ComplexHeatmap:HeatmapAnnotation]{ComplexHeatmap::HeatmapAnnotation} obj
 Build HeatmapAnnotation with safe parameter merge
 }
 \examples{
+\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
 anno <- list(
   group = ComplexHeatmap::anno_simple(
     x = c("A", "B", "A"),
@@ -48,4 +49,5 @@ ha <- build_heatmap_annotation(
   params = list(gap = grid::unit(1, "mm"))
 )
 ha
+\dontshow{\}) # examplesIf}
 }

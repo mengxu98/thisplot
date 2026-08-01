@@ -19,7 +19,7 @@
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
 #' mat <- matrix(rnorm(100), nrow = 10)
 #' ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
 #' lgd <- list(ComplexHeatmap::Legend(title = "expr", at = c(-2, 0, 2)))
@@ -42,6 +42,8 @@ heatmap_fixsize <- function(
   ht_list,
   legend_list
 ) {
+  check_r("ComplexHeatmap", verbose = FALSE)
+
   unit_value_or_zero <- function(u, units, type = c("width", "height")) {
     type <- match.arg(type)
     if (length(u) == 0) {
@@ -174,7 +176,7 @@ heatmap_fixsize <- function(
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
 #' mat <- matrix(rnorm(100), nrow = 10)
 #' ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
 #' size <- heatmap_rendersize(
@@ -200,6 +202,8 @@ heatmap_rendersize <- function(
   legend_list,
   flip
 ) {
+  check_r("ComplexHeatmap", verbose = FALSE)
+
   legend_list <- legend_list[!vapply(legend_list, is.null, logical(1))]
 
   width_annotation <- height_annotation <- 0
@@ -361,13 +365,15 @@ heatmap_rendersize <- function(
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
 #' mat <- matrix(rnorm(100), 10, 10)
 #' factor <- factor(rep(1:2, each = 5))
 #' dend <- cluster_within_group2(mat, factor)
 #' dend
 #' plot(dend)
 cluster_within_group2 <- function(mat, factor) {
+  check_r("ComplexHeatmap", verbose = FALSE)
+
   if (!is.factor(factor)) {
     factor <- factor(factor, levels = unique(factor))
   }
@@ -517,7 +523,7 @@ annotation_graphics <- function(subplots, prefix) {
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
 #' library(ggplot2)
 #' p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'   ggplot2::geom_point()
@@ -568,7 +574,7 @@ annotation_block_graphics <- function(
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
 #' library(ggplot2)
 #' lv <- c("A", "B", "C")
 #' panel_fun <- annotation_block_fill_graphics(
@@ -624,7 +630,7 @@ annotation_block_fill_graphics <- function(
 #'
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
 #' anno <- list(
 #'   group = ComplexHeatmap::anno_simple(
 #'     x = c("A", "B", "A"),
@@ -648,6 +654,8 @@ build_heatmap_annotation <- function(
   border = NULL,
   params = NULL
 ) {
+  check_r("ComplexHeatmap", verbose = FALSE)
+
   anno_args <- c(
     annotations,
     which = which,
