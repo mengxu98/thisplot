@@ -1695,9 +1695,17 @@ stat_value_plot <- function(
   ]
 
   label_text <- as.character(df[[label]])
-  if (requireNamespace("stringr", quietly = TRUE)) {
-    label_text <- stringr::str_wrap(label_text, width = character_width)
-  }
+  label_text <- vapply(
+    label_text,
+    function(x) {
+      if (is.na(x)) {
+        return(NA_character_)
+      }
+      paste(base::strwrap(x, width = character_width), collapse = "\n")
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
   df[[".stat_value_label"]] <- factor(
     label_text,
     levels = unique(rev(label_text))

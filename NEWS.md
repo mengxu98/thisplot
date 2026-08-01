@@ -1,8 +1,11 @@
-# thisplot 0.4.2
+# thisplot 0.4.3
 
 * **feat**:
   * Add `major_grid()` for reusable major-grid control.
   * Let block heatmap annotations control border colour and line width.
+
+* **fix**:
+  * Declare `ComplexHeatmap` as an imported dependency so heatmap examples run on clean check systems.
 
 # thisplot 0.4.1
 
