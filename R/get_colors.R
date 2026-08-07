@@ -375,12 +375,22 @@ print.colors <- function(x, ...) {
     if (is.na(s) || length(s) == 0) {
       return(0)
     }
-    plain_s <- cli::ansi_strip(s)
-    nchar(plain_s, type = "width")
+    cli::ansi_nchar(s, type = "width")
   }
 
   if (has_color) {
     col_names <- colnames(x)
+
+    format_cell <- function(val) {
+      format(val, trim = TRUE)
+    }
+
+    pad_cell <- function(value, width) {
+      paste0(
+        cli::ansi_align(value, width = width, align = "left", type = "width"),
+        "  "
+      )
+    }
 
     col_widths <- vapply(col_names, function(nm) {
       name_width <- display_width(nm)
@@ -388,7 +398,7 @@ print.colors <- function(x, ...) {
         if (is.na(val)) {
           return(2)
         }
-        display_width(format(val))
+        display_width(format_cell(val))
       }, numeric(1))
       max(name_width, max(data_widths, na.rm = TRUE), na.rm = TRUE)
     }, numeric(1))
@@ -396,9 +406,7 @@ print.colors <- function(x, ...) {
     header_parts <- vapply(seq_along(col_names), function(i) {
       nm <- col_names[i]
       width <- as.integer(col_widths[i])
-      current_width <- display_width(nm)
-      padding <- max(0, width - current_width)
-      paste0(nm, strrep(" ", padding + 2))
+      pad_cell(nm, width)
     }, character(1))
     cat(paste(header_parts, collapse = ""), "\n")
 
@@ -415,14 +423,10 @@ print.colors <- function(x, ...) {
         seq_along(col_names), function(j) {
           col_name <- col_names[j]
           val <- x[[col_name]][i]
-          formatted_val <- format(val)
+          formatted_val <- format_cell(val)
 
           width <- as.integer(col_widths[j])
-          current_width <- display_width(formatted_val)
-          padding <- max(0, width - current_width)
-
-          cell_content <- paste0(formatted_val, strrep(" ", padding + 2))
-          return(cell_content)
+          pad_cell(formatted_val, width)
         }, character(1)
       )
 
