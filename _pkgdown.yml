@@ -112,6 +112,7 @@ reference:
   - BlendRGBList
   - col2hex
   - get_colors
+  - print_colored_table
   - palette_colors
   - palette_list
   - RGBA2RGB

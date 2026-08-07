@@ -29,14 +29,3 @@ A function with signature \verb{(index, levels)} suitable for \code{panel_fun} i
 \description{
 Build block panel function
 }
-\examples{
-\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-library(ggplot2)
-p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
-  ggplot2::geom_point()
-panel_fun <- annotation_block_graphics(
-  subplot = p, name = "demo-block"
-)
-ComplexHeatmap::anno_block(panel_fun = panel_fun)
-\dontshow{\}) # examplesIf}
-}
