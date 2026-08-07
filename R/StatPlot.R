@@ -973,8 +973,7 @@ StatPlot <- function(
             }
             colnames(y_total) <- c("group", "y_max")
             y_total <- y_total[
-              y_total[["group"]] %in% group_levels,
-              ,
+              y_total[["group"]] %in% group_levels, ,
               drop = FALSE
             ]
             y_max_global <- max(y_total[["y_max"]], na.rm = TRUE)
@@ -1363,8 +1362,7 @@ StatPlot <- function(
           )
         }
         dat_use <- dat_use[
-          sapply(dat_use[["intersection"]], length) > 0,
-          ,
+          sapply(dat_use[["intersection"]], length) > 0, ,
           drop = FALSE
         ]
         p <- ggplot(
@@ -1681,16 +1679,14 @@ stat_value_plot <- function(
   ) {
     selected_keys <- unique(stat_value_key(selected, c(facet, label)))
     df <- df[
-      stat_value_key(df, c(facet, label)) %in% selected_keys,
-      ,
+      stat_value_key(df, c(facet, label)) %in% selected_keys, ,
       drop = FALSE
     ]
   } else {
     df <- selected
   }
   df <- df[
-    order(df[[".stat_value_rank"]], decreasing = TRUE, na.last = NA),
-    ,
+    order(df[[".stat_value_rank"]], decreasing = TRUE, na.last = NA), ,
     drop = FALSE
   ]
 
