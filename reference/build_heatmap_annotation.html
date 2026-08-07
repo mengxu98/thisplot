@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,36 +88,6 @@
     <p>A <a href="https://rdrr.io/pkg/ComplexHeatmap/man/HeatmapAnnotation.html" class="external-link">ComplexHeatmap::HeatmapAnnotation</a> object.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">anno</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  group <span class="op">=</span> <span class="fu">ComplexHeatmap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/anno_simple.html" class="external-link">anno_simple</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>A <span class="op">=</span> <span class="st">"#1b9e77"</span>, B <span class="op">=</span> <span class="st">"#d95f02"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    which <span class="op">=</span> <span class="st">"column"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ha</span> <span class="op">&lt;-</span> <span class="fu">build_heatmap_annotation</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  annotations <span class="op">=</span> <span class="va">anno</span>,</span></span>
-<span class="r-in"><span>  which <span class="op">=</span> <span class="st">"column"</span>,</span></span>
-<span class="r-in"><span>  show_annotation_name <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>  annotation_name_side <span class="op">=</span> <span class="st">"left"</span>,</span></span>
-<span class="r-in"><span>  params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>gap <span class="op">=</span> <span class="fu">grid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mm"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">ha</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> A HeatmapAnnotation object with 1 annotation</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   name: heatmap_annotation_0 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   position: column </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   items: 3 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   width: 1npc </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   height: 5mm </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   this object is subsettable</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   11.8246333333333mm extension on the left </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   name annotation_type color_mapping height</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  group   anno_simple()                  5mm</span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 
