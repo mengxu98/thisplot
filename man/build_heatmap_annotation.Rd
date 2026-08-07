@@ -32,22 +32,3 @@ A \link[ComplexHeatmap:HeatmapAnnotation]{ComplexHeatmap::HeatmapAnnotation} obj
 \description{
 Build HeatmapAnnotation with safe parameter merge
 }
-\examples{
-\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-anno <- list(
-  group = ComplexHeatmap::anno_simple(
-    x = c("A", "B", "A"),
-    col = c(A = "#1b9e77", B = "#d95f02"),
-    which = "column"
-  )
-)
-ha <- build_heatmap_annotation(
-  annotations = anno,
-  which = "column",
-  show_annotation_name = TRUE,
-  annotation_name_side = "left",
-  params = list(gap = grid::unit(1, "mm"))
-)
-ha
-\dontshow{\}) # examplesIf}
-}

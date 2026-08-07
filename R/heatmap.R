@@ -18,21 +18,6 @@
 #' @return A list with two converted units: `ht_width` and `ht_height`.
 #'
 #' @export
-#'
-#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
-#' mat <- matrix(rnorm(100), nrow = 10)
-#' ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
-#' lgd <- list(ComplexHeatmap::Legend(title = "expr", at = c(-2, 0, 2)))
-#' out <- heatmap_fixsize(
-#'   width = NULL,
-#'   width_sum = 6,
-#'   height = NULL,
-#'   height_sum = 4,
-#'   units = "in",
-#'   ht_list = ht,
-#'   legend_list = lgd
-#' )
-#' out
 heatmap_fixsize <- function(
   width,
   width_sum,
@@ -175,22 +160,6 @@ heatmap_fixsize <- function(
 #' @return A list with numeric `width_sum` and `height_sum` in `units`.
 #'
 #' @export
-#'
-#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
-#' mat <- matrix(rnorm(100), nrow = 10)
-#' ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
-#' size <- heatmap_rendersize(
-#'   width = c(4),
-#'   height = c(3),
-#'   units = "in",
-#'   ha_top_list = list(),
-#'   ha_left = NULL,
-#'   ha_right = NULL,
-#'   ht_list = ht,
-#'   legend_list = list(),
-#'   flip = FALSE
-#' )
-#' size
 heatmap_rendersize <- function(
   width,
   height,
@@ -364,13 +333,6 @@ heatmap_rendersize <- function(
 #' @return A dendrogram with ordered leaves
 #'
 #' @export
-#'
-#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
-#' mat <- matrix(rnorm(100), 10, 10)
-#' factor <- factor(rep(1:2, each = 5))
-#' dend <- cluster_within_group2(mat, factor)
-#' dend
-#' plot(dend)
 cluster_within_group2 <- function(mat, factor) {
   check_r("ComplexHeatmap", verbose = FALSE)
 
@@ -522,15 +484,6 @@ annotation_graphics <- function(subplots, prefix) {
 #' @return A function with signature `(index, levels)` suitable for `panel_fun` in [ComplexHeatmap::anno_block].
 #'
 #' @export
-#'
-#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
-#' library(ggplot2)
-#' p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
-#'   ggplot2::geom_point()
-#' panel_fun <- annotation_block_graphics(
-#'   subplot = p, name = "demo-block"
-#' )
-#' ComplexHeatmap::anno_block(panel_fun = panel_fun)
 annotation_block_graphics <- function(
   subplot,
   name,
@@ -573,15 +526,6 @@ annotation_block_graphics <- function(
 #' @return A function with signature `(index, levels)` suitable for `panel_fun` in [ComplexHeatmap::anno_block].
 #'
 #' @export
-#'
-#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
-#' library(ggplot2)
-#' lv <- c("A", "B", "C")
-#' panel_fun <- annotation_block_fill_graphics(
-#'   levels = lv,
-#'   fill_values = c(A = "#1b9e77", B = "#d95f02", C = "#7570b3")
-#' )
-#' ComplexHeatmap::anno_block(panel_fun = panel_fun)
 annotation_block_fill_graphics <- function(
   levels,
   palette = NULL,
@@ -629,23 +573,6 @@ annotation_block_fill_graphics <- function(
 #' @return A [ComplexHeatmap::HeatmapAnnotation] object.
 #'
 #' @export
-#'
-#' @examplesIf requireNamespace("ComplexHeatmap", quietly = TRUE)
-#' anno <- list(
-#'   group = ComplexHeatmap::anno_simple(
-#'     x = c("A", "B", "A"),
-#'     col = c(A = "#1b9e77", B = "#d95f02"),
-#'     which = "column"
-#'   )
-#' )
-#' ha <- build_heatmap_annotation(
-#'   annotations = anno,
-#'   which = "column",
-#'   show_annotation_name = TRUE,
-#'   annotation_name_side = "left",
-#'   params = list(gap = grid::unit(1, "mm"))
-#' )
-#' ha
 build_heatmap_annotation <- function(
   annotations,
   which,
