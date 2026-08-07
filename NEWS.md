@@ -1,3 +1,23 @@
+# thisplot 0.4.5
+
+* **feat**:
+  * Add `print_colored_table()` for ANSI-colored data-frame output, with
+    palette colors assigned by column by default and optional row coloring.
+  * Keep table headers uncolored and omit separator rules for compact console
+    output.
+
+* **fix**:
+  * Align `get_colors()` and colored-table columns using ANSI-aware terminal
+    display widths, including Chinese text.
+  * Apply distinct palette colors consistently when printing colored tables.
+
+* **docs**:
+  * Streamline documentation for optional `ComplexHeatmap` helpers.
+
+* **deps**:
+  * Remove the unused `testthat` suggested dependency and its stale
+    configuration.
+
 # thisplot 0.4.4
 
 * **fix**:

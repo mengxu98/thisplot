@@ -44,21 +44,3 @@ A list with numeric \code{width_sum} and \code{height_sum} in \code{units}.
 \description{
 Estimate heatmap render size
 }
-\examples{
-\dontshow{if (requireNamespace("ComplexHeatmap", quietly = TRUE)) withAutoprint(\{ # examplesIf}
-mat <- matrix(rnorm(100), nrow = 10)
-ht <- ComplexHeatmap::Heatmap(mat, name = "expr")
-size <- heatmap_rendersize(
-  width = c(4),
-  height = c(3),
-  units = "in",
-  ha_top_list = list(),
-  ha_left = NULL,
-  ha_right = NULL,
-  ht_list = ht,
-  legend_list = list(),
-  flip = FALSE
-)
-size
-\dontshow{\}) # examplesIf}
-}
