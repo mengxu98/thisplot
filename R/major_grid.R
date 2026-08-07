@@ -16,7 +16,8 @@
 #'
 #' @examples
 #' library(ggplot2)
-#' p <- ggplot(mtcars, aes(wt, mpg)) + geom_point()
+#' p <- ggplot(mtcars, aes(wt, mpg)) +
+#'   geom_point()
 #' major_grid(p, grid_major = TRUE)
 major_grid <- function(
   plot,

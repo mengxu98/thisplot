@@ -123,8 +123,7 @@ visual_colors <- function(
   }
 
   get_label_layout <- function(mode, texts) {
-    switch(
-      mode,
+    switch(mode,
       chinese = list(
         cell_width = 21,
         cell_height = 50,

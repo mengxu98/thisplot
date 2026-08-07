@@ -125,37 +125,33 @@ theme_sankey <-
     base_family = "",
     base_line_size = base_size / 22,
     base_rect_size = base_size / 22
-  ) {
-    {
-      ggplot2::theme_bw(
-        base_size = base_size,
-        base_family = base_family,
-        base_line_size = base_line_size,
-        base_rect_size = base_rect_size
-      ) %+replace%
-        ggplot2::theme(
-          panel.border = ggplot2::element_blank(),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          axis.line = ggplot2::element_line(
-            colour = "black",
-            linewidth = ggplot2::rel(1)
-          ),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_rect(
-            fill = "white",
-            colour = "transparent",
-            linewidth = ggplot2::rel(2)
-          ),
-          complete = TRUE,
-          axis.line.y = ggplot2::element_blank(),
-          axis.line.x = ggplot2::element_blank(),
-          axis.text.y = ggplot2::element_blank(),
-          axis.ticks.y = ggplot2::element_blank(),
-          axis.ticks.x = ggplot2::element_blank()
-        )
-    }
-  }
+  ) {{ ggplot2::theme_bw(
+    base_size = base_size,
+    base_family = base_family,
+    base_line_size = base_line_size,
+    base_rect_size = base_rect_size
+  ) %+replace%
+    ggplot2::theme(
+      panel.border = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.line = ggplot2::element_line(
+        colour = "black",
+        linewidth = ggplot2::rel(1)
+      ),
+      legend.key = ggplot2::element_blank(),
+      strip.background = ggplot2::element_rect(
+        fill = "white",
+        colour = "transparent",
+        linewidth = ggplot2::rel(2)
+      ),
+      complete = TRUE,
+      axis.line.y = ggplot2::element_blank(),
+      axis.line.x = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank()
+    ) }}
 
 #' @rdname theme_sankey
 #' @export
@@ -165,31 +161,27 @@ theme_alluvial <-
     base_family = "",
     base_line_size = base_size / 22,
     base_rect_size = base_size / 22
-  ) {
-    {
-      ggplot2::theme_bw(
-        base_size = base_size,
-        base_family = base_family,
-        base_line_size = base_line_size,
-        base_rect_size = base_rect_size
-      ) %+replace%
-        ggplot2::theme(
-          panel.border = ggplot2::element_blank(),
-          panel.grid.major = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          axis.line = ggplot2::element_blank(),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_rect(
-            fill = "white",
-            colour = "transparent",
-            linewidth = ggplot2::rel(2)
-          ),
-          complete = TRUE,
-          axis.line.x = ggplot2::element_blank(),
-          axis.ticks.x = ggplot2::element_blank()
-        )
-    }
-  }
+  ) {{ ggplot2::theme_bw(
+    base_size = base_size,
+    base_family = base_family,
+    base_line_size = base_line_size,
+    base_rect_size = base_rect_size
+  ) %+replace%
+    ggplot2::theme(
+      panel.border = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.line = ggplot2::element_blank(),
+      legend.key = ggplot2::element_blank(),
+      strip.background = ggplot2::element_rect(
+        fill = "white",
+        colour = "transparent",
+        linewidth = ggplot2::rel(2)
+      ),
+      complete = TRUE,
+      axis.line.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank()
+    ) }}
 
 #' @rdname theme_sankey
 #' @export
@@ -199,32 +191,28 @@ theme_sankey_bump <-
     base_family = "",
     base_line_size = base_size / 22,
     base_rect_size = base_size / 22
-  ) {
-    {
-      ggplot2::theme_bw(
-        base_size = base_size,
-        base_family = base_family,
-        base_line_size = base_line_size,
-        base_rect_size = base_rect_size
-      ) %+replace%
-        ggplot2::theme(
-          panel.border = ggplot2::element_blank(),
-          panel.grid.major.x = ggplot2::element_blank(),
-          panel.grid.minor = ggplot2::element_blank(),
-          axis.line = ggplot2::element_blank(),
-          legend.key = ggplot2::element_blank(),
-          strip.background = ggplot2::element_rect(
-            fill = "white",
-            colour = "transparent",
-            linewidth = ggplot2::rel(2)
-          ),
-          complete = TRUE,
-          axis.line.x = ggplot2::element_blank(),
-          axis.ticks.x = ggplot2::element_blank(),
-          panel.grid.major.y = ggplot2::element_line("gray90")
-        )
-    }
-  }
+  ) {{ ggplot2::theme_bw(
+    base_size = base_size,
+    base_family = base_family,
+    base_line_size = base_line_size,
+    base_rect_size = base_rect_size
+  ) %+replace%
+    ggplot2::theme(
+      panel.border = ggplot2::element_blank(),
+      panel.grid.major.x = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.line = ggplot2::element_blank(),
+      legend.key = ggplot2::element_blank(),
+      strip.background = ggplot2::element_rect(
+        fill = "white",
+        colour = "transparent",
+        linewidth = ggplot2::rel(2)
+      ),
+      complete = TRUE,
+      axis.line.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      panel.grid.major.y = ggplot2::element_line("gray90")
+    ) }}
 
 # FLOW LAYER ---------
 StatSankeyFlow <- ggplot2::ggproto(
@@ -270,8 +258,7 @@ StatSankeyFlow <- ggplot2::ggproto(
             dplyr::select(-n_next_x, -next_node, -next_x) |>
             dplyr::group_by_at(dplyr::vars(dplyr::everything(), -value)) |>
             dplyr::summarise(
-              freq = sum(value, na.rm = TRUE),
-              ,
+              freq = sum(value, na.rm = TRUE), ,
               .groups = "keep"
             ) |>
             dplyr::ungroup()
