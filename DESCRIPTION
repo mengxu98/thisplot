@@ -2,7 +2,7 @@ Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
 Version: 0.4.5
-Date: 2026-08-07
+Date: 2026-08-13
 Authors@R:
     c(
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054")),
