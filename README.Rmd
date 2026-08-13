@@ -59,6 +59,16 @@ get_colors("Paired")
 get_colors("cyan", palettes = "ChineseSet64")
 ```
 
+```{r}
+#| label: get_colors-3
+#| message: false
+library(ggplot2)
+p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
+  geom_point() +
+  scale_color_manual(values = get_colors(1:3)$hex)
+get_colors(p)
+```
+
 ## **Installation**
 
 Install CRAN version:

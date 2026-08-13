@@ -1,3 +1,10 @@
+# thisplot 0.4.6
+
+* **feat**:
+  * `get_colors()` can now take `ggplot` or `patchwork` objects and returns
+    a two-column data frame with the factor levels and their mapped colors
+    used in the plot(s).
+
 # thisplot 0.4.5
 
 * **feat**:
