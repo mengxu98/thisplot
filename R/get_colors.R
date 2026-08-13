@@ -9,8 +9,9 @@
 #' @param ... One or more search values.
 #' Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
 #' If NULL, using all Chinese colors.
-#' Can also be `ggplot` or `patchwork` objects to get the factor-color mapping
-#' used in the plots.
+#' Can also be `ggplot`, `patchwork`, or other renderable plot objects
+#' (`gtable`, `grob`, `gList`, `ComplexHeatmap::Heatmap`, `pheatmap`, `trellis`)
+#' to get the colors used in the plots.
 #' @param palettes Optional. A named list of palettes to search in.
 #' If `NULL` (default), searches in all available palettes.
 #'
@@ -18,6 +19,8 @@
 #' The result is automatically printed using [print.colors()].
 #' For `ggplot` or `patchwork` objects, returns a two-column `colors` data frame
 #' with the factor levels (`factor`) and their mapped colors (`color`).
+#' For other renderable plot objects, returns a two-column `colors` data frame
+#' with the colors used in the plot (`color`) and their Chinese names (`name`).
 #'
 #' @export
 #'
@@ -107,6 +110,121 @@ get_colors <- function(..., palettes = NULL) {
     }
     class(result) <- c("colors", "data.frame")
     return(result)
+  }
+
+  is_render <- vapply(
+    args,
+    function(x) {
+      inherits(x, c("gtable", "grob", "gList")) ||
+        inherits(x, c("Heatmap", "HeatmapList")) ||
+        inherits(x, "pheatmap") ||
+        inherits(x, "trellis")
+    },
+    logical(1)
+  )
+
+  if (any(is_render)) {
+    if (!all(is_render)) {
+      log_message(
+        "Mixing plot objects with search values is not supported. ",
+        "Only colors from {length(which(is_render))} plot object{?s} will be returned.",
+        message_type = "warning"
+      )
+    }
+    render_hexes <- unique(to_hex(unlist(lapply(args[is_render], function(x) {
+      if (inherits(x, "gList")) {
+        return(collect_grob_colors(grid::grobTree(x)))
+      }
+      if (inherits(x, "grob")) {
+        return(collect_grob_colors(x))
+      }
+      if (inherits(x, c("Heatmap", "HeatmapList"))) {
+        check_r("ComplexHeatmap", verbose = FALSE)
+        # Anchor colors of the color mapping, e.g. from colorRamp2()
+        anchor_colors <- tryCatch(
+          attr(x@matrix_color_mapping@col_fun, "colors"),
+          error = function(e) NULL
+        )
+        gt <- tryCatch(
+          grid::grid.grabExpr(ComplexHeatmap::draw(x)),
+          error = function(e) NULL
+        )
+        return(c(
+          collect_grob_colors(gt),
+          if (is.null(anchor_colors)) character(0) else anchor_colors
+        ))
+      }
+      if (inherits(x, c("pheatmap", "trellis"))) {
+        gt <- tryCatch(
+          grid::grid.grabExpr(print(x)),
+          error = function(e) NULL
+        )
+        return(collect_grob_colors(gt))
+      }
+      character(0)
+    }))))
+
+    if (length(specified_palette_names) > 0 && length(render_hexes) > 0) {
+      palette_hexes <- unique(toupper(unlist(all_palettes)))
+      render_hexes <- render_hexes[toupper(render_hexes) %in% palette_hexes]
+    }
+
+    if (length(render_hexes) > 0) {
+      dataset_hex_upper <- toupper(colors_df$hex)
+      matched_positions <- match(toupper(render_hexes), dataset_hex_upper)
+      result <- do.call(rbind, lapply(seq_along(render_hexes), function(i) {
+        pos <- matched_positions[i]
+        if (!is.na(pos)) {
+          data.frame(
+            color = render_hexes[i],
+            name = colors_df$name_ch[pos],
+            stringsAsFactors = FALSE
+          )
+        } else {
+          data.frame(
+            color = render_hexes[i],
+            name = render_hexes[i],
+            stringsAsFactors = FALSE
+          )
+        }
+      }))
+    } else {
+      result <- data.frame(
+        color = character(0),
+        name = character(0),
+        stringsAsFactors = FALSE
+      )
+    }
+    result <- result[order(result$name == result$color), , drop = FALSE]
+    rownames(result) <- NULL
+
+    if (nrow(result) == 0) {
+      log_message(
+        "No colors found in {length(which(is_render))} plot object{?s}",
+        message_type = "warning"
+      )
+    }
+    class(result) <- c("colors", "data.frame")
+    return(result)
+  }
+
+  unsupported <- vapply(args, function(a) {
+    if (isS4(a)) {
+      return(TRUE)
+    }
+    if (is.list(a) && !is.object(a)) {
+      return(!all(vapply(a, is.atomic, logical(1))))
+    }
+    !is.atomic(a)
+  }, logical(1))
+  if (any(unsupported)) {
+    bad_arg <- args[unsupported][[1]]
+    log_message(
+      "Cannot search with an object of {.cls {class(bad_arg)}}. ",
+      "Supported inputs: search values, ggplot/patchwork, or renderable ",
+      "plot objects (gtable, grob, gList, ComplexHeatmap::Heatmap, pheatmap, trellis).",
+      message_type = "error"
+    )
   }
 
   if (length(args) == 0) {
@@ -607,4 +725,35 @@ extract_plot_factors <- function(p) {
   }
 
   unique(rows)
+}
+
+collect_grob_colors <- function(g) {
+  if (!inherits(g, "grob")) {
+    return(character(0))
+  }
+  cols <- character(0)
+
+  gp <- g$gp
+  if (!is.null(gp)) {
+    for (nm in c("col", "fill")) {
+      vals <- gp[[nm]]
+      if (!is.null(vals) && is.character(vals)) {
+        vals <- vals[!is.na(vals) & vals != "transparent"]
+        cols <- c(cols, vals)
+      }
+    }
+  }
+
+  if (!is.null(g$grobs) && is.list(g$grobs)) {
+    for (child in g$grobs) {
+      cols <- c(cols, collect_grob_colors(child))
+    }
+  }
+  if (!is.null(g$children)) {
+    for (child in g$children) {
+      cols <- c(cols, collect_grob_colors(child))
+    }
+  }
+
+  cols
 }
