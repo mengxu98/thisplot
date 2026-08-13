@@ -9,7 +9,9 @@ get_colors(..., palettes = NULL)
 \arguments{
 \item{...}{One or more search values.
 Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
-If NULL, using all Chinese colors.}
+If NULL, using all Chinese colors.
+Can also be \code{ggplot} or \code{patchwork} objects to get the factor-color mapping
+used in the plots.}
 
 \item{palettes}{Optional. A named list of palettes to search in.
 If \code{NULL} (default), searches in all available palettes.}
@@ -17,6 +19,8 @@ If \code{NULL} (default), searches in all available palettes.}
 \value{
 A data frame with class \code{colors} containing matching color information.
 The result is automatically printed using \code{\link[=print.colors]{print.colors()}}.
+For \code{ggplot} or \code{patchwork} objects, returns a two-column \code{colors} data frame
+with the factor levels (\code{factor}) and their mapped colors (\code{color}).
 }
 \description{
 Search for colors in the Chinese colors dataset and all available palettes.
@@ -33,6 +37,13 @@ get_colors(44)
 get_colors("#2B73AF")
 
 get_colors("cyan", palettes = "ChineseSet64")
+
+# Get the factor-color mapping used in a ggplot object
+library(ggplot2)
+p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
+  geom_point() +
+  scale_color_manual(values = get_colors("Paired")$hex)
+get_colors(p)
 }
 \seealso{
 \link{chinese_colors} for the dataset of Chinese traditional colors.

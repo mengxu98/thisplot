@@ -9,11 +9,15 @@
 #' @param ... One or more search values.
 #' Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
 #' If NULL, using all Chinese colors.
+#' Can also be `ggplot` or `patchwork` objects to get the factor-color mapping
+#' used in the plots.
 #' @param palettes Optional. A named list of palettes to search in.
 #' If `NULL` (default), searches in all available palettes.
 #'
 #' @return A data frame with class `colors` containing matching color information.
 #' The result is automatically printed using [print.colors()].
+#' For `ggplot` or `patchwork` objects, returns a two-column `colors` data frame
+#' with the factor levels (`factor`) and their mapped colors (`color`).
 #'
 #' @export
 #'
@@ -32,6 +36,13 @@
 #' get_colors("#2B73AF")
 #'
 #' get_colors("cyan", palettes = "ChineseSet64")
+#'
+#' # Get the factor-color mapping used in a ggplot object
+#' library(ggplot2)
+#' p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
+#'   geom_point() +
+#'   scale_color_manual(values = get_colors("Paired")$hex)
+#' get_colors(p)
 get_colors <- function(..., palettes = NULL) {
   args <- list(...)
 
@@ -63,6 +74,39 @@ get_colors <- function(..., palettes = NULL) {
         message_type = "error"
       )
     }
+  }
+
+  is_plot <- vapply(
+    args,
+    function(x) inherits(x, "ggplot") || inherits(x, "patchwork"),
+    logical(1)
+  )
+
+  if (any(is_plot)) {
+    if (!all(is_plot)) {
+      log_message(
+        "Mixing plot objects with search values is not supported. ",
+        "Only colors from {length(which(is_plot))} plot object{?s} will be returned.",
+        message_type = "warning"
+      )
+    }
+    result <- do.call(rbind, lapply(args[is_plot], extract_plot_factors))
+    result <- unique(result)
+    rownames(result) <- NULL
+
+    if (length(specified_palette_names) > 0 && nrow(result) > 0) {
+      palette_hexes <- unique(toupper(unlist(all_palettes)))
+      result <- result[toupper(result$color) %in% palette_hexes, , drop = FALSE]
+    }
+
+    if (nrow(result) == 0) {
+      log_message(
+        "No factor-color mapping found in {length(which(is_plot))} plot{?s}",
+        message_type = "warning"
+      )
+    }
+    class(result) <- c("colors", "data.frame")
+    return(result)
   }
 
   if (length(args) == 0) {
@@ -369,7 +413,14 @@ get_colors <- function(..., palettes = NULL) {
 #' @method print colors
 #' @export
 print.colors <- function(x, ...) {
-  has_color <- cli::num_ansi_colors() > 1 && "hex" %in% colnames(x)
+  color_col <- if ("hex" %in% colnames(x)) {
+    "hex"
+  } else if ("color" %in% colnames(x)) {
+    "color"
+  } else {
+    NULL
+  }
+  has_color <- cli::num_ansi_colors() > 1 && !is.null(color_col)
 
   display_width <- function(s) {
     if (is.na(s) || length(s) == 0) {
@@ -411,7 +462,7 @@ print.colors <- function(x, ...) {
     cat(paste(header_parts, collapse = ""), "\n")
 
     for (i in seq_len(nrow(x))) {
-      hex_val <- x$hex[i]
+      hex_val <- x[[color_col]][i]
 
       if (!is.na(hex_val) && nchar(hex_val) > 0) {
         row_style <- cli::make_ansi_style(hex_val)
@@ -478,4 +529,82 @@ hex_to_rgb <- function(hex_colors) {
       "(", rgb_vals[1], ", ", rgb_vals[2], ", ", rgb_vals[3], ")"
     )
   }, character(1), USE.NAMES = FALSE)
+}
+
+# Convert a color vector to uppercase hex codes, dropping invalid values
+to_hex <- function(colors) {
+  # Strip the alpha channel from 8-digit hex codes
+  colors <- sub("^#([0-9A-Fa-f]{6})[0-9A-Fa-f]{2}$", "#\\1", colors)
+  hexes <- vapply(colors, function(col) {
+    tryCatch(
+      {
+        rgb_mat <- grDevices::col2rgb(col)
+        grDevices::rgb(
+          red = rgb_mat[1, ] / 255,
+          green = rgb_mat[2, ] / 255,
+          blue = rgb_mat[3, ] / 255
+        )
+      },
+      error = function(e) NA_character_
+    )
+  }, character(1), USE.NAMES = FALSE)
+  toupper(hexes[!is.na(hexes)])
+}
+
+# Extract factor level-color mappings used in a ggplot or patchwork object
+extract_plot_factors <- function(p) {
+  rows <- data.frame(
+    factor = character(0),
+    color = character(0),
+    stringsAsFactors = FALSE
+  )
+
+  if (inherits(p, "patchwork")) {
+    patches <- tryCatch(
+      get_namespace_fun("patchwork", "get_patches")(p),
+      error = function(e) NULL
+    )
+    sub_plots <- if (!is.null(patches) && !is.null(patches$plots)) {
+      patches$plots
+    } else {
+      p$plots
+    }
+    if (is.null(sub_plots)) {
+      sub_plots <- list()
+    }
+    for (sub_plot in sub_plots) {
+      rows <- rbind(rows, extract_plot_factors(sub_plot))
+    }
+    return(unique(rows))
+  }
+  if (!inherits(p, "ggplot")) {
+    return(rows)
+  }
+
+  built <- tryCatch(ggplot2::ggplot_build(p), error = function(e) NULL)
+  if (is.null(built)) {
+    return(rows)
+  }
+
+  # Trained discrete color/fill scales give the factor levels and their colors
+  for (scale in built$plot$scales$scales) {
+    aes <- scale$aesthetics
+    is_color_scale <- any(aes %in% c("colour", "color", "fill")) ||
+      any(grepl("^(colou?r|fill)_ggnewscale_", aes))
+    if (!is_color_scale) next
+    if (!tryCatch(scale$is_discrete(), error = function(e) FALSE)) next
+
+    limits <- tryCatch(scale$get_limits(), error = function(e) NULL)
+    if (is.null(limits) || length(limits) == 0) next
+    colors <- tryCatch(scale$map(limits), error = function(e) NULL)
+    if (is.null(colors)) next
+
+    rows <- rbind(rows, data.frame(
+      factor = as.character(limits),
+      color = to_hex(colors),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  unique(rows)
 }
