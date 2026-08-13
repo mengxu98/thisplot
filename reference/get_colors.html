@@ -61,7 +61,9 @@ It automatically searches in all palettes and reports which palette(s) contain t
 <dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>One or more search values.
 Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
-If NULL, using all Chinese colors.</p></dd>
+If NULL, using all Chinese colors.
+Can also be <code>ggplot</code> or <code>patchwork</code> objects to get the factor-color mapping
+used in the plots.</p></dd>
 
 
 <dt id="arg-palettes">palettes<a class="anchor" aria-label="anchor" href="#arg-palettes"></a></dt>
@@ -72,7 +74,9 @@ If <code>NULL</code> (default), searches in all available palettes.</p></dd>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A data frame with class <code>colors</code> containing matching color information.
-The result is automatically printed using <code><a href="print.colors.html">print.colors()</a></code>.</p>
+The result is automatically printed using <code><a href="print.colors.html">print.colors()</a></code>.
+For <code>ggplot</code> or <code>patchwork</code> objects, returns a two-column <code>colors</code> data frame
+with the factor levels (<code>factor</code>) and their mapped colors (<code>color</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -146,6 +150,19 @@ The result is automatically printed using <code><a href="print.colors.html">prin
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00AFD7;">102  danfanlan    胆矾蓝   (15, 149, 176)  #0F95B0  cyan      青           </span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00AFAF;">103  jianniaolan  樫鸟蓝   (20, 145, 168)  #1491A8  cyan      青           </span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #00AFAF;">104  facui        法翠     (16, 139, 150)  #108B96  cyan      青           </span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Get the factor-color mapping used in a ggplot object</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">wt</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">get_colors</span><span class="op">(</span><span class="st">"Paired"</span><span class="op">)</span><span class="op">$</span><span class="va">hex</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found palette: <span style="color: #0000BB;">"Paired"</span> </span>
+<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> factor  color     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7FF;">4       #A6CEE3  </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0087D7;">6       #1F78B4  </span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D7FFAF;">8       #B2DF8A  </span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
