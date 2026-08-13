@@ -10,8 +10,9 @@ get_colors(..., palettes = NULL)
 \item{...}{One or more search values.
 Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
 If NULL, using all Chinese colors.
-Can also be \code{ggplot} or \code{patchwork} objects to get the factor-color mapping
-used in the plots.}
+Can also be \code{ggplot}, \code{patchwork}, or other renderable plot objects
+(\code{gtable}, \code{grob}, \code{gList}, \code{ComplexHeatmap::Heatmap}, \code{pheatmap}, \code{trellis})
+to get the colors used in the plots.}
 
 \item{palettes}{Optional. A named list of palettes to search in.
 If \code{NULL} (default), searches in all available palettes.}
@@ -21,6 +22,8 @@ A data frame with class \code{colors} containing matching color information.
 The result is automatically printed using \code{\link[=print.colors]{print.colors()}}.
 For \code{ggplot} or \code{patchwork} objects, returns a two-column \code{colors} data frame
 with the factor levels (\code{factor}) and their mapped colors (\code{color}).
+For other renderable plot objects, returns a two-column \code{colors} data frame
+with the colors used in the plot (\code{color}) and their Chinese names (\code{name}).
 }
 \description{
 Search for colors in the Chinese colors dataset and all available palettes.

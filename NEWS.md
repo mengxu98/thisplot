@@ -4,6 +4,11 @@
   * `get_colors()` can now take `ggplot` or `patchwork` objects and returns
     a two-column data frame with the factor levels and their mapped colors
     used in the plot(s).
+  * `get_colors()` also accepts other renderable plot objects (`gtable`,
+    `grob`, `gList`, `ComplexHeatmap::Heatmap`, `pheatmap`, `trellis`) and
+    returns the colors used in the plot with their Chinese names.
+  * Raise a clear error when an unsupported object type is passed to
+    `get_colors()`.
 
 # thisplot 0.4.5
 
