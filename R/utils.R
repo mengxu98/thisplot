@@ -506,16 +506,6 @@ add_grob <- function(
   }
   return(gtable)
 }
-#' @title Normalize values to a unit sum
-#'
-#' @param x A numeric vector.
-#'
-#' @return A numeric vector scaled to sum to 1.
-#' @keywords internal
-normalize_to_sum <- function(x) {
-  if (sum(x) == 0) 0 * x else x / sum(x)
-}
-
 #' @title Convert proportions to percentages
 #'
 #' @param x A numeric vector.
@@ -527,5 +517,6 @@ normalize_to_sum <- function(x) {
 #' to_percent(c(1, 1, 2))
 #' to_percent(c(0, 0))
 to_percent <- function(x) {
-  100 * round(normalize_to_sum(x), 3)
+  normalized <- if (sum(x) == 0) 0 * x else x / sum(x)
+  100 * round(normalized, 3)
 }
