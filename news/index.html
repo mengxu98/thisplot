@@ -44,6 +44,9 @@
 <strong>feat</strong>:
 <ul><li>
 <code><a href="../reference/get_colors.html">get_colors()</a></code> can now take <code>ggplot</code> or <code>patchwork</code> objects and returns a two-column data frame with the factor levels and their mapped colors used in the plot(s).</li>
+<li>
+<code><a href="../reference/get_colors.html">get_colors()</a></code> also accepts other renderable plot objects (<code>gtable</code>, <code>grob</code>, <code>gList</code>, <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">ComplexHeatmap::Heatmap</a></code>, <code>pheatmap</code>, <code>trellis</code>) and returns the colors used in the plot with their Chinese names.</li>
+<li>Raise a clear error when an unsupported object type is passed to <code><a href="../reference/get_colors.html">get_colors()</a></code>.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">

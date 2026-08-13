@@ -62,8 +62,9 @@ It automatically searches in all palettes and reports which palette(s) contain t
 <dd><p>One or more search values.
 Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
 If NULL, using all Chinese colors.
-Can also be <code>ggplot</code> or <code>patchwork</code> objects to get the factor-color mapping
-used in the plots.</p></dd>
+Can also be <code>ggplot</code>, <code>patchwork</code>, or other renderable plot objects
+(<code>gtable</code>, <code>grob</code>, <code>gList</code>, <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">ComplexHeatmap::Heatmap</a></code>, <code>pheatmap</code>, <code>trellis</code>)
+to get the colors used in the plots.</p></dd>
 
 
 <dt id="arg-palettes">palettes<a class="anchor" aria-label="anchor" href="#arg-palettes"></a></dt>
@@ -76,7 +77,9 @@ If <code>NULL</code> (default), searches in all available palettes.</p></dd>
     <p>A data frame with class <code>colors</code> containing matching color information.
 The result is automatically printed using <code><a href="print.colors.html">print.colors()</a></code>.
 For <code>ggplot</code> or <code>patchwork</code> objects, returns a two-column <code>colors</code> data frame
-with the factor levels (<code>factor</code>) and their mapped colors (<code>color</code>).</p>
+with the factor levels (<code>factor</code>) and their mapped colors (<code>color</code>).
+For other renderable plot objects, returns a two-column <code>colors</code> data frame
+with the colors used in the plot (<code>color</code>) and their Chinese names (<code>name</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
