@@ -34,17 +34,11 @@ drop_data <- function(p) {
   UseMethod(generic = "drop_data", object = p)
 }
 
-plot_clone <- function(plot) {
-  p <- plot
-  p@scales <- plot@scales$clone()
-  p
-}
-
 #' @export
 #' @rdname drop_data
 #' @method drop_data ggplot
 drop_data.ggplot <- function(p) {
-  p <- plot_clone(p)
+  p@scales <- p$scales$clone()
 
   # fix the scales for x/y axis and 'fill', 'color', 'shape',...
   for (i in seq_along(p$scales$scales)) {
