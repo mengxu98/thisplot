@@ -102,6 +102,10 @@ reference:
   - get_vars
   - grid_draw
   - jitter_highlighted_points
+  - no_legend
+  - no_margin
+  - no_x_text
+  - no_y_text
   - patchwork_grob
   - segements_df
   - to_percent
@@ -114,6 +118,7 @@ reference:
   - BlendRGBList
   - col2hex
   - get_colors
+  - invert_svg
   - print_colored_table
   - palette_colors
   - palette_list
@@ -133,6 +138,8 @@ reference:
   - adjustlayout
   - panel_fix
   - panel_fix_overall
+  - plot_autocompose
+  - plot_autosize
 
 - subtitle: "Plot optimization"
 - contents:
