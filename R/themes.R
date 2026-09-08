@@ -233,3 +233,65 @@ theme_blank <- function(
     ))
   }
 }
+
+#' @title Remove the legend
+#'
+#' @return A ggplot2 theme object.
+#' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' ggplot(mtcars, aes(wt, mpg, colour = factor(cyl))) +
+#'   geom_point() +
+#'   no_legend()
+no_legend <- function() {
+  theme(legend.position = "none")
+}
+
+#' @title Remove plot margins
+#'
+#' @return A ggplot2 theme object.
+#' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' ggplot(mtcars, aes(wt, mpg)) +
+#'   geom_point() +
+#'   no_margin()
+no_margin <- function() {
+  theme(plot.margin = margin(0, 0, 0, 0, unit = "lines"))
+}
+
+#' @title Remove x-axis text and ticks
+#'
+#' @return A ggplot2 theme object.
+#' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' ggplot(mtcars, aes(wt, mpg)) +
+#'   geom_point() +
+#'   no_x_text()
+no_x_text <- function() {
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank()
+  )
+}
+
+#' @title Remove y-axis text and ticks
+#'
+#' @return A ggplot2 theme object.
+#' @export
+#'
+#' @examples
+#' library(ggplot2)
+#' ggplot(mtcars, aes(wt, mpg)) +
+#'   geom_point() +
+#'   no_y_text()
+no_y_text <- function() {
+  theme(
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank()
+  )
+}

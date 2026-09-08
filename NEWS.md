@@ -1,6 +1,10 @@
 # thisplot 0.4.6
 
 * **feat**:
+  * Add `plot_scatter()` and `plot_histogram()` using `theme_this()` and
+    thisplot palettes. Correlation annotation no longer depends on `ggpubr`;
+    point density and marginal plots remain optional.
+  * `StatPlot()` value bars can show numeric labels through `label = TRUE`.
   * `get_colors()` can now take `ggplot` or `patchwork` objects and returns
     a two-column data frame with the factor levels and their mapped colors
     used in the plot(s).
@@ -9,14 +13,13 @@
     returns the colors used in the plot with their Chinese names.
   * Raise a clear error when an unsupported object type is passed to
     `get_colors()`.
-
-# thisplot 0.4.5
-
-* **feat**:
   * Add `print_colored_table()` for ANSI-colored data-frame output, with
     palette colors assigned by column by default and optional row coloring.
   * Keep table headers uncolored and omit separator rules for compact console
     output.
+  * Add `invert_svg()` to build a dark-mode variant of an SVG by replacing
+    every colour with its RGB complement and giving fill-less elements a light
+    inherited fill.
 
 * **fix**:
   * Align `get_colors()` and colored-table columns using ANSI-aware terminal
