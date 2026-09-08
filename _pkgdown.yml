@@ -50,6 +50,8 @@ reference:
 - subtitle: "Statistic plot"
 - contents:
   - StatPlot
+  - plot_histogram
+  - plot_scatter
 
 - subtitle: "Dimensional plot"
 - contents:

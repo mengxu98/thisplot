@@ -407,6 +407,9 @@ StatPlot <- function(
       grid_major_element = grid_major_element,
       legend.position = legend.position,
       legend.direction = legend.direction,
+      show_label = label,
+      label.size = label.size,
+      label.fg = label.fg,
       return_data = return_data
     ))
   }
@@ -1616,6 +1619,9 @@ stat_value_plot <- function(
   ),
   legend.position = "right",
   legend.direction = "vertical",
+  show_label = FALSE,
+  label.size = 3.5,
+  label.fg = "black",
   return_data = FALSE
 ) {
   plot_type <- match.arg(plot_type)
@@ -1768,6 +1774,18 @@ stat_value_plot <- function(
     p <- p +
       geom_hline(yintercept = midpoint, color = "grey75", linewidth = 0.35) +
       labs(title = title, x = xlab, y = ylab %||% legend_title)
+    if (isTRUE(show_label)) {
+      p <- p +
+        geom_text(
+          aes(
+            label = sprintf("%.2f", .data[[score]]),
+            hjust = ifelse(.data[[score]] >= midpoint, -0.12, 1.12)
+          ),
+          size = label.size,
+          color = label.fg
+        ) +
+        scale_y_continuous(expand = expansion(mult = 0.16))
+    }
     if (isTRUE(flip)) p <- p + coord_flip()
   } else {
     p <- ggplot(

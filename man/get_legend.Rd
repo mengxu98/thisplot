@@ -4,14 +4,28 @@
 \alias{get_legend}
 \title{Extract legend from a plot}
 \usage{
-get_legend(plot)
+get_legend(plot, position = NULL)
 }
 \arguments{
 \item{plot}{A plot object.}
+
+\item{position}{Optional legend position to extract. One of \code{"left"},
+\code{"right"}, \code{"top"}, \code{"bottom"}, or \code{"inside"}. Default is \code{NULL}, which
+returns the first non-empty legend grob.}
 }
 \value{
-The legend grob.
+The legend grob, or \code{NULL} if the plot has no legend.
 }
 \description{
-Extract the legend grob from a plot object.
+Extract the legend grob from a plot object. ggplot2 3.5+ places legends in
+\code{guide-box-left} / \code{right} / \code{top} / \code{bottom} / \code{inside} slots; unused slots
+are empty \code{zeroGrob}s. This helper returns the first non-empty legend, or
+the legend at \code{position} when that argument is set.
+}
+\examples{
+library(ggplot2)
+p <- ggplot(mtcars, aes(wt, mpg, colour = factor(cyl))) +
+  geom_point()
+get_legend(p)
+get_legend(p + theme(legend.position = "bottom"), position = "bottom")
 }

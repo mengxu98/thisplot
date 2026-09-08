@@ -374,27 +374,68 @@ as_gtable <- function(plot, ...) {
 #' @title Extract legend from a plot
 #'
 #' @description
-#' Extract the legend grob from a plot object.
+#' Extract the legend grob from a plot object. ggplot2 3.5+ places legends in
+#' `guide-box-left` / `right` / `top` / `bottom` / `inside` slots; unused slots
+#' are empty `zeroGrob`s. This helper returns the first non-empty legend, or
+#' the legend at `position` when that argument is set.
 #'
 #' @md
 #' @param plot A plot object.
+#' @param position Optional legend position to extract. One of `"left"`,
+#'   `"right"`, `"top"`, `"bottom"`, or `"inside"`. Default is `NULL`, which
+#'   returns the first non-empty legend grob.
 #'
-#' @return The legend grob.
+#' @return The legend grob, or `NULL` if the plot has no legend.
 #'
 #' @export
-get_legend <- function(plot) {
+#'
+#' @examples
+#' library(ggplot2)
+#' p <- ggplot(mtcars, aes(wt, mpg, colour = factor(cyl))) +
+#'   geom_point()
+#' get_legend(p)
+#' get_legend(p + theme(legend.position = "bottom"), position = "bottom")
+get_legend <- function(plot, position = NULL) {
   plot <- as_gtable(plot)
+  if (is.null(plot) || is.null(plot$layout) || is.null(plot$grobs)) {
+    return(NULL)
+  }
   grob_names <- plot$layout$name
   grobs <- plot$grobs
-  grob_index <- which(
-    grepl(
-      "guide-box-bottom",
-      grob_names
+  if (is.null(position)) {
+    name_hit <- grepl("^guide-box", grob_names)
+  } else {
+    position <- match.arg(
+      position,
+      c("left", "right", "top", "bottom", "inside")
     )
+    name_hit <- grob_names %in% c(
+      paste0("guide-box-", position),
+      "guide-box"
+    )
+  }
+  grob_hit <- vapply(
+    grobs,
+    function(g) identical(g$name, "guide-box"),
+    logical(1)
   )
-  grob_index <- grob_index[1]
-  matched_grobs <- grobs[[grob_index]]
-  matched_grobs
+  if (length(grob_hit) < length(name_hit)) {
+    grob_hit <- c(grob_hit, rep(FALSE, length(name_hit) - length(grob_hit)))
+  }
+  candidates <- which(name_hit | grob_hit[seq_along(name_hit)])
+  nonempty <- vapply(
+    candidates,
+    function(i) {
+      g <- grobs[[i]]
+      !is.null(g) && !inherits(g, "zeroGrob")
+    },
+    logical(1)
+  )
+  candidates <- candidates[nonempty]
+  if (!length(candidates)) {
+    return(NULL)
+  }
+  grobs[[candidates[[1]]]]
 }
 
 #' @title Add a grob to a gtable
