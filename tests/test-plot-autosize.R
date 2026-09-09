@@ -19,26 +19,32 @@ bar_labelled <- ggplot(
   geom_point() +
   geom_text_repel(size = 3.5, max.overlaps = Inf)
 make_wrapped <- function(columns) {
-  wrapped_grob <- grid::grid.grabExpr({
-    grid::pushViewport(grid::viewport(
-      layout = grid::grid.layout(
-        1,
-        2,
-        widths = grid::unit.c(grid::unit(1, "null"), grid::unit(30, "mm"))
+  wrapped_grob <- grid::grid.grabExpr(
+    {
+      grid::pushViewport(grid::viewport(
+        layout = grid::grid.layout(
+          1,
+          2,
+          widths = grid::unit.c(grid::unit(1, "null"), grid::unit(30, "mm"))
+        )
+      ))
+      grid::pushViewport(grid::viewport(layout.pos.col = 1))
+      grid::grid.rect(
+        x = grid::unit(rep((seq_len(columns) - 0.5) / columns, each = 12), "npc"),
+        y = grid::unit(rep((rev(seq_len(12)) - 0.5) / 12, times = columns), "npc"),
+        width = grid::unit(1 / columns, "npc"),
+        height = grid::unit(1 / 12, "npc")
       )
-    ))
-    grid::pushViewport(grid::viewport(layout.pos.col = 1))
-    grid::grid.rect(
-      x = grid::unit(rep((seq_len(columns) - 0.5) / columns, each = 12), "npc"),
-      y = grid::unit(rep((rev(seq_len(12)) - 0.5) / 12, times = columns), "npc"),
-      width = grid::unit(1 / columns, "npc"),
-      height = grid::unit(1 / 12, "npc")
-    )
-    grid::upViewport()
-    grid::pushViewport(grid::viewport(layout.pos.col = 2))
-    grid::grid.text("Legend")
-    grid::upViewport(2)
-  }, width = 4, height = 4, wrap = TRUE, wrap.grobs = TRUE)
+      grid::upViewport()
+      grid::pushViewport(grid::viewport(layout.pos.col = 2))
+      grid::grid.text("Legend")
+      grid::upViewport(2)
+    },
+    width = 4,
+    height = 4,
+    wrap = TRUE,
+    wrap.grobs = TRUE
+  )
   patchwork::wrap_elements(full = wrapped_grob)
 }
 panel_aspect <- function(plot) {
@@ -139,7 +145,9 @@ plain_panel_fit <- panel_fix(plain, width = 45, height = 35, margin = 2, units =
 # Regression test: Global theme inheritance
 old_theme <- theme_get()
 theme_set(theme_this())
-global_plain <- ggplot(mtcars, aes(wt, mpg)) + geom_point() + labs(title = "Title")
+global_plain <- ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  labs(title = "Title")
 global_harm <- thisplot:::autosize_harmonize_text(global_plain, base_size = 7)
 eff_global_harm <- ggplot2:::plot_theme(global_harm)
 theme_set(old_theme)
