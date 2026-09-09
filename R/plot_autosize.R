@@ -67,8 +67,8 @@ plot_autosize <- function(
     stop("`label_autosize` must be `TRUE` or `FALSE`.", call. = FALSE)
   }
   if (!is.null(base_size) &&
-      !(is.character(base_size) && length(base_size) == 1 && identical(base_size, "auto")) &&
-      !(is.numeric(base_size) && length(base_size) == 1 && is.finite(base_size) && base_size > 0)) {
+    !(is.character(base_size) && length(base_size) == 1 && identical(base_size, "auto")) &&
+    !(is.numeric(base_size) && length(base_size) == 1 && is.finite(base_size) && base_size > 0)) {
     stop("`base_size` must be `\"auto\"`, `NULL`, or a positive point size.", call. = FALSE)
   }
   text_base_pt <- autosize_resolve_text_base(x, base_size)
@@ -218,8 +218,8 @@ plot_autocompose <- function(
   }
   for (value in list(ncol, nrow)) {
     if (!is.null(value) &&
-        (!is.numeric(value) || length(value) != 1 || !is.finite(value) ||
-          value < 1 || value != as.integer(value))) {
+      (!is.numeric(value) || length(value) != 1 || !is.finite(value) ||
+        value < 1 || value != as.integer(value))) {
       stop("`ncol` and `nrow` must be positive whole numbers.", call. = FALSE)
     }
   }
@@ -227,21 +227,21 @@ plot_autocompose <- function(
     stop("`label_autosize` must be `TRUE` or `FALSE`.", call. = FALSE)
   }
   if (!is.numeric(target_aspect) || length(target_aspect) != 1 ||
-      !is.finite(target_aspect) || target_aspect <= 0) {
+    !is.finite(target_aspect) || target_aspect <= 0) {
     stop("`target_aspect` must be a positive number.", call. = FALSE)
   }
   if (!is.null(target_width) &&
-      (!is.numeric(target_width) || length(target_width) != 1 ||
-        !is.finite(target_width) || target_width <= 0)) {
+    (!is.numeric(target_width) || length(target_width) != 1 ||
+      !is.finite(target_width) || target_width <= 0)) {
     stop("`target_width` must be a positive number.", call. = FALSE)
   }
   if (!is.numeric(gutter) || length(gutter) != 1 ||
-      !is.finite(gutter) || gutter < 0) {
+    !is.finite(gutter) || gutter < 0) {
     stop("`gutter` must be a non-negative number.", call. = FALSE)
   }
   if (!is.null(base_size) &&
-      !(is.character(base_size) && length(base_size) == 1 && identical(base_size, "auto")) &&
-      !(is.numeric(base_size) && length(base_size) == 1 && is.finite(base_size) && base_size > 0)) {
+    !(is.character(base_size) && length(base_size) == 1 && identical(base_size, "auto")) &&
+    !(is.numeric(base_size) && length(base_size) == 1 && is.finite(base_size) && base_size > 0)) {
     stop("`base_size` must be `\"auto\"`, `NULL`, or a positive point size.", call. = FALSE)
   }
   n <- length(plots)
@@ -458,7 +458,7 @@ autosize_compose_publication <- function(widths, heights, target_aspect, gutter,
       tied <- !is.null(best) &&
         isTRUE(all.equal(packed$score, best$score, tolerance = 1e-8))
       if (is.null(best) || packed$score < best$score - 1e-8 ||
-          tied && packed$width * packed$height < best$width * best$height) {
+        tied && packed$width * packed$height < best$width * best$height) {
         best <- packed
       }
     }
@@ -821,7 +821,7 @@ autosize_harmonize_text <- function(plot, base_size) {
     for (name in names(eff_theme)) {
       element <- eff_theme[[name]]
       if (inherits(element, "element_text") &&
-          is.numeric(element$size) && !inherits(element$size, "rel")) {
+        is.numeric(element$size) && !inherits(element$size, "rel")) {
         overrides[[name]] <- ggplot2::element_text(size = element$size * factor)
       }
     }
@@ -945,10 +945,12 @@ autosize_wrapped_size <- function(plot, panel_width, panel_height, margin, units
     )
   )
   panel_width_mm <- grid::convertWidth(
-    grid::unit(panel_width, units), "mm", valueOnly = TRUE
+    grid::unit(panel_width, units), "mm",
+    valueOnly = TRUE
   )
   panel_height_mm <- grid::convertHeight(
-    grid::unit(panel_height, units), "mm", valueOnly = TRUE
+    grid::unit(panel_height, units), "mm",
+    valueOnly = TRUE
   )
   margin_mm <- grid::convertWidth(grid::unit(margin, units), "mm", valueOnly = TRUE)
 
@@ -999,7 +1001,8 @@ autosize_label_text <- function(plot, panel_width, units, base_size = NA_real_) 
     return(plot)
   }
   panel_width_mm <- grid::convertWidth(
-    grid::unit(panel_width, units), "mm", valueOnly = TRUE
+    grid::unit(panel_width, units), "mm",
+    valueOnly = TRUE
   )
   if (length(base_size) != 1 || !is.finite(base_size)) {
     base_size <- autosize_theme_base(plot)
@@ -1032,7 +1035,8 @@ autosize_label_text <- function(plot, panel_width, units, base_size = NA_real_) 
       size_unit <- "mm"
     }
     current_mm <- grid::convertWidth(
-      grid::unit(current, size_unit), "mm", valueOnly = TRUE
+      grid::unit(current, size_unit), "mm",
+      valueOnly = TRUE
     )
     panel <- data$PANEL
     if (is.null(panel)) {
@@ -1056,7 +1060,8 @@ autosize_label_text <- function(plot, panel_width, units, base_size = NA_real_) 
       next
     }
     target <- grid::convertWidth(
-      grid::unit(target_mm, "mm"), size_unit, valueOnly = TRUE
+      grid::unit(target_mm, "mm"), size_unit,
+      valueOnly = TRUE
     )
     aes_params <- layer$aes_params
     aes_params$size <- target
