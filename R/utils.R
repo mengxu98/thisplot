@@ -100,8 +100,44 @@ build_patchwork <- function(
   panel_row = 10,
   panel_col = 8
 ) {
+  default_layout <- get_namespace_fun("patchwork", "default_layout")
+  table_defaults <- vapply(
+    c("TABLE_ROWS", "TABLE_COLS", "PANEL_ROW", "PANEL_COL"),
+    function(name) {
+      value <- tryCatch(
+        get(name, envir = asNamespace("patchwork")),
+        error = function(e) NA_real_
+      )
+      as.numeric(value)
+    },
+    numeric(1)
+  )
+  if (all(!is.na(table_defaults))) {
+    if (!identical(
+      as.numeric(c(table_rows, table_cols, panel_row, panel_col)),
+      unname(table_defaults)
+    )) {
+      log_message(
+        "{.arg table_rows}, {.arg table_cols}, {.arg panel_row} and {.arg panel_col} are set by patchwork and cannot be overridden",
+        message_type = "warning"
+      )
+    }
+    table_rows <- table_defaults[[1]]
+    table_cols <- table_defaults[[2]]
+    panel_row <- table_defaults[[3]]
+    panel_col <- table_defaults[[4]]
+  }
+  if (length(tryCatch(x$plots, error = function(e) NULL)) == 0) {
+    get_patches_fun <- tryCatch(
+      get_namespace_fun("patchwork", "get_patches"),
+      error = function(e) NULL
+    )
+    if (!is.null(get_patches_fun)) {
+      x <- get_patches_fun(x)
+    }
+  }
   x$layout <- utils::modifyList(
-    get_namespace_fun("patchwork", "default_layout"),
+    default_layout,
     x$layout[!vapply(x$layout, is.null, logical(1))]
   )
 
@@ -154,7 +190,7 @@ build_patchwork <- function(
     x$layout$design <- create_design_fun(
       dims[2],
       dims[1],
-      x$layout$byrow
+      isTRUE(x$layout$byrow)
     )
   } else {
     dims <- c(
@@ -190,7 +226,7 @@ build_patchwork <- function(
       seq_along(gt), function(i) {
         loc <- design[i, ]
         lay <- gt[[i]]$layout
-        lay$name <- paste0(lay$name, "-", i)
+        lay$z <- lay$z + ifelse(lay$name == "background", 0, max_z[i])
         lay$t <- lay$t +
           ifelse(
             lay$t <= panel_row, (loc$t - 1) * table_rows,
@@ -212,7 +248,8 @@ build_patchwork <- function(
             (loc$l - 1) * table_cols,
             (loc$r - 1) * table_cols
           )
-        lay$z <- lay$z + max_z[i]
+        lay$z <- lay$z + ifelse(lay$name == "background", 0, max_z[i])
+        lay$name <- paste0(lay$name, "-", i)
         lay
       }
     )
@@ -252,18 +289,58 @@ build_patchwork <- function(
       if (!attr(theme, "complete")) {
         theme <- ggplot2::theme_get() + theme
       }
+      position <- theme$legend.position %||% "right"
+      if (length(position) == 2) {
+        log_message(
+          "Manual legend position not possible for collected guides. Defaulting to 'right'",
+          message_type = "warning"
+        )
+        position <- "right"
+      }
       assemble_guides_fun <- get_namespace_fun(
         "patchwork", "assemble_guides"
       )
-      guide_grobs <- assemble_guides_fun(guide_grobs, theme)
+      guide_grobs <- assemble_guides_fun(guide_grobs, position, theme)
       attach_guides_fun <- get_namespace_fun(
         "patchwork", "attach_guides"
       )
-      gt_new <- attach_guides_fun(gt_new, guide_grobs, theme)
+      gt_new <- attach_guides_fun(gt_new, guide_grobs, position, theme)
     }
   } else {
     gt_new$collected_guides <- guide_grobs
   }
+
+  axes <- x$layout$axes %||% default_layout$axes
+  if (axes %in% c("collect", "collect_x")) {
+    collect_axes_fun <- get_namespace_fun("patchwork", "collect_axes")
+    gt_new <- collect_axes_fun(gt_new, "x")
+  }
+  if (axes %in% c("collect", "collect_y")) {
+    collect_axes_fun <- get_namespace_fun("patchwork", "collect_axes")
+    gt_new <- collect_axes_fun(gt_new, "y")
+  }
+  titles <- x$layout$axis_titles %||% default_layout$axis_titles
+  if (titles %in% c("collect", "collect_x")) {
+    collect_titles_fun <- get_namespace_fun(
+      "patchwork", "collect_axis_titles"
+    )
+    gt_new <- collect_titles_fun(gt_new, "x", merge = TRUE)
+  }
+  if (titles %in% c("collect", "collect_y")) {
+    collect_titles_fun <- get_namespace_fun(
+      "patchwork", "collect_axis_titles"
+    )
+    gt_new <- collect_titles_fun(gt_new, "y", merge = TRUE)
+  }
+  gt_new <- gtable::gtable_add_grob(
+    gt_new,
+    ggplot2::zeroGrob(),    t = panel_row,
+    l = panel_col,
+    b = panel_row + table_rows * (dims[1] - 1),
+    r = panel_col + table_cols * (dims[2] - 1),
+    z = -1,
+    name = "panel-area"
+  )
 
   class(gt_new) <- c("gtable_patchwork", class(gt_new))
   gt_new
