@@ -52,7 +52,8 @@
 <li>Raise a clear error when an unsupported object type is passed to <code><a href="../reference/get_colors.html">get_colors()</a></code>.</li>
 <li>Add <code><a href="../reference/print_colored_table.html">print_colored_table()</a></code> for ANSI-colored data-frame output, with palette colors assigned by column by default and optional row coloring.</li>
 <li>Keep table headers uncolored and omit separator rules for compact console output.</li>
-<li>Add <code><a href="../reference/invert_svg.html">invert_svg()</a></code> to build a dark-mode variant of an SVG by replacing every colour with its RGB complement and giving fill-less elements a light inherited fill.</li>
+<li>Add <code><a href="../reference/invert_svg.html">invert_svg()</a></code> to build a dark-mode variant of an SVG by replacing every colour with its RGB complement and giving fill-less elements a light inherited fill. Rasters embedded as <code>data:image/png;base64,...</code> payloads, such as the colour bar of a continuous ggplot2 legend, are complemented pixel by pixel too, which <code>invert_raster = FALSE</code> turns off. The <code><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb()</a></code> notation written by cairo-based devices such as <code><a href="https://rdrr.io/r/grDevices/cairo.html" class="external-link">grDevices::svg()</a></code> is understood as well, and a file that holds no colour to invert is reported instead of being copied silently.</li>
+<li>Add <code><a href="../reference/invert_png.html">invert_png()</a></code> for a PNG on its own and <code><a href="../reference/invert_figures.html">invert_figures()</a></code> to invert several figures at once, given files or directories. Both name their copy after the input with a <code>-dark</code> suffix, and <code><a href="../reference/invert_figures.html">invert_figures()</a></code> skips files that already carry that suffix.</li>
 </ul></li>
 <li>
 <strong>fix</strong>:
