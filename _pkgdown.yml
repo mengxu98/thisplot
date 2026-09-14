@@ -118,6 +118,8 @@ reference:
   - BlendRGBList
   - col2hex
   - get_colors
+  - invert_figures
+  - invert_png
   - invert_svg
   - print_colored_table
   - palette_colors

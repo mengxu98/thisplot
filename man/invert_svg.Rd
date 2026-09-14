@@ -4,7 +4,13 @@
 \alias{invert_svg}
 \title{Invert the colours of an SVG file}
 \usage{
-invert_svg(path, output = NULL, default_fill = "#ffffff", quiet = FALSE)
+invert_svg(
+  path,
+  output = NULL,
+  default_fill = "#ffffff",
+  invert_raster = TRUE,
+  quiet = FALSE
+)
 }
 \arguments{
 \item{path}{Path to the input SVG file.}
@@ -17,6 +23,9 @@ without writing a file.}
 without their own fill do not stay black. Use \code{NULL} to leave the root
 element untouched.}
 
+\item{invert_raster}{Whether to complement the colours of embedded raster
+images as well. Default is \code{TRUE}. Requires the \code{png} package.}
+
 \item{quiet}{Whether to suppress the message about the written file.
 Default is \code{FALSE}.}
 }
@@ -25,17 +34,10 @@ The output path, invisibly, or the modified SVG as a string when
 \code{output} is \code{NA}.
 }
 \description{
-Build a dark-mode variant of an SVG image by replacing every hexadecimal
-colour with its RGB complement. Elements that do not set their own \code{fill}
-would keep the SVG default black, so \code{default_fill} is written on the root
-\verb{<svg>} element, where those elements inherit it.
-}
-\examples{
-svg <- tempfile(fileext = ".svg")
-writeLines(
-  '<svg viewBox="0 0 10 10"><rect width="10" height="10" fill="#ffffff"/></svg>',
-  svg
-)
-invert_svg(svg)
-readLines(sub("\\\\.svg$", "-dark.svg", svg))
+Build a dark-mode variant of an SVG image by replacing every colour with its
+RGB complement. Both the hexadecimal notation used by svglite and the
+\code{rgb()} notation written by cairo-based devices such as \code{grDevices::svg()}
+are understood. Elements that do not set their own \code{fill} would keep the SVG
+default black, so \code{default_fill} is written on the root \verb{<svg>} element,
+where those elements inherit it.
 }

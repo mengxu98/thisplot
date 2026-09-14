@@ -19,7 +19,16 @@
     output.
   * Add `invert_svg()` to build a dark-mode variant of an SVG by replacing
     every colour with its RGB complement and giving fill-less elements a light
-    inherited fill.
+    inherited fill. Rasters embedded as `data:image/png;base64,...` payloads,
+    such as the colour bar of a continuous ggplot2 legend, are complemented
+    pixel by pixel too, which `invert_raster = FALSE` turns off. The `rgb()`
+    notation written by cairo-based devices such as `grDevices::svg()` is
+    understood as well, and a file that holds no colour to invert is reported
+    instead of being copied silently.
+  * Add `invert_png()` for a PNG on its own and `invert_figures()` to invert
+    several figures at once, given files or directories. Both name their copy
+    after the input with a `-dark` suffix, and `invert_figures()` skips files
+    that already carry that suffix.
 
 * **fix**:
   * Align `get_colors()` and colored-table columns using ANSI-aware terminal

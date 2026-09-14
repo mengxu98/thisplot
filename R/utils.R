@@ -334,7 +334,8 @@ build_patchwork <- function(
   }
   gt_new <- gtable::gtable_add_grob(
     gt_new,
-    ggplot2::zeroGrob(),    t = panel_row,
+    ggplot2::zeroGrob(),
+    t = panel_row,
     l = panel_col,
     b = panel_row + table_rows * (dims[1] - 1),
     r = panel_col + table_cols * (dims[2] - 1),
