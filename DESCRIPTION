@@ -42,6 +42,7 @@ Suggests:
     ggalluvial,
     ggExtra,
     ggpointdensity,
+    ggrastr,
     ggupset,
     ggVennDiagram,
     htmltools,
@@ -55,6 +56,6 @@ Suggests:
     venny
 Config/Needs/website: mengxu98/thistemplate
 Encoding: UTF-8
-RoxygenNote: 7.3.3
 Language: en-US
 LazyData: true
+Config/roxygen2/version: 8.1.0
