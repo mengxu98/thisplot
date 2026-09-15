@@ -67,6 +67,7 @@ sub-plot's layers itself. The rasterisation is done by
 <span>  <span class="va">plot</span>,</span>
 <span>  layers <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Point"</span>, <span class="st">"Tile"</span>, <span class="st">"Path"</span>, <span class="st">"Line"</span>, <span class="st">"Segment"</span><span class="op">)</span>,</span>
 <span>  dpi <span class="op">=</span> <span class="fl">300</span>,</span>
+<span>  dev <span class="op">=</span> <span class="st">"ragg"</span>,</span>
 <span>  recurse <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -88,6 +89,13 @@ the default <code>"Point"</code> matches <code><a href="https://ggplot2.tidyvers
 <dt id="arg-dpi">dpi<a class="anchor" aria-label="anchor" href="#arg-dpi"></a></dt>
 <dd><p>Resolution of the rasterised layers, in dots per inch.
 Default is <code>300</code>.</p></dd>
+
+
+<dt id="arg-dev">dev<a class="anchor" aria-label="anchor" href="#arg-dev"></a></dt>
+<dd><p>Graphic device used to render the rasterised layers, passed to
+<code><a href="https://rdrr.io/pkg/ggrastr/man/rasterise.html" class="external-link">ggrastr::rasterise()</a></code>. Default is <code>"ragg"</code>, which does not need X11; the
+<code>"cairo"</code> device of the underlying package does, and is unavailable on many
+headless machines.</p></dd>
 
 
 <dt id="arg-recurse">recurse<a class="anchor" aria-label="anchor" href="#arg-recurse"></a></dt>
