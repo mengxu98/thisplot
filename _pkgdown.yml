@@ -107,6 +107,7 @@ reference:
   - no_x_text
   - no_y_text
   - patchwork_grob
+  - rasterise_plot
   - segements_df
   - to_percent
 
