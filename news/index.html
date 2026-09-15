@@ -42,7 +42,8 @@
 <h2 class="pkg-version" data-toc-text="0.4.6" id="thisplot-046">thisplot 0.4.6<a class="anchor" aria-label="anchor" href="#thisplot-046"></a></h2>
 <ul><li>
 <strong>feat</strong>:
-<ul><li>Add <code><a href="../reference/plot_scatter.html">plot_scatter()</a></code> and <code><a href="../reference/plot_histogram.html">plot_histogram()</a></code> using <code><a href="../reference/theme_this.html">theme_this()</a></code> and thisplot palettes. Correlation annotation no longer depends on <code>ggpubr</code>; point density and marginal plots remain optional.</li>
+<ul><li>Add <code><a href="../reference/rasterise_plot.html">rasterise_plot()</a></code>, which renders the point and line layers of a <code>ggplot</code> or <code>patchwork</code> object as 300 dpi rasters, recursing into the sub-plots of a composite, so figures with many elements stay small and fast to draw.</li>
+<li>Add <code><a href="../reference/plot_scatter.html">plot_scatter()</a></code> and <code><a href="../reference/plot_histogram.html">plot_histogram()</a></code> using <code><a href="../reference/theme_this.html">theme_this()</a></code> and thisplot palettes. Correlation annotation no longer depends on <code>ggpubr</code>; point density and marginal plots remain optional.</li>
 <li>
 <code><a href="../reference/StatPlot.html">StatPlot()</a></code> value bars can show numeric labels through <code>label = TRUE</code>.</li>
 <li>
