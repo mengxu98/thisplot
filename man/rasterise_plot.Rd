@@ -8,6 +8,7 @@ rasterise_plot(
   plot,
   layers = c("Point", "Tile", "Path", "Line", "Segment"),
   dpi = 300,
+  dev = "ragg",
   recurse = TRUE
 )
 }
@@ -20,6 +21,11 @@ the default \code{"Point"} matches \code{geom_point()} layers. Add \code{"Violin
 
 \item{dpi}{Resolution of the rasterised layers, in dots per inch.
 Default is \code{300}.}
+
+\item{dev}{Graphic device used to render the rasterised layers, passed to
+\code{\link[ggrastr:rasterise]{ggrastr::rasterise()}}. Default is \code{"ragg"}, which does not need X11; the
+\code{"cairo"} device of the underlying package does, and is unavailable on many
+headless machines.}
 
 \item{recurse}{Whether to rasterise the sub-plots of a \code{patchwork}
 composite. Default is \code{TRUE}.}

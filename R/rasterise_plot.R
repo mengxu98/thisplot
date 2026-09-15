@@ -16,6 +16,10 @@
 #' `"Boxplot"` or `"Crossbar"` to rasterise those layers as well.
 #' @param dpi Resolution of the rasterised layers, in dots per inch.
 #' Default is `300`.
+#' @param dev Graphic device used to render the rasterised layers, passed to
+#' [ggrastr::rasterise()]. Default is `"ragg"`, which does not need X11; the
+#' `"cairo"` device of the underlying package does, and is unavailable on many
+#' headless machines.
 #' @param recurse Whether to rasterise the sub-plots of a `patchwork`
 #' composite. Default is `TRUE`.
 #'
@@ -38,6 +42,7 @@ rasterise_plot <- function(
   plot,
   layers = c("Point", "Tile", "Path", "Line", "Segment"),
   dpi = 300,
+  dev = "ragg",
   recurse = TRUE
 ) {
   if (!inherits(plot, c("ggplot", "patchwork"))) {
@@ -65,11 +70,12 @@ rasterise_plot <- function(
       rasterise_plot,
       layers = layers,
       dpi = dpi,
+      dev = dev,
       recurse = TRUE
     )
   }
   if (length(plot$layers) > 0) {
-    plot <- ggrastr::rasterise(plot, layers = layers, dpi = dpi)
+    plot <- ggrastr::rasterise(plot, layers = layers, dpi = dpi, dev = dev)
   }
 
   plot

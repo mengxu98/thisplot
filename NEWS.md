@@ -4,7 +4,8 @@
   * Add `rasterise_plot()`, which renders the point and line layers of a
     `ggplot` or `patchwork` object as 300 dpi rasters, recursing into the
     sub-plots of a composite, so figures with many elements stay small and
-    fast to draw.
+    fast to draw. Layers are rendered with the `ragg` device, which, unlike
+    the `Cairo` device of the underlying package, needs no X11.
   * Add `plot_scatter()` and `plot_histogram()` using `theme_this()` and
     thisplot palettes. Correlation annotation no longer depends on `ggpubr`;
     point density and marginal plots remain optional.
