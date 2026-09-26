@@ -148,7 +148,6 @@ NetworkPlot <- function(
     paste(edge[["..to"]], edge[["..from"]], sep = "\r")
   )
   edge$.edge_key <- edge_key
-  edge <- edge[!duplicated(edge$.edge_key), , drop = FALSE]
   edge <- edge[order(abs(edge[["..weight"]]), decreasing = TRUE), , drop = FALSE]
   edge <- edge[!duplicated(edge$.edge_key), , drop = FALSE]
   edge$.edge_key <- NULL
@@ -162,28 +161,24 @@ NetworkPlot <- function(
     log_message("'node' must be a data.frame object.", message_type = "error")
   }
   node <- as.data.frame(node, stringsAsFactors = FALSE)
-  if (is.null(node_name)) {
-    node_name <- if ("name" %in% colnames(node)) "name" else rownames(node)
+  if (is.null(node_name) && "name" %in% colnames(node)) {
+    node_name <- "name"
   }
-  if (is.null(node_name) || !node_name %in% colnames(node)) {
-    if (!is.null(rownames(node)) && any(nzchar(rownames(node)))) {
-      node[["..name"]] <- rownames(node)
-    } else {
-      log_message(
-        "Cannot determine node identifiers; supply 'node_name' or a 'name' column.",
-        message_type = "error"
-      )
-    }
-  } else {
+  if (!is.null(node_name) && node_name %in% colnames(node)) {
     node[["..name"]] <- as.character(node[[node_name]])
+  } else if (any(nzchar(rownames(node)))) {
+    node[["..name"]] <- rownames(node)
+  } else {
+    log_message(
+      "Cannot determine node identifiers; supply 'node_name' or a 'name' column.",
+      message_type = "error"
+    )
   }
-  node <- node[node[["..name"]] %in% node_names, , drop = FALSE]
   missing_nodes <- setdiff(node_names, node[["..name"]])
   if (length(missing_nodes) > 0) {
-    node <- rbind(
-      node,
-      data.frame(..name = missing_nodes, stringsAsFactors = FALSE)
-    )
+    pad <- node[rep(NA_integer_, length(missing_nodes)), , drop = FALSE]
+    pad[["..name"]] <- missing_nodes
+    node <- rbind(node, pad)
   }
   node <- node[!duplicated(node[["..name"]]), , drop = FALSE]
 
@@ -291,22 +286,24 @@ NetworkPlot <- function(
     character(0)
   }
   label_df <- node[node[["..name"]] %in% node_label, , drop = FALSE]
-  label_df[["..label_size"]] <- if (is.null(label_size)) {
-    label.size
-  } else if (length(label_size) == 1L && label_size %in% colnames(node)) {
-    as.numeric(label_df[[label_size]])
-  } else {
-    unname(as.numeric(label_size[label_df[["..name"]]]))
+  if (nrow(label_df) > 0L) {
+    label_df[["..label_size"]] <- if (is.null(label_size)) {
+      label.size
+    } else if (length(label_size) == 1L && label_size %in% colnames(node)) {
+      as.numeric(label_df[[label_size]])
+    } else {
+      unname(as.numeric(label_size[label_df[["..name"]]]))
+    }
+    label_df[["..label_size"]][!is.finite(label_df[["..label_size"]])] <- label.size
+    label_df[["..label_face"]] <- if (is.null(label_face)) {
+      "plain"
+    } else if (length(label_face) == 1L && label_face %in% colnames(node)) {
+      as.character(label_df[[label_face]])
+    } else {
+      unname(as.character(label_face[label_df[["..name"]]]))
+    }
+    label_df[["..label_face"]][is.na(label_df[["..label_face"]])] <- "plain"
   }
-  label_df[["..label_size"]][!is.finite(label_df[["..label_size"]])] <- label.size
-  label_df[["..label_face"]] <- if (is.null(label_face)) {
-    "plain"
-  } else if (length(label_face) == 1L && label_face %in% colnames(node)) {
-    as.character(label_df[[label_face]])
-  } else {
-    unname(as.character(label_face[label_df[["..name"]]]))
-  }
-  label_df[["..label_face"]][is.na(label_df[["..label_face"]])] <- "plain"
 
   p <- ggplot2::ggplot()
   if (nrow(edge) > 0) {
