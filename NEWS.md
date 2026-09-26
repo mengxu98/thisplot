@@ -1,6 +1,12 @@
 # thisplot 0.4.6
 
 * **feat**:
+  * Add `NetworkPlot()` to draw a network from an edge data frame and an
+    optional node data frame, with igraph layouts (`fr`, `kk`, `circle`) or
+    user-supplied coordinates, edge width and colour by weight and group,
+    node group colour, shape and size mapping, repelled labels, highlight
+    rings, and theme control. Duplicate edges are collapsed to the strongest
+    weight and self-loops dropped.
   * Add `rasterise_plot()`, which renders the point and line layers of a
     `ggplot` or `patchwork` object as 300 dpi rasters, recursing into the
     sub-plots of a composite, so figures with many elements stay small and
@@ -42,10 +48,6 @@
 
 * **docs**:
   * Streamline documentation for optional `ComplexHeatmap` helpers.
-
-* **deps**:
-  * Remove the unused `testthat` suggested dependency and its stale
-    configuration.
 
 # thisplot 0.4.4
 

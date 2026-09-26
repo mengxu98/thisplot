@@ -57,9 +57,10 @@ reference:
 - contents:
   - DimDataPlot
 
-- subtitle: "Graph plot"
+- subtitle: "Graph and network plot"
 - contents:
   - GraphPlot
+  - NetworkPlot
 
 - subtitle: "Sankey and alluvial"
 - contents:

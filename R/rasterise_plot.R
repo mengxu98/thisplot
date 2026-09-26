@@ -1,14 +1,5 @@
 #' @title Rasterise the layers of a plot
 #'
-#' @description
-#' Render the point and line layers of a `ggplot` or `patchwork` object as
-#' raster images, while the axes, text, legends and the remaining layers stay
-#' vector. A figure with a large number of elements then stays small and quick
-#' to draw, in the file and in the browser. For a `patchwork` composite the
-#' sub-plots are rasterised as well, because a composite carries only the first
-#' sub-plot's layers itself. The rasterisation is done by
-#' [ggrastr::rasterise()].
-#'
 #' @md
 #' @param plot A `ggplot` or `patchwork` object.
 #' @param layers Layer types to rasterise, named without the `Geom` prefix, so
@@ -17,7 +8,7 @@
 #' @param dpi Resolution of the rasterised layers, in dots per inch.
 #' Default is `300`.
 #' @param dev Graphic device used to render the rasterised layers, passed to
-#' [ggrastr::rasterise()]. Default is `"ragg"`, which does not need X11; the
+#' `ggrastr::rasterise()`. Default is `"ragg"`, which does not need X11; the
 #' `"cairo"` device of the underlying package does, and is unavailable on many
 #' headless machines.
 #' @param recurse Whether to rasterise the sub-plots of a `patchwork`
@@ -28,6 +19,7 @@
 #'
 #' @seealso [invert_svg()]
 #'
+#' @export
 #' @examples
 #' panel <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
 #'   ggplot2::geom_point() +
@@ -36,8 +28,6 @@
 #' rasterise_plot(panel)
 #'
 #' rasterise_plot(patchwork::wrap_plots(panel, panel), dpi = 150)
-#'
-#' @export
 rasterise_plot <- function(
   plot,
   layers = c("Point", "Tile", "Path", "Line", "Segment"),
