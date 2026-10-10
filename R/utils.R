@@ -1,5 +1,3 @@
-get_namespace_fun <- thisutils::get_namespace_fun
-
 #' @title Get used vars in a ggplot object
 #'
 #' @md
@@ -422,6 +420,9 @@ as_grob <- function(plot, ...) {
 #'
 #' @export
 as_gtable <- function(plot, ...) {
+  if (!inherits(plot, c("gtable", "grob"))) {
+    plot <- as_grob(plot, ...)
+  }
   if (inherits(plot, "gtable")) {
     return(plot)
   }
@@ -430,23 +431,12 @@ as_gtable <- function(plot, ...) {
     gt <- gtable::gtable_col(NULL, list(plot), u, u)
     gt$layout$clip <- "inherit"
     return(gt)
-  } else {
-    grob <- as_grob(plot, ...)
-    if (inherits(grob, "gtable")) {
-      return(grob)
-    } else if (inherits(grob, "grob")) {
-      u <- grid::unit(1, "null")
-      gt <- gtable::gtable_col(NULL, list(grob), u, u)
-      gt$layout$clip <- "inherit"
-      return(gt)
-    } else {
-      log_message(
-        "Cannot convert object of {.cls {class(grob)}} into a gtable",
-        message_type = "warning"
-      )
-      return(NULL)
-    }
   }
+  log_message(
+    "Cannot convert object of {.cls {class(plot)}} into a gtable",
+    message_type = "warning"
+  )
+  return(NULL)
 }
 
 #' @title Extract legend from a plot

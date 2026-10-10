@@ -109,8 +109,6 @@ compute_velocity_on_grid <- function(
   for (dim_i in 1:n_dim) {
     m1 <- min(x_emb[, dim_i], na.rm = TRUE)
     m2 <- max(x_emb[, dim_i], na.rm = TRUE)
-    # m1 <- m1 - 0.01 * abs(m2 - m1)
-    # m2 <- m2 + 0.01 * abs(m2 - m1)
     gr <- seq(m1, m2, length.out = ceiling(50 * density))
     grs <- c(grs, list(gr))
   }

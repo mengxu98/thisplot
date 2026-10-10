@@ -59,12 +59,8 @@ get_colors <- function(..., palettes = NULL) {
   specified_palette_names <- character(0)
   if (!is.null(palettes)) {
     if (is.character(palettes)) {
-      all_palettes_list <- c(
-        thisplot::palette_list,
-        get_chinese_palettes()
-      )
       specified_palette_names <- palettes
-      all_palettes <- all_palettes_list[names(all_palettes_list) %in% palettes]
+      all_palettes <- all_palettes[names(all_palettes) %in% palettes]
       if (length(all_palettes) == 0) {
         log_message(
           "No matching palettes found for: {.val {palettes}}",
@@ -314,7 +310,7 @@ get_colors <- function(..., palettes = NULL) {
           )
         }
         class(result) <- c("colors", "data.frame")
-        cli::cli_h3("Found palette{?s}: {.val {palette_names_found}}")
+        log_message("Found palette{?s}: {.val {palette_names_found}}")
         return(result)
       }
     }
@@ -323,12 +319,12 @@ get_colors <- function(..., palettes = NULL) {
       colors_hex_upper <- toupper(colors_df$hex)
       palette_color_indices <- which(colors_hex_upper %in% palette_hex_upper)
       colors_df <- colors_df[palette_color_indices, , drop = FALSE]
-      cli::cli_h3("Searching in palette{?s}: {.val {palette_names_found}}")
+      log_message("Searching in palette{?s}: {.val {palette_names_found}}")
     }
   }
 
   if (length(specified_palette_names) > 0 && length(remaining_search_values) > 0) {
-    cli::cli_h3("Searching in palette{?s}: {.val {specified_palette_names}}")
+    log_message("Searching in palette{?s}: {.val {specified_palette_names}}")
   }
 
   if (length(remaining_search_values) > 0) {
@@ -415,7 +411,7 @@ get_colors <- function(..., palettes = NULL) {
   }
 
   if (length(palette_matches) > 0) {
-    cli::cli_h3("Found in:")
+    log_message("Found in:")
     unique_hex_codes <- unique(names(palette_matches))
     for (hex_code in unique_hex_codes) {
       pal_info <- palette_matches[[hex_code]]
@@ -655,14 +651,7 @@ to_hex <- function(colors) {
   colors <- sub("^#([0-9A-Fa-f]{6})[0-9A-Fa-f]{2}$", "#\\1", colors)
   hexes <- vapply(colors, function(col) {
     tryCatch(
-      {
-        rgb_mat <- grDevices::col2rgb(col)
-        grDevices::rgb(
-          red = rgb_mat[1, ] / 255,
-          green = rgb_mat[2, ] / 255,
-          blue = rgb_mat[3, ] / 255
-        )
-      },
+      col2hex(col),
       error = function(e) NA_character_
     )
   }, character(1), USE.NAMES = FALSE)

@@ -130,11 +130,6 @@ plot_scatter <- function(
       )
     marginal_group_colour <- FALSE
     marginal_group_fill <- FALSE
-  } else {
-    log_message(
-      "{.arg data} must be a data frame with 2 or 3 columns",
-      message_type = "error"
-    )
   }
 
   theme_fun <- if (is.function(theme_use)) {

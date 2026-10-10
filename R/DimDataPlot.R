@@ -410,7 +410,14 @@ DimDataPlot <- function(
 
   if (has_shape) {
     shape_levels <- levels(plot_data[[".plot_shape"]])
-    shape_values <- dim_data_plot_shapes(shape_levels, shape.values)
+    if (is.null(shape.values)) {
+      shape.values <- c(16, 17, 15, 18, 3, 7, 8, 0, 1, 2, 5, 6)
+    }
+    shape_values <- if (!is.null(names(shape.values)) && all(shape_levels %in% names(shape.values))) {
+      shape.values[shape_levels]
+    } else {
+      stats::setNames(rep(shape.values, length.out = length(shape_levels)), shape_levels)
+    }
     p <- p +
       ggplot2::scale_shape_manual(
         name = if (identical(shape.by, group.by)) {
@@ -524,15 +531,4 @@ dim_data_plot_factor <- function(x, show_na = FALSE, arg = "group") {
     }
   }
   list(value = value, keep = keep)
-}
-
-dim_data_plot_shapes <- function(levels_use, shape.values = NULL) {
-  if (is.null(shape.values)) {
-    shape.values <- c(16, 17, 15, 18, 3, 7, 8, 0, 1, 2, 5, 6)
-  }
-  if (!is.null(names(shape.values)) && all(levels_use %in% names(shape.values))) {
-    return(shape.values[levels_use])
-  }
-  shape.values <- rep(shape.values, length.out = length(levels_use))
-  stats::setNames(shape.values, levels_use)
 }

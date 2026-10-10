@@ -341,6 +341,16 @@ StatPlot <- function(
   }
   venn_args <- venn_args %||% list()
 
+  grid_major_element <- if (isTRUE(grid_major)) {
+    element_line(
+      colour = grid_major_colour,
+      linetype = grid_major_linetype,
+      linewidth = grid_major_linewidth
+    )
+  } else {
+    element_blank()
+  }
+
   if (identical(stat_type, "value")) {
     if (!plot_type %in% c("bar", "dot")) {
       log_message(
@@ -366,15 +376,6 @@ StatPlot <- function(
       xlab <- xlab %||% ""
     }
     complete_groups <- complete_groups %||% identical(plot_type, "dot")
-    grid_major_element <- if (isTRUE(grid_major)) {
-      element_line(
-        colour = grid_major_colour,
-        linetype = grid_major_linetype,
-        linewidth = grid_major_linewidth
-      )
-    } else {
-      element_blank()
-    }
     return(stat_value_plot(
       data = meta.data,
       label = stat.by,
@@ -423,16 +424,6 @@ StatPlot <- function(
       )
       position <- "stack"
     }
-  }
-
-  grid_major_element <- if (isTRUE(grid_major)) {
-    element_line(
-      colour = grid_major_colour,
-      linetype = grid_major_linetype,
-      linewidth = grid_major_linewidth
-    )
-  } else {
-    element_blank()
   }
 
   if (nrow(meta.data) == 0) {
@@ -1589,10 +1580,10 @@ stat_value_plot <- function(
   score,
   group = NULL,
   facet = NULL,
-  plot_type = c("bar", "dot", "comparison"),
+  plot_type = c("bar", "dot"),
   top_n = Inf,
   top_by = NULL,
-  complete_groups = identical(plot_type, "comparison"),
+  complete_groups = FALSE,
   score_cutoff = NULL,
   sort_by = c("absolute", "score"),
   palette = "RdBu",
@@ -1644,7 +1635,7 @@ stat_value_plot <- function(
       message_type = "error"
     )
   }
-  if (plot_type %in% c("dot", "comparison") && is.null(group)) {
+  if (identical(plot_type, "dot") && is.null(group)) {
     log_message(
       "{.arg group} is required for grouped dot plots",
       message_type = "error"
@@ -1675,12 +1666,11 @@ stat_value_plot <- function(
     df[[score]]
   }
   df[[".stat_value_rank"]] <- rank_value
-  df[[".stat_value_row"]] <- seq_len(nrow(df))
   selected <- stat_value_top_rows(df, top_n = top_n, top_by = top_by)
 
   if (
     isTRUE(complete_groups) &&
-      plot_type %in% c("dot", "comparison") &&
+      identical(plot_type, "dot") &&
       !is.null(group)
   ) {
     selected_keys <- unique(stat_value_key(selected, c(facet, label)))
@@ -1837,7 +1827,6 @@ stat_value_plot <- function(
     )
 
   df[[".stat_value_rank"]] <- NULL
-  df[[".stat_value_row"]] <- NULL
   df[[".stat_value_label"]] <- NULL
   df[[".stat_value_abs"]] <- NULL
   rownames(df) <- NULL
