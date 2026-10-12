@@ -59,12 +59,8 @@ get_colors <- function(..., palettes = NULL) {
   specified_palette_names <- character(0)
   if (!is.null(palettes)) {
     if (is.character(palettes)) {
-      all_palettes_list <- c(
-        thisplot::palette_list,
-        get_chinese_palettes()
-      )
       specified_palette_names <- palettes
-      all_palettes <- all_palettes_list[names(all_palettes_list) %in% palettes]
+      all_palettes <- all_palettes[names(all_palettes) %in% palettes]
       if (length(all_palettes) == 0) {
         log_message(
           "No matching palettes found for: {.val {palettes}}",
@@ -655,14 +651,7 @@ to_hex <- function(colors) {
   colors <- sub("^#([0-9A-Fa-f]{6})[0-9A-Fa-f]{2}$", "#\\1", colors)
   hexes <- vapply(colors, function(col) {
     tryCatch(
-      {
-        rgb_mat <- grDevices::col2rgb(col)
-        grDevices::rgb(
-          red = rgb_mat[1, ] / 255,
-          green = rgb_mat[2, ] / 255,
-          blue = rgb_mat[3, ] / 255
-        )
-      },
+      col2hex(col),
       error = function(e) NA_character_
     )
   }, character(1), USE.NAMES = FALSE)

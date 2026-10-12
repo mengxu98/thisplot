@@ -57,19 +57,19 @@ plot_autosize <- function(
 ) {
   for (value in list(panel_width, panel_height, dpi)) {
     if (!is.numeric(value) || length(value) != 1 || is.na(value) || value <= 0) {
-      stop("Panel dimensions and dpi must be positive numbers.", call. = FALSE)
+      thisutils::log_message("Panel dimensions and dpi must be positive numbers.", message_type = "error")
     }
   }
   if (!is.numeric(margin) || length(margin) != 1 || is.na(margin) || margin < 0) {
-    stop("`margin` must be a non-negative number.", call. = FALSE)
+    thisutils::log_message("`margin` must be a non-negative number.", message_type = "error")
   }
   if (!is.logical(label_autosize) || length(label_autosize) != 1 || is.na(label_autosize)) {
-    stop("`label_autosize` must be `TRUE` or `FALSE`.", call. = FALSE)
+    thisutils::log_message("`label_autosize` must be `TRUE` or `FALSE`.", message_type = "error")
   }
   if (!is.null(base_size) &&
     !(is.character(base_size) && length(base_size) == 1 && identical(base_size, "auto")) &&
     !(is.numeric(base_size) && length(base_size) == 1 && is.finite(base_size) && base_size > 0)) {
-    stop("`base_size` must be `\"auto\"`, `NULL`, or a positive point size.", call. = FALSE)
+    thisutils::log_message("`base_size` must be `\"auto\"`, `NULL`, or a positive point size.", message_type = "error")
   }
   text_base_pt <- autosize_resolve_text_base(x, base_size)
   if (is.finite(text_base_pt)) {
@@ -214,35 +214,35 @@ plot_autocompose <- function(
     plots <- list(plots)
   }
   if (!is.list(plots) || !length(plots)) {
-    stop("`plots` must be a plot or a non-empty list of plots.", call. = FALSE)
+    thisutils::log_message("`plots` must be a plot or a non-empty list of plots.", message_type = "error")
   }
   for (value in list(ncol, nrow)) {
     if (!is.null(value) &&
       (!is.numeric(value) || length(value) != 1 || !is.finite(value) ||
         value < 1 || value != as.integer(value))) {
-      stop("`ncol` and `nrow` must be positive whole numbers.", call. = FALSE)
+      thisutils::log_message("`ncol` and `nrow` must be positive whole numbers.", message_type = "error")
     }
   }
   if (!is.logical(label_autosize) || length(label_autosize) != 1 || is.na(label_autosize)) {
-    stop("`label_autosize` must be `TRUE` or `FALSE`.", call. = FALSE)
+    thisutils::log_message("`label_autosize` must be `TRUE` or `FALSE`.", message_type = "error")
   }
   if (!is.numeric(target_aspect) || length(target_aspect) != 1 ||
     !is.finite(target_aspect) || target_aspect <= 0) {
-    stop("`target_aspect` must be a positive number.", call. = FALSE)
+    thisutils::log_message("`target_aspect` must be a positive number.", message_type = "error")
   }
   if (!is.null(target_width) &&
     (!is.numeric(target_width) || length(target_width) != 1 ||
       !is.finite(target_width) || target_width <= 0)) {
-    stop("`target_width` must be a positive number.", call. = FALSE)
+    thisutils::log_message("`target_width` must be a positive number.", message_type = "error")
   }
   if (!is.numeric(gutter) || length(gutter) != 1 ||
     !is.finite(gutter) || gutter < 0) {
-    stop("`gutter` must be a non-negative number.", call. = FALSE)
+    thisutils::log_message("`gutter` must be a non-negative number.", message_type = "error")
   }
   if (!is.null(base_size) &&
     !(is.character(base_size) && length(base_size) == 1 && identical(base_size, "auto")) &&
     !(is.numeric(base_size) && length(base_size) == 1 && is.finite(base_size) && base_size > 0)) {
-    stop("`base_size` must be `\"auto\"`, `NULL`, or a positive point size.", call. = FALSE)
+    thisutils::log_message("`base_size` must be `\"auto\"`, `NULL`, or a positive point size.", message_type = "error")
   }
   n <- length(plots)
   combined <- patchwork::wrap_plots(plots)
@@ -273,7 +273,7 @@ plot_autocompose <- function(
   grobs <- lapply(fitted, function(plot) {
     grob <- if (grid::is.grob(plot)) plot else as_grob(plot)
     if (!grid::is.grob(grob)) {
-      stop("Every item in `plots` must be drawable.", call. = FALSE)
+      thisutils::log_message("Every item in `plots` must be drawable.", message_type = "error")
     }
     grob
   })
@@ -328,7 +328,7 @@ plot_autocompose <- function(
       nrow <- ceiling(n / ncol)
     }
     if (ncol * nrow < n) {
-      stop("`ncol * nrow` must fit all plots.", call. = FALSE)
+      thisutils::log_message("`ncol * nrow` must fit all plots.", message_type = "error")
     }
 
     component_rows <- (seq_len(n) - 1L) %/% ncol + 1L
@@ -992,7 +992,16 @@ autosize_label_text <- function(plot, panel_width, units, base_size = NA_real_) 
     return(plot)
   }
 
-  text_layers <- autosize_text_layers(plot)
+  text_layers <- vapply(
+    plot$layers,
+    function(layer) {
+      inherits(
+        layer$geom,
+        c("GeomText", "GeomLabel", "GeomTextRepel", "GeomLabelRepel")
+      )
+    },
+    logical(1)
+  )
   if (!any(text_layers)) {
     return(plot)
   }
@@ -1068,19 +1077,6 @@ autosize_label_text <- function(plot, panel_width, units, base_size = NA_real_) 
     plot$layers[[i]] <- ggplot2::ggproto(NULL, layer, aes_params = aes_params)
   }
   plot
-}
-
-autosize_text_layers <- function(plot) {
-  vapply(
-    plot$layers,
-    function(layer) {
-      inherits(
-        layer$geom,
-        c("GeomText", "GeomLabel", "GeomTextRepel", "GeomLabelRepel")
-      )
-    },
-    logical(1)
-  )
 }
 
 autosize_text_scale <- function(plot) {

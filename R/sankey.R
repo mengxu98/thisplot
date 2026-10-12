@@ -1,6 +1,5 @@
 # modified from: https://github.com/davidsjoberg/ggsankey/blob/main/R/sankey.R
 
-# ** Support functions ----------
 prepare_params <- function(...) {
   # Prepare aesthics for flow lines
   flow.aes <- list(...)
@@ -64,7 +63,7 @@ sigmoid <- function(x_from, x_to, y_from, y_to, smooth = 5, n = 300) {
 #' @export
 make_long <- function(.df, ..., value = NULL) {
   if ("..r" %in% names(.df)) {
-    stop("The column name '..r' is not allowed")
+    thisutils::log_message("The column name '..r' is not allowed", message_type = "error")
   }
   .vars <- dplyr::quos(...)
 
@@ -105,6 +104,39 @@ make_long <- function(.df, ..., value = NULL) {
 }
 
 
+sankey_theme_base <- function(
+  base_size,
+  base_family,
+  base_line_size,
+  base_rect_size,
+  grid_major = list(panel.grid.major = ggplot2::element_blank()),
+  axis_line = ggplot2::element_blank(),
+  ...
+) {
+  ggplot2::theme_bw(
+    base_size = base_size,
+    base_family = base_family,
+    base_line_size = base_line_size,
+    base_rect_size = base_rect_size
+  ) %+replace%
+    do.call(ggplot2::theme, c(
+      list(panel.border = ggplot2::element_blank()),
+      grid_major,
+      list(
+        panel.grid.minor = ggplot2::element_blank(),
+        axis.line = axis_line,
+        legend.key = ggplot2::element_blank(),
+        strip.background = ggplot2::element_rect(
+          fill = "white",
+          colour = "transparent",
+          linewidth = ggplot2::rel(2)
+        ),
+        complete = TRUE
+      ),
+      list(...)
+    ))
+}
+
 #' @title Themes for sankey plot
 #'
 #' @description Minimal themes for sankey, alluvial and sankey bump plots
@@ -119,102 +151,64 @@ make_long <- function(.df, ..., value = NULL) {
 #' @aliases theme_sankey_bump
 #'
 #' @export
-theme_sankey <-
-  function(
-    base_size = 11,
-    base_family = "",
-    base_line_size = base_size / 22,
-    base_rect_size = base_size / 22
-  ) {{ ggplot2::theme_bw(
+theme_sankey <- function(
+  base_size = 11,
+  base_family = "",
+  base_line_size = base_size / 22,
+  base_rect_size = base_size / 22
+) {
+  sankey_theme_base(
     base_size = base_size,
     base_family = base_family,
     base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      axis.line = ggplot2::element_line(
-        colour = "black",
-        linewidth = ggplot2::rel(1)
-      ),
-      legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(
-        fill = "white",
-        colour = "transparent",
-        linewidth = ggplot2::rel(2)
-      ),
-      complete = TRUE,
-      axis.line.y = ggplot2::element_blank(),
-      axis.line.x = ggplot2::element_blank(),
-      axis.text.y = ggplot2::element_blank(),
-      axis.ticks.y = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
-    ) }}
+    base_rect_size = base_rect_size,
+    axis_line = ggplot2::element_line(colour = "black", linewidth = ggplot2::rel(1)),
+    axis.line.y = ggplot2::element_blank(),
+    axis.line.x = ggplot2::element_blank(),
+    axis.text.y = ggplot2::element_blank(),
+    axis.ticks.y = ggplot2::element_blank(),
+    axis.ticks.x = ggplot2::element_blank()
+  )
+}
 
 #' @rdname theme_sankey
 #' @export
-theme_alluvial <-
-  function(
-    base_size = 11,
-    base_family = "",
-    base_line_size = base_size / 22,
-    base_rect_size = base_size / 22
-  ) {{ ggplot2::theme_bw(
+theme_alluvial <- function(
+  base_size = 11,
+  base_family = "",
+  base_line_size = base_size / 22,
+  base_rect_size = base_size / 22
+) {
+  sankey_theme_base(
     base_size = base_size,
     base_family = base_family,
     base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      axis.line = ggplot2::element_blank(),
-      legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(
-        fill = "white",
-        colour = "transparent",
-        linewidth = ggplot2::rel(2)
-      ),
-      complete = TRUE,
-      axis.line.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank()
-    ) }}
+    base_rect_size = base_rect_size,
+    axis.line.x = ggplot2::element_blank(),
+    axis.ticks.x = ggplot2::element_blank()
+  )
+}
 
 #' @rdname theme_sankey
 #' @export
-theme_sankey_bump <-
-  function(
-    base_size = 11,
-    base_family = "",
-    base_line_size = base_size / 22,
-    base_rect_size = base_size / 22
-  ) {{ ggplot2::theme_bw(
+theme_sankey_bump <- function(
+  base_size = 11,
+  base_family = "",
+  base_line_size = base_size / 22,
+  base_rect_size = base_size / 22
+) {
+  sankey_theme_base(
     base_size = base_size,
     base_family = base_family,
     base_line_size = base_line_size,
-    base_rect_size = base_rect_size
-  ) %+replace%
-    ggplot2::theme(
-      panel.border = ggplot2::element_blank(),
-      panel.grid.major.x = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      axis.line = ggplot2::element_blank(),
-      legend.key = ggplot2::element_blank(),
-      strip.background = ggplot2::element_rect(
-        fill = "white",
-        colour = "transparent",
-        linewidth = ggplot2::rel(2)
-      ),
-      complete = TRUE,
-      axis.line.x = ggplot2::element_blank(),
-      axis.ticks.x = ggplot2::element_blank(),
-      panel.grid.major.y = ggplot2::element_line("gray90")
-    ) }}
+    base_rect_size = base_rect_size,
+    grid_major = list(panel.grid.major.x = ggplot2::element_blank()),
+    axis.line.x = ggplot2::element_blank(),
+    axis.ticks.x = ggplot2::element_blank(),
+    panel.grid.major.y = ggplot2::element_line("gray90")
+  )
+}
 
-# FLOW LAYER ---------
 StatSankeyFlow <- ggplot2::ggproto(
   "StatSankeyFlow",
   ggplot2::Stat,
@@ -392,7 +386,6 @@ StatSankeyFlow <- ggplot2::ggproto(
   }
 )
 
-# FLOW SANKEYBUMP LAYER ---------
 StatSankeyBumpFlow <- ggplot2::ggproto(
   "StatSankeyBumpFlow",
   ggplot2::Stat,
@@ -609,7 +602,6 @@ StatSankeyBumpFlow <- ggplot2::ggproto(
   }
 )
 
-# TEXT LAYER -------
 StatSankeyText <- ggplot2::ggproto(
   "StatSankeyText",
   ggplot2::Stat,
@@ -696,7 +688,6 @@ StatSankeyText <- ggplot2::ggproto(
   }
 )
 
-# NODE LAYER -------
 StatSankeyNode <- ggplot2::ggproto(
   "StatSankeyNode",
   ggplot2::Stat,

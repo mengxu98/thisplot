@@ -72,13 +72,9 @@ visual_colors <- function(
   n_colors <- length(colors)
   display_names <- as.character(names)
 
-  luminance <- function(hex_color) {
-    rgb <- grDevices::col2rgb(hex_color) / 255
-    0.299 * rgb[1, ] + 0.587 * rgb[2, ] + 0.114 * rgb[3, ]
-  }
-
   text_color_for <- function(hex_color) {
-    ifelse(luminance(hex_color) > 0.5, "#000000", "#FFFFFF")
+    rgb <- grDevices::col2rgb(hex_color) / 255
+    ifelse(0.299 * rgb[1, ] + 0.587 * rgb[2, ] + 0.114 * rgb[3, ] > 0.5, "#000000", "#FFFFFF")
   }
 
   is_chinese <- function(text) {

@@ -407,40 +407,25 @@ NetworkPlot <- function(
   }
 
   if (nrow(label_df) > 0) {
-    if (requireNamespace("ggrepel", quietly = TRUE)) {
-      p <- p + ggrepel::geom_text_repel(
-        data = label_df,
-        mapping = ggplot2::aes(
-          x = .data[["..x"]],
-          y = .data[["..y"]],
-          label = .data[["..name"]],
-          size = .data[["..label_size"]],
-          fontface = .data[["..label_face"]]
-        ),
-        colour = label.fg,
-        bg.color = label.bg,
-        bg.r = label.bg.r,
-        segment.colour = NA,
-        max.overlaps = Inf,
-        box.padding = 0.35,
-        point.padding = 0.28,
-        show.legend = FALSE,
-        inherit.aes = FALSE
-      ) + ggplot2::scale_size_identity()
-    } else {
-      p <- p + ggplot2::geom_text(
-        data = label_df,
-        mapping = ggplot2::aes(
-          x = .data[["..x"]],
-          y = .data[["..y"]],
-          label = .data[["..name"]],
-          size = .data[["..label_size"]],
-          fontface = .data[["..label_face"]]
-        ),
-        colour = label.fg,
-        inherit.aes = FALSE
-      ) + ggplot2::scale_size_identity()
-    }
+    p <- p + ggrepel::geom_text_repel(
+      data = label_df,
+      mapping = ggplot2::aes(
+        x = .data[["..x"]],
+        y = .data[["..y"]],
+        label = .data[["..name"]],
+        size = .data[["..label_size"]],
+        fontface = .data[["..label_face"]]
+      ),
+      colour = label.fg,
+      bg.color = label.bg,
+      bg.r = label.bg.r,
+      segment.colour = NA,
+      max.overlaps = Inf,
+      box.padding = 0.35,
+      point.padding = 0.28,
+      show.legend = FALSE,
+      inherit.aes = FALSE
+    ) + ggplot2::scale_size_identity()
   }
 
   theme_fun <- switch(theme_use,
