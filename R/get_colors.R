@@ -310,7 +310,7 @@ get_colors <- function(..., palettes = NULL) {
           )
         }
         class(result) <- c("colors", "data.frame")
-        log_message("Found palette{?s}: {.val {palette_names_found}}")
+        cli::cli_h3("Found palette{?s}: {.val {palette_names_found}}")
         return(result)
       }
     }
@@ -319,12 +319,12 @@ get_colors <- function(..., palettes = NULL) {
       colors_hex_upper <- toupper(colors_df$hex)
       palette_color_indices <- which(colors_hex_upper %in% palette_hex_upper)
       colors_df <- colors_df[palette_color_indices, , drop = FALSE]
-      log_message("Searching in palette{?s}: {.val {palette_names_found}}")
+      cli::cli_h3("Searching in palette{?s}: {.val {palette_names_found}}")
     }
   }
 
   if (length(specified_palette_names) > 0 && length(remaining_search_values) > 0) {
-    log_message("Searching in palette{?s}: {.val {specified_palette_names}}")
+    cli::cli_h3("Searching in palette{?s}: {.val {specified_palette_names}}")
   }
 
   if (length(remaining_search_values) > 0) {
@@ -411,7 +411,7 @@ get_colors <- function(..., palettes = NULL) {
   }
 
   if (length(palette_matches) > 0) {
-    log_message("Found in:")
+    cli::cli_h3("Found in:")
     unique_hex_codes <- unique(names(palette_matches))
     for (hex_code in unique_hex_codes) {
       pal_info <- palette_matches[[hex_code]]
