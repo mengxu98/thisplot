@@ -42,9 +42,10 @@ panel <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +
   ggplot2::geom_point() +
   ggplot2::facet_wrap(~cyl)
 
-rasterise_plot(panel)
-
-rasterise_plot(patchwork::wrap_plots(panel, panel), dpi = 150)
+if (requireNamespace("ggrastr", quietly = TRUE)) {
+  rasterise_plot(panel)
+  rasterise_plot(patchwork::wrap_plots(panel, panel), dpi = 150)
+}
 }
 \seealso{
 \code{\link[=invert_svg]{invert_svg()}}

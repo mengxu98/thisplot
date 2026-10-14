@@ -135,7 +135,7 @@ get_colors <- function(..., palettes = NULL) {
         return(collect_grob_colors(x))
       }
       if (inherits(x, c("Heatmap", "HeatmapList"))) {
-        check_r("ComplexHeatmap", verbose = FALSE)
+        check_r("ComplexHeatmap", install = FALSE, verbose = FALSE)
         # Anchor colors of the color mapping, e.g. from colorRamp2()
         anchor_colors <- tryCatch(
           attr(x@matrix_color_mapping@col_fun, "colors"),

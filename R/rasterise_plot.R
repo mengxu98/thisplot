@@ -25,9 +25,10 @@
 #'   ggplot2::geom_point() +
 #'   ggplot2::facet_wrap(~cyl)
 #'
-#' rasterise_plot(panel)
-#'
-#' rasterise_plot(patchwork::wrap_plots(panel, panel), dpi = 150)
+#' if (requireNamespace("ggrastr", quietly = TRUE)) {
+#'   rasterise_plot(panel)
+#'   rasterise_plot(patchwork::wrap_plots(panel, panel), dpi = 150)
+#' }
 rasterise_plot <- function(
   plot,
   layers = c("Point", "Tile", "Path", "Line", "Segment"),
@@ -48,7 +49,7 @@ rasterise_plot <- function(
       message_type = "error"
     )
   }
-  check_r("ggrastr", verbose = FALSE)
+  check_r("ggrastr", install = FALSE, verbose = FALSE)
 
   if (
     isTRUE(recurse) &&

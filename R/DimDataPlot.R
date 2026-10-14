@@ -269,7 +269,9 @@ DimDataPlot <- function(
 
   mark_layers <- NULL
   if (isTRUE(add_mark)) {
-    check_r("concaveman", verbose = FALSE)
+    if (identical(mark_type, "hull")) {
+      check_r("concaveman", install = FALSE, verbose = FALSE)
+    }
     if (identical(mark_type, "ellipse")) {
       mark_layers <- list(
         ggplot2::stat_ellipse(

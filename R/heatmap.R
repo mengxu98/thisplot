@@ -27,7 +27,7 @@ heatmap_fixsize <- function(
   ht_list,
   legend_list
 ) {
-  check_r("ComplexHeatmap", verbose = FALSE)
+  check_r("ComplexHeatmap", install = FALSE, verbose = FALSE)
 
   unit_value_or_zero <- function(u, units, type = c("width", "height")) {
     type <- match.arg(type)
@@ -171,7 +171,7 @@ heatmap_rendersize <- function(
   legend_list,
   flip
 ) {
-  check_r("ComplexHeatmap", verbose = FALSE)
+  check_r("ComplexHeatmap", install = FALSE, verbose = FALSE)
 
   legend_list <- legend_list[!vapply(legend_list, is.null, logical(1))]
 
@@ -334,7 +334,7 @@ heatmap_rendersize <- function(
 #'
 #' @export
 cluster_within_group2 <- function(mat, factor) {
-  check_r("ComplexHeatmap", verbose = FALSE)
+  check_r("ComplexHeatmap", install = FALSE, verbose = FALSE)
 
   if (!is.factor(factor)) {
     factor <- factor(factor, levels = unique(factor))
@@ -581,7 +581,7 @@ build_heatmap_annotation <- function(
   border = NULL,
   params = NULL
 ) {
-  check_r("ComplexHeatmap", verbose = FALSE)
+  check_r("ComplexHeatmap", install = FALSE, verbose = FALSE)
 
   anno_args <- c(
     annotations,
