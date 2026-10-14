@@ -1,3 +1,9 @@
+# thisplot (development version)
+
+* Use the public ggplot2 theme completion API and require ggplot2 4.0.0 or later.
+* Check optional plotting dependencies without installing packages during plotting. Only hull marks require concaveman. Require thisutils 0.5.0 for dependency checks without installation.
+* Install CI dependencies with two workers and remove the empty coverage job.
+
 # thisplot 0.4.6
 
 * **feat**:

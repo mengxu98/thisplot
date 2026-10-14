@@ -816,7 +816,7 @@ autosize_harmonize_text <- function(plot, base_size) {
       return(plot)
     }
     factor <- base_size / current[[1]]
-    eff_theme <- ggplot2:::plot_theme(plot)
+    eff_theme <- ggplot2::complete_theme(plot$theme)
     overrides <- list()
     for (name in names(eff_theme)) {
       element <- eff_theme[[name]]
