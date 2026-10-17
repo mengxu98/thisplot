@@ -214,7 +214,7 @@ theme_blank <- function(
         grid::textGrob(
           label = ylab,
           x = grid::unit(-0.85, "lines"),
-          y = grid::unit(ylen_npc, "npc") + grid::unit(0.25, "lines"),
+          y = grid::unit(ylen_npc / 2, "npc"),
           vjust = 0.5,
           hjust = 0.5,
           rot = 90,

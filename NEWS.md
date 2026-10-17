@@ -4,6 +4,9 @@
 * Check optional plotting dependencies without installing packages during plotting. Only hull marks require concaveman. Require thisutils 0.5.0 for dependency checks without installation.
 * Install CI dependencies with two workers and remove the empty coverage job.
 
+* **fix**: Center the rotated y-axis label along the coordinate arrow in
+  `theme_blank()` across panel sizes and custom arrow lengths.
+
 # thisplot 0.4.6
 
 * **feat**:
