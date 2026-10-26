@@ -47,6 +47,10 @@
     that already carry that suffix.
 
 * **fix**:
+  * Invert color animation values when the target SVG attribute is a color,
+    preserving non-color animations and element references.
+  * Preserve edge endpoints with missing weights when constructing network
+    layouts, including circular layouts that do not use weights.
   * Preserve SVG element references and CSS selectors when inverting colors.
   * Keep zero-weight edges in network plots while excluding them from layout
     forces, so the `fr` and `kk` layouts accept zero weights.

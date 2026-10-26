@@ -137,9 +137,19 @@ invert_svg_colour <- function(svg) {
       "[[:alpha:]_:][[:alnum:]_.:-]*\\s*=\\s*(?:\"[^\"]*\"|'[^']*')",
       tag, perl = TRUE
     )
-    regmatches(tag, attributes) <- list(vapply(regmatches(tag, attributes)[[1]], function(attribute) {
+    attribute_list <- regmatches(tag, attributes)[[1]]
+    color_attributes <- c("fill", "stroke", "color", "stop-color", "flood-color", "lighting-color")
+    tag_name <- sub("^<([^[:space:]/>]+)(?s:.*)$", "\\1", tag, perl = TRUE)
+    tag_name <- sub("^.*:", "", tag_name)
+    target <- attribute_list[grepl("^attributeName\\s*=", attribute_list)]
+    target <- gsub("^[^=]*=\\s*['\"]|['\"]$", "", target, perl = TRUE)
+    if (tag_name %in% c("animate", "animateColor", "set") &&
+      length(target) == 1L && target %in% color_attributes) {
+      color_attributes <- c(color_attributes, "from", "to", "by", "values")
+    }
+    regmatches(tag, attributes) <- list(vapply(attribute_list, function(attribute) {
       name <- sub("\\s*=(?s:.*)$", "", attribute, perl = TRUE)
-      if (name %in% c("fill", "stroke", "color", "stop-color", "flood-color", "lighting-color")) {
+      if (name %in% color_attributes) {
         return(invert(attribute))
       }
       if (identical(name, "style")) {
