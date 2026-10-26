@@ -1,13 +1,9 @@
-# thisplot (development version)
-
-* Use the public ggplot2 theme completion API and require ggplot2 4.0.0 or later.
-* Check optional plotting dependencies without installing packages during plotting. Only hull marks require concaveman. Require thisutils 0.5.0 for dependency checks without installation.
-* Install CI dependencies with two workers and remove the empty coverage job.
-
-* **fix**: Center the rotated y-axis label along the coordinate arrow in
-  `theme_blank()` across panel sizes and custom arrow lengths.
-
 # thisplot 0.4.6
+
+* **compatibility**:
+  * Require ggplot2 4.0.0 or later and use its public theme completion API.
+  * Require thisutils 0.5.0 or later for optional dependency checks without
+    installing packages during plotting. Only hull marks require concaveman.
 
 * **feat**:
   * Add `NetworkPlot()` to draw a network from an edge data frame and an
@@ -51,6 +47,11 @@
     that already carry that suffix.
 
 * **fix**:
+  * Preserve SVG element references and CSS selectors when inverting colors.
+  * Keep zero-weight edges in network plots while excluding them from layout
+    forces, so the `fr` and `kk` layouts accept zero weights.
+  * Center the rotated y-axis label along the coordinate arrow in
+    `theme_blank()` across panel sizes and custom arrow lengths.
   * Align `get_colors()` and colored-table columns using ANSI-aware terminal
     display widths, including Chinese text.
   * Apply distinct palette colors consistently when printing colored tables.

@@ -92,21 +92,69 @@ invert_svg <- function(
 
 invert_svg_colour <- function(svg) {
   pattern <- paste0(
+    "/\\*(?s:.*?)\\*/(*SKIP)(*F)|",
+    "(?i:url)\\([^)]*\\)(*SKIP)(*F)|",
     "#[0-9a-fA-F]{6}\\b|#[0-9a-fA-F]{3}\\b|",
     "rgba?\\(\\s*[0-9.]+%?\\s*,\\s*[0-9.]+%?\\s*,\\s*[0-9.]+%?",
     "(?:\\s*,\\s*[0-9.]+%?)?\\s*\\)"
   )
-  matches <- gregexpr(pattern, svg, perl = TRUE)
-  regmatches(svg, matches) <- list(
-    vapply(
-      regmatches(svg, matches)[[1]],
-      function(one) {
-        if (substring(one, 1L, 1L) == "#") invert_hex(one) else invert_rgb(one)
-      },
-      character(1),
-      USE.NAMES = FALSE
+  invert <- function(text) {
+    matches <- gregexpr(pattern, text, perl = TRUE)
+    regmatches(text, matches) <- list(
+      vapply(
+        regmatches(text, matches)[[1]],
+        function(one) {
+          if (substring(one, 1L, 1L) == "#") invert_hex(one) else invert_rgb(one)
+        },
+        character(1),
+        USE.NAMES = FALSE
+      )
     )
+    text
+  }
+  invert_css <- function(css) {
+    gap <- "(?:\\s|/\\*(?s:.*?)\\*/)*"
+    declarations <- gregexpr(
+      paste0(
+        "(?:^|[;{])", gap, "[[:alnum:]_-]+", gap, ":", gap,
+        "(?:/\\*(?s:.*?)\\*/|(?i:url)\\([^)]*\\)|[^;}\"'])+"
+      ),
+      css, perl = TRUE
+    )
+    regmatches(css, declarations) <- list(vapply(regmatches(css, declarations)[[1]], invert, character(1)))
+    css
+  }
+  skipped <- "<!--(?s:.*?)-->(*SKIP)(*F)|<!\\[CDATA\\[(?s:.*?)\\]\\]>(*SKIP)(*F)|"
+  tags <- gregexpr(
+    paste0(
+      skipped,
+      "<[[:alpha:]_][[:alnum:]_.:-]*(?:\"[^\"]*\"|'[^']*'|[^'\">])*>"
+    ),
+    svg, perl = TRUE
   )
+  regmatches(svg, tags) <- list(vapply(regmatches(svg, tags)[[1]], function(tag) {
+    attributes <- gregexpr(
+      "[[:alpha:]_:][[:alnum:]_.:-]*\\s*=\\s*(?:\"[^\"]*\"|'[^']*')",
+      tag, perl = TRUE
+    )
+    regmatches(tag, attributes) <- list(vapply(regmatches(tag, attributes)[[1]], function(attribute) {
+      name <- sub("\\s*=(?s:.*)$", "", attribute, perl = TRUE)
+      if (name %in% c("fill", "stroke", "color", "stop-color", "flood-color", "lighting-color")) {
+        return(invert(attribute))
+      }
+      if (identical(name, "style")) {
+        value <- regexpr("^[^=]*=\\s*['\"]\\K(?s:.*)(?=['\"]$)", attribute, perl = TRUE)
+        regmatches(attribute, value) <- invert_css(regmatches(attribute, value))
+      }
+      attribute
+    }, character(1)))
+    tag
+  }, character(1)))
+  styles <- gregexpr(
+    paste0(skipped, "<style\\b(?:\"[^\"]*\"|'[^']*'|[^'\">])*>\\K(?s:.*?)(?=</style\\s*>)"),
+    svg, perl = TRUE
+  )
+  regmatches(svg, styles) <- list(vapply(regmatches(svg, styles)[[1]], invert_css, character(1)))
   svg
 }
 
