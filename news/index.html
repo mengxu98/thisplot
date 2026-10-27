@@ -39,15 +39,13 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="thisplot-development-version">thisplot (development version)<a class="anchor" aria-label="anchor" href="#thisplot-development-version"></a></h2>
-<ul><li><p>Use the public ggplot2 theme completion API and require ggplot2 4.0.0 or later.</p></li>
-<li><p>Check optional plotting dependencies without installing packages during plotting. Only hull marks require concaveman. Require thisutils 0.5.0 for dependency checks without installation.</p></li>
-<li><p>Install CI dependencies with two workers and remove the empty coverage job.</p></li>
-<li><p><strong>fix</strong>: Center the rotated y-axis label along the coordinate arrow in <code><a href="../reference/theme_blank.html">theme_blank()</a></code> across panel sizes and custom arrow lengths.</p></li>
-</ul></div>
-    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.6" id="thisplot-046">thisplot 0.4.6<a class="anchor" aria-label="anchor" href="#thisplot-046"></a></h2>
 <ul><li>
+<strong>compatibility</strong>:
+<ul><li>Require ggplot2 4.0.0 or later and use its public theme completion API.</li>
+<li>Require thisutils 0.5.0 or later for optional dependency checks without installing packages during plotting. Only hull marks require concaveman.</li>
+</ul></li>
+<li>
 <strong>feat</strong>:
 <ul><li>Add <code><a href="../reference/NetworkPlot.html">NetworkPlot()</a></code> to draw a network from an edge data frame and an optional node data frame, with igraph layouts (<code>fr</code>, <code>kk</code>, <code>circle</code>) or user-supplied coordinates, edge width and colour by weight and group, node group colour, shape and size mapping, repelled labels, highlight rings, and theme control. Duplicate edges are collapsed to the strongest weight and self-loops dropped.</li>
 <li>Add <code><a href="../reference/rasterise_plot.html">rasterise_plot()</a></code>, which renders the point and line layers of a <code>ggplot</code> or <code>patchwork</code> object as 300 dpi rasters, recursing into the sub-plots of a composite, so figures with many elements stay small and fast to draw. Layers are rendered with the <code>ragg</code> device, which, unlike the <code>Cairo</code> device of the underlying package, needs no X11.</li>
@@ -66,7 +64,12 @@
 </ul></li>
 <li>
 <strong>fix</strong>:
-<ul><li>Align <code><a href="../reference/get_colors.html">get_colors()</a></code> and colored-table columns using ANSI-aware terminal display widths, including Chinese text.</li>
+<ul><li>Invert color animation values when the target SVG attribute is a color, preserving non-color animations and element references.</li>
+<li>Preserve edge endpoints with missing weights when constructing network layouts, including circular layouts that do not use weights.</li>
+<li>Preserve SVG element references and CSS selectors when inverting colors.</li>
+<li>Keep zero-weight edges in network plots while excluding them from layout forces, so the <code>fr</code> and <code>kk</code> layouts accept zero weights.</li>
+<li>Center the rotated y-axis label along the coordinate arrow in <code><a href="../reference/theme_blank.html">theme_blank()</a></code> across panel sizes and custom arrow lengths.</li>
+<li>Align <code><a href="../reference/get_colors.html">get_colors()</a></code> and colored-table columns using ANSI-aware terminal display widths, including Chinese text.</li>
 <li>Apply distinct palette colors consistently when printing colored tables.</li>
 </ul></li>
 <li>
