@@ -10,7 +10,6 @@
 Version](https://img.shields.io/conda/vn/conda-forge/r-thisplot?color=green)](https://anaconda.org/conda-forge/r-thisplot)
 [![R-hub](https://github.com/mengxu98/thisplot/actions/workflows/rhub.yaml/badge.svg)](https://github.com/mengxu98/thisplot/actions/workflows/rhub.yaml)
 [![R-CMD-check](https://github.com/mengxu98/thisplot/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mengxu98/thisplot/actions/workflows/R-CMD-check.yaml)
-[![test-coverage](https://github.com/mengxu98/thisplot/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/mengxu98/thisplot/actions/workflows/test-coverage.yaml)
 [![pkgdown](https://github.com/mengxu98/thisplot/actions/workflows/pkgdown.yaml/badge.svg)](https://mengxu98.github.io/thisplot/reference/index.html)
 [![RStudio CRAN mirror
 downloads](https://cranlogs.r-pkg.org/badges/grand-total/thisplot)](https://CRAN.R-project.org/package=thisplot)
