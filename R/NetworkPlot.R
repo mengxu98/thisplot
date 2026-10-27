@@ -200,6 +200,7 @@ NetworkPlot <- function(
       weight = abs(edge[["..weight"]]),
       stringsAsFactors = FALSE
     )
+    graph_edges <- graph_edges[is.na(graph_edges$weight) | graph_edges$weight != 0, , drop = FALSE]
     graph <- igraph::graph_from_data_frame(
       graph_edges,
       directed = FALSE,
