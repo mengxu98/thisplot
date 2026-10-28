@@ -119,7 +119,8 @@ invert_svg_colour <- function(svg) {
         "(?:^|[;{])", gap, "[[:alnum:]_-]+", gap, ":", gap,
         "(?:/\\*(?s:.*?)\\*/|(?i:url)\\([^)]*\\)|[^;}\"'])+"
       ),
-      css, perl = TRUE
+      css,
+      perl = TRUE
     )
     regmatches(css, declarations) <- list(vapply(regmatches(css, declarations)[[1]], invert, character(1)))
     css
@@ -130,12 +131,14 @@ invert_svg_colour <- function(svg) {
       skipped,
       "<[[:alpha:]_][[:alnum:]_.:-]*(?:\"[^\"]*\"|'[^']*'|[^'\">])*>"
     ),
-    svg, perl = TRUE
+    svg,
+    perl = TRUE
   )
   regmatches(svg, tags) <- list(vapply(regmatches(svg, tags)[[1]], function(tag) {
     attributes <- gregexpr(
       "[[:alpha:]_:][[:alnum:]_.:-]*\\s*=\\s*(?:\"[^\"]*\"|'[^']*')",
-      tag, perl = TRUE
+      tag,
+      perl = TRUE
     )
     attribute_list <- regmatches(tag, attributes)[[1]]
     color_attributes <- c("fill", "stroke", "color", "stop-color", "flood-color", "lighting-color")
@@ -162,7 +165,8 @@ invert_svg_colour <- function(svg) {
   }, character(1)))
   styles <- gregexpr(
     paste0(skipped, "<style\\b(?:\"[^\"]*\"|'[^']*'|[^'\">])*>\\K(?s:.*?)(?=</style\\s*>)"),
-    svg, perl = TRUE
+    svg,
+    perl = TRUE
   )
   regmatches(svg, styles) <- list(vapply(regmatches(svg, styles)[[1]], invert_css, character(1)))
   svg
