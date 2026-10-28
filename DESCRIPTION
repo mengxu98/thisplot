@@ -2,7 +2,7 @@ Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
 Version: 0.4.6
-Date: 2026-10-26
+Date: 2026-10-28
 Authors@R:
     c(
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054")),
@@ -60,3 +60,4 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 Config/roxygen2/version: 8.1.0
+RoxygenNote: 8.1.1
