@@ -17,9 +17,9 @@ compute_velocity_on_grid(
 )
 }
 \arguments{
-\item{x_emb}{A matrix of dimension n_obs x n_dim specifying the embedding coordinates of the cells.}
+\item{x_emb}{A numeric coordinate matrix with observations in rows.}
 
-\item{v_emb}{A matrix of dimension n_obs x n_dim specifying the velocity vectors of the cells.}
+\item{v_emb}{A numeric vector matrix with the same dimensions as \code{x_emb}.}
 
 \item{density}{A numeric value specifying the density of the grid points along each dimension.
 Default is \code{1}.}

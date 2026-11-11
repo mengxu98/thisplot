@@ -4,19 +4,19 @@
 \alias{make_long}
 \title{Make a long data frame for sankey plot}
 \usage{
-make_long(.df, ..., value = NULL)
+make_long(.df, value = NULL, ...)
 }
 \arguments{
 \item{.df}{a data frame}
 
-\item{...}{unquoted columnnames of df that you want to include in the plot.}
-
 \item{value}{if each row have a weight this weight could be kept by providing column name of weight.}
+
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 a longer data frame
 }
 \description{
-Prepares a 'wide' data frame into a format that `geom_sankey` or `geom_alluvial` understands.
+Prepares a 'wide' data frame into a format that \code{geom_sankey} or \code{geom_alluvial} understands.
 Useful to show flows between dimensions in dataset.
 }

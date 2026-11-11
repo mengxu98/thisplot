@@ -55,46 +55,43 @@ sigmoid <- function(x_from, x_to, y_from, y_to, smooth = 5, n = 300) {
 #' Useful to show flows between dimensions in dataset.
 #'
 #' @param .df a data frame
-#' @param ... unquoted columnnames of df that you want to include in the plot.
+#' @param ... Arguments passed to other functions.
 #' @param value if each row have a weight this weight could be kept by providing column name of weight.
 #'
 #' @return a longer data frame
 #'
 #' @export
-make_long <- function(.df, ..., value = NULL) {
+#' @md
+make_long <- function(.df, value = NULL, ...) {
   if ("..r" %in% names(.df)) {
     thisutils::log_message("The column name '..r' is not allowed", message_type = "error")
   }
   .vars <- dplyr::quos(...)
+  value_var <- dplyr::enquo(value)
 
-  if (!missing(value)) {
-    value_var <- dplyr::enquo(value)
+  weighted <- !rlang::quo_is_null(value_var)
+  if (weighted) {
     out <- .df |>
       dplyr::select(!!!.vars, value = !!value_var) |>
       dplyr::mutate(..r = dplyr::row_number()) |>
-      tidyr::gather(x, node, -..r, -value) |>
-      dplyr::arrange(.data$..r) |>
-      dplyr::group_by(.data$..r) |>
-      dplyr::mutate(
-        next_x = dplyr::lead(.data$x),
-        next_node = dplyr::lead(.data$node)
-      ) |>
-      dplyr::ungroup() |>
-      dplyr::select(-..r) |>
-      dplyr::relocate(value, .after = dplyr::last_col())
+      tidyr::gather(x, node, -..r, -value)
   } else {
     out <- .df |>
       dplyr::select(!!!.vars) |>
       dplyr::mutate(..r = dplyr::row_number()) |>
-      tidyr::gather(x, node, -..r) |>
-      dplyr::arrange(.data$..r) |>
-      dplyr::group_by(.data$..r) |>
-      dplyr::mutate(
-        next_x = dplyr::lead(.data$x),
-        next_node = dplyr::lead(.data$node)
-      ) |>
-      dplyr::ungroup() |>
-      dplyr::select(-..r)
+      tidyr::gather(x, node, -..r)
+  }
+  out <- out |>
+    dplyr::arrange(.data$..r) |>
+    dplyr::group_by(.data$..r) |>
+    dplyr::mutate(
+      next_x = dplyr::lead(.data$x),
+      next_node = dplyr::lead(.data$node)
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::select(-..r)
+  if (weighted) {
+    out <- dplyr::relocate(out, value, .after = dplyr::last_col())
   }
 
   levels <- unique(out$x)
@@ -151,6 +148,7 @@ sankey_theme_base <- function(
 #' @aliases theme_sankey_bump
 #'
 #' @export
+#' @md
 theme_sankey <- function(
   base_size = 11,
   base_family = "",
@@ -173,6 +171,7 @@ theme_sankey <- function(
 
 #' @rdname theme_sankey
 #' @export
+#' @md
 theme_alluvial <- function(
   base_size = 11,
   base_family = "",
@@ -191,6 +190,7 @@ theme_alluvial <- function(
 
 #' @rdname theme_sankey
 #' @export
+#' @md
 theme_sankey_bump <- function(
   base_size = 11,
   base_family = "",
@@ -784,8 +784,7 @@ StatSankeyNode <- ggplot2::ggproto(
 #' @param width Width of nodes.
 #' @param smooth How much smooth should the curve have? More means steeper curve.
 #' @param inherit.aes Should the geom inherit aesthetics.
-#' @param ... Other arguments to be passed to the geom.
-#'
+#' @param ... Arguments passed to other functions.
 #' @section Aesthetics:
 #' geom_sankey understand the following aesthetics (required aesthetics are in
 #' bold):
@@ -807,12 +806,13 @@ StatSankeyNode <- ggplot2::ggproto(
 #' @return A ggplot layer.
 #'
 #' @export
+#' @md
 #' @examples
 #' dat <- data.frame(
 #'   Group = c("A", "A", "B", "B", "C"),
 #'   Type = c("X", "Y", "X", "Y", "X")
 #' )
-#' long <- make_long(dat, Group, Type)
+#' long <- make_long(dat, Group, Type, value = NULL)
 #' ggplot2::ggplot(
 #'   long,
 #'   ggplot2::aes(
@@ -895,6 +895,7 @@ geom_sankey <- function(
 #'
 #' @rdname geom_sankey_label
 #' @export
+#' @md
 geom_sankey_label <- function(
   mapping = NULL,
   data = NULL,
@@ -934,6 +935,7 @@ geom_sankey_label <- function(
 
 #' @rdname geom_sankey_label
 #' @export
+#' @md
 geom_sankey_text <- function(
   mapping = NULL,
   data = NULL,
@@ -981,6 +983,7 @@ geom_sankey_text <- function(
 #' @return A ggplot layer.
 #'
 #' @export
+#' @md
 geom_alluvial <- function(
   mapping = NULL,
   data = NULL,
@@ -1025,6 +1028,7 @@ geom_alluvial <- function(
 #'
 #' @rdname geom_alluvial_label
 #' @export
+#' @md
 geom_alluvial_text <- function(
   mapping = NULL,
   data = NULL,
@@ -1052,6 +1056,7 @@ geom_alluvial_text <- function(
 
 #' @rdname geom_alluvial_label
 #' @export
+#' @md
 geom_alluvial_label <- function(
   mapping = NULL,
   data = NULL,
@@ -1092,6 +1097,7 @@ geom_alluvial_label <- function(
 #' @return A ggplot layer.
 #'
 #' @export
+#' @md
 geom_sankey_bump <- function(
   mapping = NULL,
   data = NULL,

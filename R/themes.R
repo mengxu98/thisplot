@@ -1,10 +1,9 @@
-#' @title The default theme for scop plot function.
+#' @title Default plot theme
 #'
 #' @md
 #' @param aspect.ratio Aspect ratio of the panel.
 #' @param base_size Base font size
-#' @param ... Arguments passed to the [ggplot2::theme].
-#'
+#' @param ... Arguments passed to other functions.
 #' @return A ggplot2 theme object (class `theme`, `gg`).
 #'
 #' @export
@@ -124,8 +123,7 @@ theme_this <- function(
 #' @param xlab The label of the x-axis.
 #' @param ylab The label of the y-axis.
 #' @param lab_size The size of the axis labels.
-#' @param ... Arguments passed to the [ggplot2::theme].
-#'
+#' @param ... Arguments passed to other functions.
 #' @return A list containing ggplot2 theme objects and annotation objects.
 #' If `add_coord` is `TRUE`, returns a list with coordinate arrows;
 #' otherwise returns a list with theme only.
@@ -239,6 +237,7 @@ theme_blank <- function(
 #' @return A ggplot2 theme object.
 #' @export
 #'
+#' @md
 #' @examples
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg, colour = factor(cyl))) +
@@ -253,6 +252,7 @@ no_legend <- function() {
 #' @return A ggplot2 theme object.
 #' @export
 #'
+#' @md
 #' @examples
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg)) +
@@ -267,6 +267,7 @@ no_margin <- function() {
 #' @return A ggplot2 theme object.
 #' @export
 #'
+#' @md
 #' @examples
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg)) +
@@ -284,6 +285,7 @@ no_x_text <- function() {
 #' @return A ggplot2 theme object.
 #' @export
 #'
+#' @md
 #' @examples
 #' library(ggplot2)
 #' ggplot(mtcars, aes(wt, mpg)) +

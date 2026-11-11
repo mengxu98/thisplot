@@ -22,11 +22,11 @@
 #' or column colors, or columns without explicit colors.
 #' @param by Whether default palette colors are assigned by `"col"` (default)
 #' or `"row"`.
-#' @param ... Additional arguments passed to `format()`.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return `x` invisibly.
 #' @export
 #'
+#' @md
 #' @examples
 #' t1 <- data.frame(
 #'   name = c("a", "b", "c"),

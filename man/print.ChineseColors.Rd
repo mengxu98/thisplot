@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A \code{ChineseColors} object.}
 
-\item{...}{Additional arguments.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 Details of the \code{ChineseColors} object.

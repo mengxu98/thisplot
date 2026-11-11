@@ -143,6 +143,17 @@ DimDataPlot <- function(
   theme_args = list(),
   seed = 11
 ) {
+  rng <- get0(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+  on.exit(
+    {
+      if (!is.null(rng)) {
+        assign(".Random.seed", rng, envir = .GlobalEnv)
+      } else if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+        rm(".Random.seed", envir = .GlobalEnv)
+      }
+    },
+    add = TRUE
+  )
   set.seed(seed)
   mark_type <- match.arg(mark_type)
 
@@ -460,6 +471,7 @@ DimDataPlot <- function(
           inherit.aes = FALSE
         ) +
         ggrepel::geom_text_repel(
+          seed = seed,
           data = label_data,
           mapping = ggplot2::aes(
             x = .data[[".plot_x"]],
@@ -481,6 +493,7 @@ DimDataPlot <- function(
     } else {
       p <- p +
         ggrepel::geom_text_repel(
+          seed = seed,
           data = label_data,
           mapping = ggplot2::aes(
             x = .data[[".plot_x"]],

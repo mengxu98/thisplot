@@ -9,7 +9,7 @@ as_gtable(plot, ...)
 \arguments{
 \item{plot}{A plot object (gtable, grob, patchwork, or ggplot).}
 
-\item{...}{Additional arguments passed to other functions.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A gtable object.

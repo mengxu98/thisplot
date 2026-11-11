@@ -2,6 +2,7 @@
 #'
 #' @concept data
 #' @name palette_list
+#' @md
 NULL
 
 #' @title Chinese traditional colors dataset
@@ -22,6 +23,7 @@ NULL
 #' @concept data
 #' @name chinese_colors
 #'
+#' @md
 #' @examples
 #' data(chinese_colors)
 #' color_sets <- attr(chinese_colors, "color_sets")

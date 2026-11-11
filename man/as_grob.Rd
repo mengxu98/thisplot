@@ -9,7 +9,7 @@ as_grob(plot, ...)
 \arguments{
 \item{plot}{A plot object (gList, patchwork, or ggplot).}
 
-\item{...}{Additional arguments passed to other functions.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A grob object.

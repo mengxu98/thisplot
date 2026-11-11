@@ -51,7 +51,7 @@ cc$visual_colors(
 
 ```{r}
 #| label: get_colors-1
-get_colors("Paired")
+get_colors("Paired", palettes = NULL)
 ```
 
 ```{r}
@@ -65,8 +65,8 @@ get_colors("cyan", palettes = "ChineseSet64")
 library(ggplot2)
 p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
   geom_point() +
-  scale_color_manual(values = get_colors(1:3)$hex)
-get_colors(p)
+  scale_color_manual(values = get_colors(1:3, palettes = NULL)$hex)
+get_colors(p, palettes = NULL)
 ```
 
 ## **Installation**

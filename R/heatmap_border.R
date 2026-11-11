@@ -13,6 +13,7 @@
 #' @return A list with `enabled`, `color`, `size`, `gp`, and `legend_border`.
 #'
 #' @export
+#' @md
 heatmap_border_spec <- function(border = NULL, palcolor = "black", size = 1) {
   enabled <- !is.null(border) && !isFALSE(border)
   color <- if (is.character(border) && length(border) > 0L && nzchar(border[[1]])) {
@@ -37,30 +38,35 @@ heatmap_border_spec <- function(border = NULL, palcolor = "black", size = 1) {
 
 #' @rdname heatmap_border_spec
 #' @export
+#' @md
 heatmap_border_enabled <- function(border) {
   heatmap_border_spec(border = border)$enabled
 }
 
 #' @rdname heatmap_border_spec
 #' @export
+#' @md
 heatmap_border_color <- function(border, palcolor = "black") {
   heatmap_border_spec(border = border, palcolor = palcolor)$color
 }
 
 #' @rdname heatmap_border_spec
 #' @export
+#' @md
 heatmap_border_size_value <- function(size) {
   heatmap_border_spec(size = size)$size
 }
 
 #' @rdname heatmap_border_spec
 #' @export
+#' @md
 heatmap_border_gp <- function(border, color, size = 1) {
   heatmap_border_spec(border = border, palcolor = color, size = size)$gp
 }
 
 #' @rdname heatmap_border_spec
 #' @export
+#' @md
 heatmap_legend_border <- function(border, color) {
   heatmap_border_spec(border = border, palcolor = color)$legend_border
 }

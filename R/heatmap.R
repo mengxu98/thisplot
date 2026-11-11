@@ -333,6 +333,7 @@ heatmap_rendersize <- function(
 #' @return A dendrogram with ordered leaves
 #'
 #' @export
+#' @md
 cluster_within_group2 <- function(mat, factor) {
   check_r("ComplexHeatmap", install = FALSE, verbose = FALSE)
 
@@ -403,6 +404,7 @@ cluster_within_group2 <- function(mat, factor) {
 #' @return A grid grob object. If the input is not drawable, returns a null grob.
 #' @export
 #'
+#' @md
 #' @examples
 #' library(ggplot2)
 #' p <- ggplot2::ggplot(mtcars, ggplot2::aes(wt, mpg)) +

@@ -29,22 +29,22 @@ geom_sankey_bump(
 
 \item{smooth}{How much smooth should the curve have? More means steeper curve.}
 
-\item{type}{Either `sankey` or `alluvial`.}
+\item{type}{Either \code{sankey} or \code{alluvial}.}
 
 \item{inherit.aes}{Should the geom inherit aesthetics.}
 
-\item{...}{Other arguments to be passed to the geom.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A ggplot layer.
 }
 \description{
 Creates a sankey bump plot which visualize flows between nodes.
-Each observation needs to have a `x` aesthetic as well as a `next_x` column which declares where that observation should flow.
-Also, each observation should have a `node` and a `next_node` aesthetic which provide information about which group in the y-direction.
+Each observation needs to have a \code{x} aesthetic as well as a \code{next_x} column which declares where that observation should flow.
+Also, each observation should have a \code{node} and a \code{next_node} aesthetic which provide information about which group in the y-direction.
 }
 \details{
 Other important arguments are;
-`space` which provides the space between nodes in the y-direction;
-`shift` which shifts nodes in the y-direction.
+\code{space} which provides the space between nodes in the y-direction;
+\code{shift} which shifts nodes in the y-direction.
 }

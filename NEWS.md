@@ -1,3 +1,18 @@
+# thisplot (development version)
+
+* **refactor**: Share weighted and unweighted Sankey data preparation while preserving selections and column order.
+* **fix**: Seeded dimension, statistical and network plots restore the caller's random-number state, including after errors. Plot data slimming retains variables used in arithmetic mappings and facet expressions.
+
+* **refactor**: Place `...` last in function signatures; unrestricted `get_colors()` searches use `palettes = NULL`, and unweighted `make_long()` selections use `value = NULL`.
+
+* **feat**: Add `scatter_layers()` and `plot_scatter3d()` for shared point, outline and interactive three-dimensional rendering.
+
+* **feat**: Add `streamline_layers()` for shared vector-grid streamlines with fixed or magnitude colours.
+
+* **feat**: Add `contrast_text()` to choose black or white text after compositing transparent fills over their background.
+
+* **feat**: Add `geom_round_rect()` with a corner radius in millimetres and standard rectangle aesthetics.
+
 # thisplot 0.4.6
 
 * **compatibility**:

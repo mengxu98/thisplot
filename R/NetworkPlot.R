@@ -207,6 +207,17 @@ NetworkPlot <- function(
       vertices = data.frame(name = node[["..name"]])
     )
     if (!is.null(seed)) {
+      rng <- get0(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+      on.exit(
+        {
+          if (!is.null(rng)) {
+            assign(".Random.seed", rng, envir = .GlobalEnv)
+          } else if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+            rm(".Random.seed", envir = .GlobalEnv)
+          }
+        },
+        add = TRUE
+      )
       set.seed(seed)
     }
     xy <- switch(layout,

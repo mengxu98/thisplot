@@ -47,6 +47,14 @@ get_vars <- function(
       )
     )
   )
+  expressions <- c(
+    as.list(p$mapping),
+    unlist(lapply(p$layers, function(layer) as.list(layer$mapping)), recursive = FALSE),
+    as.list(p$facet$params$facets),
+    as.list(p$facet$params$rows),
+    as.list(p$facet$params$cols)
+  )
+  vars <- unique(c(vars, unlist(lapply(expressions, all.vars))))
   vars_used <- intersect(
     unique(
       c(
@@ -353,8 +361,7 @@ build_patchwork <- function(
 #'
 #' @md
 #' @param x A patchwork object.
-#' @param ... Additional arguments passed to other functions.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return A gtable object.
 #'
 #' @export
@@ -387,8 +394,7 @@ patchwork_grob <- function(x, ...) {
 #'
 #' @md
 #' @param plot A plot object (gList, patchwork, or ggplot).
-#' @param ... Additional arguments passed to other functions.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return A grob object.
 #'
 #' @export
@@ -414,8 +420,7 @@ as_grob <- function(plot, ...) {
 #'
 #' @md
 #' @param plot A plot object (gtable, grob, patchwork, or ggplot).
-#' @param ... Additional arguments passed to other functions.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return A gtable object.
 #'
 #' @export
@@ -622,6 +627,7 @@ add_grob <- function(
 #' @return A numeric vector expressed as percentages.
 #'
 #' @export
+#' @md
 #' @examples
 #' to_percent(c(1, 1, 2))
 #' to_percent(c(0, 0))

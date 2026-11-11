@@ -75,14 +75,14 @@ thisplot_logo <- function(unicode = cli::is_utf8_output()) {
 #' @title Print logo
 #'
 #' @param x Input information.
-#' @param ... Other parameters.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return Print the ASCII logo
 #'
 #' @method print thisplot_logo
 #'
 #' @export
 #'
+#' @md
 print.thisplot_logo <- function(x, ...) {
   cat(x, ..., sep = "\n")
   invisible(x)
