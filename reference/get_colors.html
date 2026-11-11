@@ -11,7 +11,7 @@ It automatically searches in all palettes and reports which palette(s) contain t
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,25 +51,20 @@ It automatically searches in all palettes and reports which palette(s) contain t
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_colors</span><span class="op">(</span><span class="va">...</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_colors</span><span class="op">(</span>palettes <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>One or more search values.
-Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
-If NULL, using all Chinese colors.
-Can also be <code>ggplot</code>, <code>patchwork</code>, or other renderable plot objects
-(<code>gtable</code>, <code>grob</code>, <code>gList</code>, <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">ComplexHeatmap::Heatmap</a></code>, <code>pheatmap</code>, <code>trellis</code>)
-to get the colors used in the plots.</p></dd>
-
-
-<dt id="arg-palettes">palettes<a class="anchor" aria-label="anchor" href="#arg-palettes"></a></dt>
+<dl><dt id="arg-palettes">palettes<a class="anchor" aria-label="anchor" href="#arg-palettes"></a></dt>
 <dd><p>Optional. A named list of palettes to search in.
 If <code>NULL</code> (default), searches in all available palettes.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>Arguments passed to other functions.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -90,7 +85,7 @@ with the colors used in the plot (<code>color</code>) and their Chinese names (<
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"Paired"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"Paired"</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found palette: <span style="color: #0000BB;">"Paired"</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> name     rgb              hex       </span>
@@ -107,26 +102,26 @@ with the colors used in the plot (<code>color</code>) and their Chinese names (<
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #FFFFAF;">#FFFF99  (255, 255, 153)  #FFFF99  </span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #D78700;">#B15928  (177, 89, 40)    #B15928  </span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"#FF7F00"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"#FF7F00"</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#FF7F00</span>: <span style="color: #0000BB;">"Paired"</span> and <span style="color: #0000BB;">"Set1"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> name     rgb            hex       </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #FF8700;">#FF7F00  (255, 127, 0)  #FF7F00  </span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"pinlan"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"pinlan"</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#2B73AF</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseBlue"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> num  name    name_ch  rgb             hex      category  category_ch   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87D7;">21   pinlan  品蓝     (43, 115, 175)  #2B73AF  blue      蓝           </span> </span>
-<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="fl">44</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="fl">44</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#4E7CA1</span>: <span style="color: #0000BB;">"ChineseBlue"</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> num  name       name_ch  rgb             hex      category  category_ch   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #5F87AF;">44   diechilan  蝶翅蓝   (78, 124, 161)  #4E7CA1  blue      蓝           </span> </span>
-<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"#2B73AF"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="st">"#2B73AF"</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found in: </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="font-weight: bold;">#2B73AF</span>: <span style="color: #0000BB;">"ChineseSet128"</span> and <span style="color: #0000BB;">"ChineseBlue"</span></span>
@@ -158,10 +153,10 @@ with the colors used in the plot (<code>color</code>) and their Chinese names (<
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">wt</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">get_colors</span><span class="op">(</span><span class="st">"Paired"</span><span class="op">)</span><span class="op">$</span><span class="va">hex</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">get_colors</span><span class="op">(</span><span class="st">"Paired"</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">$</span><span class="va">hex</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ── Found palette: <span style="color: #0000BB;">"Paired"</span> </span>
-<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_colors</span><span class="op">(</span><span class="va">p</span>, palettes <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> factor  color     </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #AFD7FF;">4       #A6CEE3  </span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #0087D7;">6       #1F78B4  </span> </span>

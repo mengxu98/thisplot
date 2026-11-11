@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">thisplot</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +39,17 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4.6" id="thisplot-046">thisplot 0.4.6<a class="anchor" aria-label="anchor" href="#thisplot-046"></a></h2>
+<h2 class="pkg-version" data-toc-text="development version" id="thisplot-development-version">thisplot (development version)<a class="anchor" aria-label="anchor" href="#thisplot-development-version"></a></h2>
+<ul><li><p><strong>refactor</strong>: Share weighted and unweighted Sankey data preparation while preserving selections and column order.</p></li>
+<li><p><strong>fix</strong>: Seeded dimension, statistical and network plots restore the caller’s random-number state, including after errors. Plot data slimming retains variables used in arithmetic mappings and facet expressions.</p></li>
+<li><p><strong>refactor</strong>: Place <code>...</code> last in function signatures; unrestricted <code><a href="../reference/get_colors.html">get_colors()</a></code> searches use <code>palettes = NULL</code>, and unweighted <code><a href="../reference/make_long.html">make_long()</a></code> selections use <code>value = NULL</code>.</p></li>
+<li><p><strong>feat</strong>: Add <code><a href="../reference/scatter_layers.html">scatter_layers()</a></code> and <code><a href="../reference/plot_scatter3d.html">plot_scatter3d()</a></code> for shared point, outline and interactive three-dimensional rendering.</p></li>
+<li><p><strong>feat</strong>: Add <code><a href="../reference/streamline_layers.html">streamline_layers()</a></code> for shared vector-grid streamlines with fixed or magnitude colours.</p></li>
+<li><p><strong>feat</strong>: Add <code><a href="../reference/contrast_text.html">contrast_text()</a></code> to choose black or white text after compositing transparent fills over their background.</p></li>
+<li><p><strong>feat</strong>: Add <code><a href="../reference/geom_round_rect.html">geom_round_rect()</a></code> with a corner radius in millimetres and standard rectangle aesthetics.</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.6" id="thisplot-046">thisplot 0.4.6<a class="anchor" aria-label="anchor" href="#thisplot-046"></a></h2><p class="text-muted">CRAN release: 2026-10-28</p>
 <ul><li>
 <strong>compatibility</strong>:
 <ul><li>Require ggplot2 4.0.0 or later and use its public theme completion API.</li>
