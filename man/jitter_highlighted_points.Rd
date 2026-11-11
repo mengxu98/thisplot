@@ -12,7 +12,7 @@ jitter_highlighted_points(
 )
 }
 \arguments{
-\item{data}{A data frame containing `x`, `y`, and `border` columns.}
+\item{data}{A data frame containing \code{x}, \code{y}, and \code{border} columns.}
 
 \item{jitter_width}{Width of the x jitter.}
 
@@ -21,7 +21,7 @@ jitter_highlighted_points(
 \item{seed}{Numeric value used to offset the deterministic sequence.}
 }
 \value{
-A data frame with `x_plot` and `y_plot` columns.
+A data frame with \code{x_plot} and \code{y_plot} columns.
 }
 \description{
 Jitter highlighted points deterministically

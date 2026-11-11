@@ -1,8 +1,8 @@
 #' @title Compute velocity on grid
 #'
 #' @md
-#' @param x_emb A matrix of dimension n_obs x n_dim specifying the embedding coordinates of the cells.
-#' @param v_emb A matrix of dimension n_obs x n_dim specifying the velocity vectors of the cells.
+#' @param x_emb A numeric coordinate matrix with observations in rows.
+#' @param v_emb A numeric vector matrix with the same dimensions as `x_emb`.
 #' @param density A numeric value specifying the density of the grid points along each dimension.
 #' Default is `1`.
 #' @param smooth A numeric value specifying the smoothing factor for the velocity vectors.

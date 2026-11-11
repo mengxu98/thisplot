@@ -25,8 +25,7 @@
 #' Default is `FALSE`.
 #' @param save `NULL` or the file name used to save the plot.
 #' @param bg_color The background color of the plot.
-#' @param ... Additional arguments passed to other functions.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return If `return_grob` is `TRUE`, returns a gtable object.
 #' Otherwise, returns a patchwork object with fixed panel sizes.
 #' The returned object has a `size` attribute containing width, height, and units.
@@ -359,6 +358,7 @@ panel_fix <- function(
 
 #' @rdname panel_fix
 #' @export
+#' @md
 panel_fix_overall <- function(
   x,
   panel_index = NULL,

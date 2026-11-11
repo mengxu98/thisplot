@@ -4,18 +4,13 @@
 \alias{get_colors}
 \title{Get colors from Chinese colors dataset or palettes}
 \usage{
-get_colors(..., palettes = NULL)
+get_colors(palettes = NULL, ...)
 }
 \arguments{
-\item{...}{One or more search values.
-Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
-If NULL, using all Chinese colors.
-Can also be \code{ggplot}, \code{patchwork}, or other renderable plot objects
-(\code{gtable}, \code{grob}, \code{gList}, \code{ComplexHeatmap::Heatmap}, \code{pheatmap}, \code{trellis})
-to get the colors used in the plots.}
-
 \item{palettes}{Optional. A named list of palettes to search in.
 If \code{NULL} (default), searches in all available palettes.}
+
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A data frame with class \code{colors} containing matching color information.
@@ -31,13 +26,13 @@ This function can search by palette names, color names (pinyin or Chinese), numb
 It automatically searches in all palettes and reports which palette(s) contain the found colors.
 }
 \examples{
-get_colors("Paired")
+get_colors("Paired", palettes = NULL)
 
-get_colors("#FF7F00")
+get_colors("#FF7F00", palettes = NULL)
 
-get_colors("pinlan")
-get_colors(44)
-get_colors("#2B73AF")
+get_colors("pinlan", palettes = NULL)
+get_colors(44, palettes = NULL)
+get_colors("#2B73AF", palettes = NULL)
 
 get_colors("cyan", palettes = "ChineseSet64")
 
@@ -45,8 +40,8 @@ get_colors("cyan", palettes = "ChineseSet64")
 library(ggplot2)
 p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
   geom_point() +
-  scale_color_manual(values = get_colors("Paired")$hex)
-get_colors(p)
+  scale_color_manual(values = get_colors("Paired", palettes = NULL)$hex)
+get_colors(p, palettes = NULL)
 }
 \seealso{
 \link{chinese_colors} for the dataset of Chinese traditional colors.

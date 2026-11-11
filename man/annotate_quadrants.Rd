@@ -17,11 +17,11 @@ annotate_quadrants(
 )
 }
 \arguments{
-\item{plot}{A `ggplot` object.}
+\item{plot}{A \code{ggplot} object.}
 
-\item{x}{Name of the x variable in `plot$data`.}
+\item{x}{Name of the x variable in \code{plot$data}.}
 
-\item{y}{Name of the y variable in `plot$data`.}
+\item{y}{Name of the y variable in \code{plot$data}.}
 
 \item{cutoffs}{Cut points for x and y axes. Can be a numeric vector of length
 1 or 2, or a list with the x and y cut points.}
@@ -38,7 +38,7 @@ annotate_quadrants(
 group.}
 }
 \value{
-A `ggplot` object.
+A \code{ggplot} object.
 }
 \description{
 Annotate plot quadrants with percentages

@@ -6,12 +6,7 @@
 #' It automatically searches in all palettes and reports which palette(s) contain the found colors.
 #'
 #' @md
-#' @param ... One or more search values.
-#' Can be palette names, color names (pinyin or Chinese), numbers, or hex codes.
-#' If NULL, using all Chinese colors.
-#' Can also be `ggplot`, `patchwork`, or other renderable plot objects
-#' (`gtable`, `grob`, `gList`, `ComplexHeatmap::Heatmap`, `pheatmap`, `trellis`)
-#' to get the colors used in the plots.
+#' @param ... Arguments passed to other functions.
 #' @param palettes Optional. A named list of palettes to search in.
 #' If `NULL` (default), searches in all available palettes.
 #'
@@ -30,13 +25,13 @@
 #' [ChineseColors] for the ChineseColors object.
 #'
 #' @examples
-#' get_colors("Paired")
+#' get_colors("Paired", palettes = NULL)
 #'
-#' get_colors("#FF7F00")
+#' get_colors("#FF7F00", palettes = NULL)
 #'
-#' get_colors("pinlan")
-#' get_colors(44)
-#' get_colors("#2B73AF")
+#' get_colors("pinlan", palettes = NULL)
+#' get_colors(44, palettes = NULL)
+#' get_colors("#2B73AF", palettes = NULL)
 #'
 #' get_colors("cyan", palettes = "ChineseSet64")
 #'
@@ -44,9 +39,9 @@
 #' library(ggplot2)
 #' p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
 #'   geom_point() +
-#'   scale_color_manual(values = get_colors("Paired")$hex)
-#' get_colors(p)
-get_colors <- function(..., palettes = NULL) {
+#'   scale_color_manual(values = get_colors("Paired", palettes = NULL)$hex)
+#' get_colors(p, palettes = NULL)
+get_colors <- function(palettes = NULL, ...) {
   args <- list(...)
 
   colors_df <- thisplot::chinese_colors
@@ -519,8 +514,7 @@ get_colors <- function(..., palettes = NULL) {
 #'
 #' @md
 #' @param x A colors object (data frame with color information).
-#' @param ... Additional arguments passed to print.
-#'
+#' @param ... Arguments passed to other functions.
 #' @return
 #' Details of the colors objec.
 #'
@@ -614,8 +608,7 @@ print.colors <- function(x, ...) {
 #' @md
 #' @param x A colors object (data frame with color information).
 #' @param n Number of rows to return. Default is `6`.
-#' @param ... Additional arguments passed to [head()].
-#'
+#' @param ... Arguments passed to other functions.
 #' @return
 #' A colors object with the first `n` rows.
 #'

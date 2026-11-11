@@ -11,7 +11,7 @@
 
 \item{n}{Number of rows to return. Default is \code{6}.}
 
-\item{...}{Additional arguments passed to \code{\link[=head]{head()}}.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A colors object with the first \code{n} rows.

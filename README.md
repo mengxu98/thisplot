@@ -992,7 +992,7 @@ cc$visual_colors(
 </div>
 
 ``` r
-get_colors("Paired")
+get_colors("Paired", palettes = NULL)
 #> 
 #> ── Found palette: "Paired"
 #>       name             rgb     hex
@@ -1037,8 +1037,8 @@ get_colors("cyan", palettes = "ChineseSet64")
 library(ggplot2)
 p <- ggplot(mtcars, aes(mpg, wt, color = factor(cyl))) +
   geom_point() +
-  scale_color_manual(values = get_colors(1:3)$hex)
-get_colors(p)
+  scale_color_manual(values = get_colors(1:3, palettes = NULL)$hex)
+get_colors(p, palettes = NULL)
 #>   factor   color
 #> 1      4 #D2F0F4
 #> 2      6 #C6E6E8

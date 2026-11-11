@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{Input information.}
 
-\item{...}{Other parameters.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 Print the ASCII logo

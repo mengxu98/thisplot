@@ -37,6 +37,7 @@ drop_data <- function(p) {
 #' @export
 #' @rdname drop_data
 #' @method drop_data ggplot
+#' @md
 drop_data.ggplot <- function(p) {
   p@scales <- p$scales$clone()
 
@@ -93,6 +94,7 @@ drop_data.ggplot <- function(p) {
 #' @export
 #' @rdname drop_data
 #' @method drop_data patchwork
+#' @md
 drop_data.patchwork <- function(p) {
   for (i in seq_along(p$patches$plots)) {
     p$patches$plots[[i]] <- drop_data(p$patches$plots[[i]])
@@ -103,6 +105,7 @@ drop_data.patchwork <- function(p) {
 #' @export
 #' @rdname drop_data
 #' @method drop_data default
+#' @md
 drop_data.default <- function(p) {
   p
 }

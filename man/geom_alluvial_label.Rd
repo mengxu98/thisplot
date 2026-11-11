@@ -46,17 +46,17 @@ geom_alluvial_label(
 
 \item{inherit.aes}{Should the geom inherit aesthetics.}
 
-\item{...}{Other arguments to be passed to the geom.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A ggplot layer.
 }
 \description{
 Creates centered labels or text in nodes of your alluvial plot.
-Needs to have the exact same aesthetics as the call to `geom_alluvial` to work.
+Needs to have the exact same aesthetics as the call to \code{geom_alluvial} to work.
 }
 \details{
 Other important arguments are;
-`space` which provides the space between nodes in the y-direction;
-`shift` which shifts nodes in the y-direction.
+\code{space} which provides the space between nodes in the y-direction;
+\code{shift} which shifts nodes in the y-direction.
 }

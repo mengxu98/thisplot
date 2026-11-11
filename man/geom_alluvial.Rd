@@ -36,13 +36,13 @@ geom_alluvial(
 
 \item{inherit.aes}{Should the geom inherit aesthetics.}
 
-\item{...}{Other arguments to be passed to the geom.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A ggplot layer.
 }
 \description{
 Creates an alluvial plot which visualize flows between nodes.
-Each observation needs to have a `x` aesthetic as well as a `next_x` column which declares where that observation should flow.
-Also each observation should have a `node` and a `next_node` aesthetic which provide information about which group in the y-direction.
+Each observation needs to have a \code{x} aesthetic as well as a \code{next_x} column which declares where that observation should flow.
+Also each observation should have a \code{node} and a \code{next_node} aesthetic which provide information about which group in the y-direction.
 }

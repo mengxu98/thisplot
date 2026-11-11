@@ -33,6 +33,7 @@ slim_data <- function(p) {
 #' @export
 #' @rdname slim_data
 #' @method slim_data ggplot
+#' @md
 slim_data.ggplot <- function(p) {
   vars <- get_vars(p)
   if (length(vars) > 0) {
@@ -50,6 +51,7 @@ slim_data.ggplot <- function(p) {
 #' @export
 #' @rdname slim_data
 #' @method slim_data patchwork
+#' @md
 slim_data.patchwork <- function(p) {
   for (i in seq_along(p$patches$plots)) {
     p$patches$plots[[i]] <- slim_data(p$patches$plots[[i]])
@@ -60,6 +62,7 @@ slim_data.patchwork <- function(p) {
 
 #' @export
 #' @method slim_data default
+#' @md
 slim_data.default <- function(p) {
   return(p)
 }

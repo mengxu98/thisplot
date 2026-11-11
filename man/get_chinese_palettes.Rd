@@ -8,7 +8,7 @@ get_chinese_palettes(prefix = "Chinese")
 }
 \arguments{
 \item{prefix}{The prefix of the palette names.
-Default is `"Chinese_"`.}
+Default is \code{"Chinese_"}.}
 }
 \value{
 A list of Chinese color palettes.

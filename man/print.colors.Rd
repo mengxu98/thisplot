@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{A colors object (data frame with color information).}
 
-\item{...}{Additional arguments passed to print.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 Details of the colors objec.

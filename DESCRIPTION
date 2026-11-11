@@ -1,8 +1,8 @@
 Type: Package
 Package: thisplot
 Title: Utility Functions for Plotting
-Version: 0.4.6
-Date: 2026-10-28
+Version: 0.4.7
+Date: 2026-11-08
 Authors@R:
     c(
     person("Meng", "Xu", email = "mengxu98@qq.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-8300-1054")),
@@ -31,6 +31,7 @@ Imports:
     patchwork,
     proxyC,
     reshape2,
+    rlang,
     stats,
     thisutils (>= 0.5.0),
     utils
@@ -48,10 +49,13 @@ Suggests:
     ggVennDiagram,
     htmltools,
     Matrix,
+    metR,
+    plotly,
     png,
     purrr,
     ragg,
     scales,
+    scattermore,
     stringr,
     tidyr,
     venny

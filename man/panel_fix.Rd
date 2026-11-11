@@ -74,7 +74,7 @@ Default is \code{FALSE}.}
 \item{verbose}{Whether to print the message.
 Default is \code{TRUE}.}
 
-\item{...}{Additional arguments passed to other functions.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 If \code{return_grob} is \code{TRUE}, returns a gtable object.

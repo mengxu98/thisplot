@@ -9,7 +9,7 @@ patchwork_grob(x, ...)
 \arguments{
 \item{x}{A patchwork object.}
 
-\item{...}{Additional arguments passed to other functions.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A gtable object.

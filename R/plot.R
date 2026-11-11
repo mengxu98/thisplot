@@ -13,6 +13,7 @@
 #'
 #' @export
 #'
+#' @md
 #' @examples
 #' library(ggplot2)
 #' temp_nodes <- data.frame(
@@ -273,6 +274,7 @@ adjustlayout <- function(
 #' @return A `ggplot` object.
 #'
 #' @export
+#' @md
 #' @examples
 #' df <- data.frame(
 #'   x = c(0.1, 0.2, 0.8, 0.9),
@@ -406,6 +408,7 @@ annotate_quadrants <- function(
 #' @return A list containing the clipped data frame and clipping limits.
 #'
 #' @export
+#' @md
 #' @examples
 #' df <- data.frame(avg_log2FC = c(-10, -2, 0, 2, 10))
 #' clip_symmetric_range(df)
@@ -442,6 +445,7 @@ clip_symmetric_range <- function(data, value_col = "avg_log2FC") {
 #' @return A data frame with `x_plot` and `y_plot` columns.
 #'
 #' @export
+#' @md
 #' @examples
 #' df <- data.frame(
 #'   x = c(0, 1),

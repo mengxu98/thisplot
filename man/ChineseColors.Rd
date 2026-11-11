@@ -18,17 +18,17 @@ cc <- ChineseColors()
 cc
 
 # Get a color by pinyin
-get_colors("pinlan")
+get_colors("pinlan", palettes = NULL)
 
 # By number
-get_colors(44)
+get_colors(44, palettes = NULL)
 
 # By hex code
-get_colors("#2B73AF")
+get_colors("#2B73AF", palettes = NULL)
 
 # Multiple colors
-get_colors("pinlan", "piao")
-get_colors(91:100)
+get_colors("pinlan", "piao", palettes = NULL)
+get_colors(91:100, palettes = NULL)
 
 # Chinese names
 cc$visual_colors(

@@ -27,7 +27,7 @@ theme_blank(
 
 \item{lab_size}{The size of the axis labels.}
 
-\item{...}{Arguments passed to the \link[ggplot2:theme]{ggplot2::theme}.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A list containing ggplot2 theme objects and annotation objects.

@@ -31,7 +31,7 @@ geom_sankey(
 
 \item{space}{Space between nodes in the y-direction.}
 
-\item{type}{Either `sankey` or `alluvial`.}
+\item{type}{Either \code{sankey} or \code{alluvial}.}
 
 \item{width}{Width of nodes.}
 
@@ -39,35 +39,36 @@ geom_sankey(
 
 \item{inherit.aes}{Should the geom inherit aesthetics.}
 
-\item{...}{Other arguments to be passed to the geom.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A ggplot layer.
 }
 \description{
 Creates a sankey plot which visualize flows between nodes.
-Each observation needs to have a `x` aesthetic as well as a `next_x` column which declares where that observation should flow.
-Also each observation should have a `node` and a `next_node` aesthetic which provide information about which group in the y-direction.
-By default each row of the data frame is counted to calculate the size of flows. A manual flow value can be added with the `value` aesthetic.
+Each observation needs to have a \code{x} aesthetic as well as a \code{next_x} column which declares where that observation should flow.
+Also each observation should have a \code{node} and a \code{next_node} aesthetic which provide information about which group in the y-direction.
+By default each row of the data frame is counted to calculate the size of flows. A manual flow value can be added with the \code{value} aesthetic.
 }
 \section{Aesthetics}{
 
 geom_sankey understand the following aesthetics (required aesthetics are in
 bold):
-
-- **x0**
-- **y0**
-- **a**
-- **b**
-- **angle**
-- m1
-- m2
-- color
-- fill
-- size
-- linetype
-- alpha
-- lineend
+\itemize{
+\item \strong{x0}
+\item \strong{y0}
+\item \strong{a}
+\item \strong{b}
+\item \strong{angle}
+\item m1
+\item m2
+\item color
+\item fill
+\item size
+\item linetype
+\item alpha
+\item lineend
+}
 }
 
 \examples{
@@ -75,7 +76,7 @@ dat <- data.frame(
   Group = c("A", "A", "B", "B", "C"),
   Type = c("X", "Y", "X", "Y", "X")
 )
-long <- make_long(dat, Group, Type)
+long <- make_long(dat, Group, Type, value = NULL)
 ggplot2::ggplot(
   long,
   ggplot2::aes(

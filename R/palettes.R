@@ -361,6 +361,7 @@ show_palettes <- function(
 #' @return A list of Chinese color palettes.
 #' @export
 #'
+#' @md
 #' @examples
 #' show_palettes(get_chinese_palettes())
 get_chinese_palettes <- function(

@@ -44,17 +44,17 @@ geom_sankey_text(
 
 \item{space}{Space between nodes in the y-direction.}
 
-\item{type}{Either `sankey` or `alluvial`.}
+\item{type}{Either \code{sankey} or \code{alluvial}.}
 
 \item{width}{Width of nodes.}
 
 \item{inherit.aes}{Should the geom inherit aesthetics.}
 
-\item{...}{Other arguments to be passed to the geom.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
 A ggplot layer.
 }
 \description{
-Creates centered labels or text in nodes of your sankey plot. Needs to have the exact same aesthetics as the call to `geom_sankey` to work.
+Creates centered labels or text in nodes of your sankey plot. Needs to have the exact same aesthetics as the call to \code{geom_sankey} to work.
 }

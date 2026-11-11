@@ -22,19 +22,19 @@ heatmap_border_gp(border, color, size = 1)
 heatmap_legend_border(border, color)
 }
 \arguments{
-\item{border}{`NULL`, a logical border flag, or a non-empty colour string.}
+\item{border}{\code{NULL}, a logical border flag, or a non-empty colour string.}
 
-\item{palcolor}{Fallback border colour when `border` is not a colour string.}
+\item{palcolor}{Fallback border colour when \code{border} is not a colour string.}
 
-\item{size}{Border line width. Invalid or negative values use `1`.}
+\item{size}{Border line width. Invalid or negative values use \code{1}.}
 
-\item{color}{Fallback border colour used by the `gp` and legend helpers.}
+\item{color}{Fallback border colour used by the \code{gp} and legend helpers.}
 }
 \value{
-A list with `enabled`, `color`, `size`, `gp`, and `legend_border`.
+A list with \code{enabled}, \code{color}, \code{size}, \code{gp}, and \code{legend_border}.
 }
 \description{
 Normalize a heatmap border flag, optional colour override, and line width
-into values accepted by `ComplexHeatmap::Heatmap` and
-`ComplexHeatmap::Legend`.
+into values accepted by \code{ComplexHeatmap::Heatmap} and
+\code{ComplexHeatmap::Legend}.
 }

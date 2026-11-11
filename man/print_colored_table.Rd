@@ -17,34 +17,34 @@ print_colored_table(
 \item{x}{A data frame.}
 
 \item{color_by}{A character vector of column names to color, or a named list
-of color sources. If `NULL` (default), colors are assigned according to
-`by`.}
+of color sources. If \code{NULL} (default), colors are assigned according to
+\code{by}.}
 
-\item{colors}{Optional color source used for all `color_by` columns unless
-overridden by a named list in `color_by`: a named hex vector whose names
+\item{colors}{Optional color source used for all \code{color_by} columns unless
+overridden by a named list in \code{color_by}: a named hex vector whose names
 match the values of the colored columns, a plain hex vector recycled per
-row, or `NA` to fall back to `palette`.}
+row, or \code{NA} to fall back to \code{palette}.}
 
-\item{palette}{Palette name passed to `palette_colors()` for default row
+\item{palette}{Palette name passed to \code{palette_colors()} for default row
 or column colors, or columns without explicit colors.}
 
-\item{by}{Whether default palette colors are assigned by `"col"` (default)
-or `"row"`.}
+\item{by}{Whether default palette colors are assigned by \code{"col"} (default)
+or \code{"row"}.}
 
-\item{...}{Additional arguments passed to `format()`.}
+\item{...}{Arguments passed to other functions.}
 }
 \value{
-`x` invisibly.
+\code{x} invisibly.
 }
 \description{
 Prints a data frame as an aligned console table with ANSI colors. By default
-each column receives one distinct color from `palette`; set `by = "row"`
-to use one color per row. Custom `color_by` specifications can still color
+each column receives one distinct color from \code{palette}; set \code{by = "row"}
+to use one color per row. Custom \code{color_by} specifications can still color
 individual values. Column widths are computed from visible ANSI text, so
 escape sequences and Chinese text do not break alignment in the console.
 Colors are emitted only when
 the output supports ANSI colors (a terminal or RStudio, or when
-`options(thisplot.colors = TRUE)` is set); captured output stays clean.
+\code{options(thisplot.colors = TRUE)} is set); captured output stays clean.
 }
 \examples{
 t1 <- data.frame(

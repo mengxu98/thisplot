@@ -310,6 +310,17 @@ StatPlot <- function(
   force = FALSE,
   seed = 11
 ) {
+  rng <- get0(".Random.seed", envir = .GlobalEnv, inherits = FALSE)
+  on.exit(
+    {
+      if (!is.null(rng)) {
+        assign(".Random.seed", rng, envir = .GlobalEnv)
+      } else if (exists(".Random.seed", envir = .GlobalEnv, inherits = FALSE)) {
+        rm(".Random.seed", envir = .GlobalEnv)
+      }
+    },
+    add = TRUE
+  )
   set.seed(seed)
 
   stat_type <- match.arg(stat_type)
@@ -1089,6 +1100,7 @@ StatPlot <- function(
           if (plot_type == "dot") {
             p <- p +
               ggrepel::geom_text_repel(
+                seed = seed,
                 aes(
                   x = .data[[g]],
                   y = .data[[stat.by]],
@@ -1108,6 +1120,7 @@ StatPlot <- function(
           } else {
             p <- p +
               ggrepel::geom_text_repel(
+                seed = seed,
                 aes(
                   label = .data[[".label_text"]],
                   y = value
@@ -1297,6 +1310,7 @@ StatPlot <- function(
               show.legend = FALSE
             ) +
             ggrepel::geom_text_repel(
+              seed = seed,
               data = ggVennDiagram::venn_setlabel(data),
               aes(
                 X,
@@ -1320,6 +1334,7 @@ StatPlot <- function(
               segment.colour = "black"
             ) +
             ggrepel::geom_text_repel(
+              seed = seed,
               data = ggVennDiagram::venn_regionlabel(data),
               aes(X, Y, label = count),
               colour = label.fg,
@@ -1370,6 +1385,7 @@ StatPlot <- function(
             show.legend = FALSE
           ) +
           ggrepel::geom_text_repel(
+            seed = seed,
             aes(label = after_stat(count)),
             stat = "count",
             colour = label.fg,
@@ -1469,7 +1485,8 @@ StatPlot <- function(
         dat <- suppressWarnings(
           make_long(
             dat_use,
-            dplyr::all_of(stat.by)
+            dplyr::all_of(stat.by),
+            value = NULL
           )
         )
         dat$node <- factor(dat$node, levels = rev(names(colors)))
