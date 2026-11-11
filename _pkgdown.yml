@@ -56,6 +56,8 @@ reference:
 - subtitle: "Dimensional plot"
 - contents:
   - DimDataPlot
+  - scatter_layers
+  - plot_scatter3d
 
 - subtitle: "Graph and network plot"
 - contents:
@@ -99,6 +101,7 @@ reference:
   - clip_symmetric_range
   - compute_velocity_on_grid
   - extractgrobs
+  - geom_round_rect
   - get_legend
   - get_vars
   - grid_draw
@@ -110,6 +113,7 @@ reference:
   - patchwork_grob
   - rasterise_plot
   - segements_df
+  - streamline_layers
   - to_percent
 
 - subtitle: "Color functions"
@@ -119,6 +123,7 @@ reference:
   - blendcolors
   - BlendRGBList
   - col2hex
+  - contrast_text
   - get_colors
   - invert_figures
   - invert_png
