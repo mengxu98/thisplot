@@ -68,7 +68,7 @@ scatter_layers <- function(
         message_type = "error"
       )
     }
-    thisutils::check_r("scattermore", verbose = FALSE)
+    check_r("scattermore", strict = TRUE, verbose = FALSE)
     geom <- thisutils::get_namespace_fun("scattermore", "geom_scattermore")
   } else {
     geom <- ggplot2::geom_point

@@ -77,7 +77,7 @@ streamline_layers <- function(
       message_type = "error"
     )
   }
-  thisutils::check_r("metR", verbose = FALSE)
+  check_r("metR", strict = TRUE, verbose = FALSE)
   geom_streamline <- thisutils::get_namespace_fun("metR", "geom_streamline")
 
   data <- expand.grid(x_grid[1, ], x_grid[2, ])

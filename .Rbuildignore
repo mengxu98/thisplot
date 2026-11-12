@@ -18,6 +18,8 @@
 ^reasonix\.toml$
 ^renv$
 ^renv\.lock$
+^renv/.*$
+^\.Rprofile$
 ^scripts$
 ^test$
 .codex

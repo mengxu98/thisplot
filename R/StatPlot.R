@@ -427,7 +427,7 @@ StatPlot <- function(
   }
 
   if (identical(plot_type, "trend_alluvial")) {
-    check_r("ggalluvial", install = FALSE, verbose = FALSE)
+    check_r("ggalluvial", strict = TRUE, verbose = FALSE)
     if (identical(position, "dodge")) {
       log_message(
         "{.arg position} is forcibly set to {.val stack} when {.arg plot_type = 'trend_alluvial'}",
@@ -549,7 +549,7 @@ StatPlot <- function(
         message_type = "error"
       )
     }
-    check_r("venny", install = FALSE, verbose = FALSE)
+    check_r("venny", strict = TRUE, verbose = FALSE)
   }
 
   levels <- unique(

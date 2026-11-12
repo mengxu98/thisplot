@@ -22,12 +22,7 @@ invert_png <- function(path, output = NULL, quiet = FALSE) {
       message_type = "error"
     )
   }
-  if (!requireNamespace("png", quietly = TRUE)) {
-    log_message(
-      "Package {.pkg png} is required to invert a PNG file.",
-      message_type = "error"
-    )
-  }
+  check_r("png", strict = TRUE, verbose = FALSE)
 
   if (is.null(output)) {
     output <- if (grepl("\\.png$", path, ignore.case = TRUE)) {

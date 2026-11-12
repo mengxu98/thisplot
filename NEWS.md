@@ -1,5 +1,7 @@
 # thisplot (development version)
 
+* **fix**: `geom_sankey_bump()` no longer fails with "could not find function rowwise".
+* **fix**: `dplyr` moves to Imports because `StatPlot()` uses it on its default path. Optional packages needed by heatmaps, hull marks, alluvial trends, Venn, rasterised, Sankey, scatter, marginal scatter, streamline and 3D plots and by PNG/SVG inversion are installed on first use through `thisutils::check_r(strict = TRUE)` (thisutils >= 0.5.4); the call stops with an install hint only if installation fails.
 * **refactor**: Share weighted and unweighted Sankey data preparation while preserving selections and column order.
 * **fix**: Seeded dimension, statistical and network plots restore the caller's random-number state, including after errors. Plot data slimming retains variables used in arithmetic mappings and facet expressions.
 
