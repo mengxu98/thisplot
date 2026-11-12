@@ -1047,6 +1047,9 @@ get_colors(p, palettes = NULL)
 
 ## **Installation**
 
+For an unpublished local checkout, follow the complete two-stage restore in
+[DEVELOPMENT.md](DEVELOPMENT.md) using the matching source archives.
+
 Install CRAN version:
 
 ``` r

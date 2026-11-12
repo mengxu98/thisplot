@@ -21,6 +21,8 @@
 ^renv/.*$
 ^\.Rprofile$
 ^scripts$
+^tools$
+^DEVELOPMENT\.md$
 ^test$
 .codex
 ^\.codegraph$

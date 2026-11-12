@@ -59,6 +59,8 @@ Suggests:
     stringr,
     tidyr,
     venny
+Remotes:
+    mengxu98/thisutils
 Config/Needs/website: mengxu98/thistemplate
 Encoding: UTF-8
 Language: en-US
