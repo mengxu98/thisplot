@@ -93,7 +93,7 @@ plot_scatter3d <- function(
       )
     }
   }
-  thisutils::check_r("plotly", verbose = FALSE)
+  check_r("plotly", strict = TRUE, verbose = FALSE)
   plot_ly <- thisutils::get_namespace_fun("plotly", "plot_ly")
   add_trace <- thisutils::get_namespace_fun("plotly", "add_trace")
   layout <- thisutils::get_namespace_fun("plotly", "layout")

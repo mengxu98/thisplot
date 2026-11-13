@@ -281,7 +281,7 @@ DimDataPlot <- function(
   mark_layers <- NULL
   if (isTRUE(add_mark)) {
     if (identical(mark_type, "hull")) {
-      check_r("concaveman", install = FALSE, verbose = FALSE)
+      check_r("concaveman", strict = TRUE, verbose = FALSE)
     }
     if (identical(mark_type, "ellipse")) {
       mark_layers <- list(

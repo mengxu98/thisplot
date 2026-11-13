@@ -18,6 +18,7 @@ Depends:
 Imports:
     cli,
     dendextend,
+    dplyr,
     ggforce,
     geomtextpath,
     ggrepel,
@@ -33,13 +34,12 @@ Imports:
     reshape2,
     rlang,
     stats,
-    thisutils (>= 0.5.0),
+    thisutils (>= 0.5.4),
     utils
 Suggests:
     concaveman,
     circlize,
     ComplexHeatmap,
-    dplyr,
     forcats,
     ggalluvial,
     ggExtra,
@@ -59,6 +59,8 @@ Suggests:
     stringr,
     tidyr,
     venny
+Remotes:
+    mengxu98/thisutils
 Config/Needs/website: mengxu98/thistemplate
 Encoding: UTF-8
 Language: en-US

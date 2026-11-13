@@ -162,12 +162,7 @@ plot_scatter <- function(
     return(p + facet_wrap(~cluster))
   }
   if (!is.null(marginal_type)) {
-    if (!requireNamespace("ggExtra", quietly = TRUE)) {
-      log_message(
-        "Package {.pkg ggExtra} is required for marginal plots",
-        message_type = "error"
-      )
-    }
+    check_r("ggExtra", strict = TRUE, verbose = FALSE)
     marginal_type <- match.arg(
       marginal_type,
       c("density", "histogram", "boxplot", "violin", "densigram")

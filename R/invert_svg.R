@@ -241,13 +241,7 @@ invert_svg_raster <- function(svg) {
 }
 
 invert_png_payload <- function(payload) {
-  if (!requireNamespace("png", quietly = TRUE)) {
-    log_message(
-      "Package {.pkg png} is required to invert the raster images of an SVG.",
-      message_type = "warning"
-    )
-    return(payload)
-  }
+  check_r("png", strict = TRUE, verbose = FALSE)
 
   image <- png::readPNG(base64_decode(payload))
   base64_encode(png::writePNG(invert_pixels(image)))

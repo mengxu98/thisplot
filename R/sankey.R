@@ -63,6 +63,7 @@ sigmoid <- function(x_from, x_to, y_from, y_to, smooth = 5, n = 300) {
 #' @export
 #' @md
 make_long <- function(.df, value = NULL, ...) {
+  check_r("tidyr", strict = TRUE, verbose = FALSE)
   if ("..r" %in% names(.df)) {
     thisutils::log_message("The column name '..r' is not allowed", message_type = "error")
   }
@@ -554,7 +555,7 @@ StatSankeyBumpFlow <- ggplot2::ggproto(
           dplyr::mutate(group = dplyr::row_number())
 
         flows |>
-          rowwise() |>
+          dplyr::rowwise() |>
           dplyr::mutate(
             ..groupqq = stringr::str_remove(nodes, as.character(x))
           ) |>
@@ -838,6 +839,7 @@ geom_sankey <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   params_list <- prepare_params(...)
 
   list(
@@ -908,6 +910,7 @@ geom_sankey_label <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   # Prepare aesthetics for label
   label.aes <- list(...)
 
@@ -948,6 +951,7 @@ geom_sankey_text <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   label.aes <- list(...)
 
   list(
@@ -996,6 +1000,7 @@ geom_alluvial <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   geom_sankey(
     mapping = mapping,
     data = data,
@@ -1040,6 +1045,7 @@ geom_alluvial_text <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   geom_sankey_text(
     mapping = mapping,
     data = data,
@@ -1068,6 +1074,7 @@ geom_alluvial_label <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   geom_sankey_label(
     mapping = mapping,
     data = data,
@@ -1109,6 +1116,7 @@ geom_sankey_bump <- function(
   inherit.aes = TRUE,
   ...
 ) {
+  check_r(c("purrr", "tidyr"), strict = TRUE, verbose = FALSE)
   params_list <- prepare_params(...)
 
   list(

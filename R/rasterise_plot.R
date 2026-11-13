@@ -49,7 +49,7 @@ rasterise_plot <- function(
       message_type = "error"
     )
   }
-  check_r("ggrastr", install = FALSE, verbose = FALSE)
+  check_r("ggrastr", strict = TRUE, verbose = FALSE)
 
   if (
     isTRUE(recurse) &&
