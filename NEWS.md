@@ -1,5 +1,8 @@
 # thisplot (development version)
 
+* **feat**: Add `annotation_raster_background()` to place an image in data
+  coordinates and blend it with white.
+
 * **deps**: Declare the GitHub source for `thisutils`.
 
 * **fix**: `geom_sankey_bump()` no longer fails with "could not find function rowwise".

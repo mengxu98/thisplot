@@ -481,3 +481,31 @@ jitter_highlighted_points <- function(
   data[border_idx, "y_plot"] <- data[border_idx, "y"] + y_offset
   data
 }
+
+#' @title Add a raster background
+#'
+#' @description
+#' Place an image inside a plot using bounds in data coordinates.
+#'
+#' @param image A numeric matrix or RGB array with values in `[0, 1]`.
+#'   At full strength, any image accepted by [grDevices::as.raster()] can be used.
+#' @param xmin,xmax,ymin,ymax Raster bounds in data coordinates.
+#' @param alpha Numeric image strength, clamped to `[0, 1]`. Lower values
+#'   blend the pixels with white. The default `1` uses the original colors.
+#'
+#' @return A ggplot2 layer to add before the other layers of a plot.
+#' @seealso [ggplot2::annotation_raster()]
+#' @md
+#' @export
+#' @examples
+#' image <- matrix(c(0.2, 0.9, 0.7, 0.4), nrow = 2)
+#' ggplot2::ggplot(iris, ggplot2::aes(Sepal.Length, Sepal.Width)) +
+#'   annotation_raster_background(image, 4, 8, 2, 4.5, alpha = 0.35) +
+#'   ggplot2::geom_point()
+annotation_raster_background <- function(image, xmin, xmax, ymin, ymax, alpha = 1) {
+  alpha <- max(min(alpha, 1), 0)
+  if (alpha < 1) {
+    image <- image * alpha + (1 - alpha)
+  }
+  ggplot2::annotation_raster(grDevices::as.raster(image), xmin, xmax, ymin, ymax)
+}
