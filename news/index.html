@@ -40,48 +40,46 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="thisplot-development-version">thisplot (development version)<a class="anchor" aria-label="anchor" href="#thisplot-development-version"></a></h2>
-<ul><li><p><strong>feat</strong>: Add <code><a href="../reference/annotation_raster_background.html">annotation_raster_background()</a></code> to place an image in data coordinates and blend it with white.</p></li>
-<li><p><strong>deps</strong>: Declare the GitHub source for <code>thisutils</code>.</p></li>
-<li><p><strong>fix</strong>: <code><a href="../reference/geom_sankey_bump.html">geom_sankey_bump()</a></code> no longer fails with “could not find function rowwise”.</p></li>
-<li><p><strong>fix</strong>: <code>dplyr</code> moves to Imports because <code><a href="../reference/StatPlot.html">StatPlot()</a></code> uses it on its default path. Optional packages needed by heatmaps, hull marks, alluvial trends, Venn, rasterised, Sankey, scatter, marginal scatter, streamline and 3D plots and by PNG/SVG inversion are installed on first use through <code>thisutils::check_r(strict = TRUE)</code> (thisutils &gt;= 0.5.4); the call stops with an install hint only if installation fails.</p></li>
-<li><p><strong>refactor</strong>: Share weighted and unweighted Sankey data preparation while preserving selections and column order.</p></li>
-<li><p><strong>fix</strong>: Seeded dimension, statistical and network plots restore the caller’s random-number state, including after errors. Plot data slimming retains variables used in arithmetic mappings and facet expressions.</p></li>
-<li><p><strong>refactor</strong>: Place <code>...</code> last in function signatures; unrestricted <code><a href="../reference/get_colors.html">get_colors()</a></code> searches use <code>palettes = NULL</code>, and unweighted <code><a href="../reference/make_long.html">make_long()</a></code> selections use <code>value = NULL</code>.</p></li>
-<li><p><strong>feat</strong>: Add <code><a href="../reference/scatter_layers.html">scatter_layers()</a></code> and <code><a href="../reference/plot_scatter3d.html">plot_scatter3d()</a></code> for shared point, outline and interactive three-dimensional rendering.</p></li>
-<li><p><strong>feat</strong>: Add <code><a href="../reference/streamline_layers.html">streamline_layers()</a></code> for shared vector-grid streamlines with fixed or magnitude colours.</p></li>
-<li><p><strong>feat</strong>: Add <code><a href="../reference/contrast_text.html">contrast_text()</a></code> to choose black or white text after compositing transparent fills over their background.</p></li>
-<li><p><strong>feat</strong>: Add <code><a href="../reference/geom_round_rect.html">geom_round_rect()</a></code> with a corner radius in millimetres and standard rectangle aesthetics.</p></li>
+<ul><li>
+<strong>feat</strong>:
+<ul><li>Add <code><a href="../reference/annotation_raster_background.html">annotation_raster_background()</a></code> for white-blended images in data coordinates and <code><a href="../reference/geom_round_rect.html">geom_round_rect()</a></code> for rounded rectangles.</li>
+<li>Add <code><a href="../reference/scatter_layers.html">scatter_layers()</a></code>, <code><a href="../reference/plot_scatter3d.html">plot_scatter3d()</a></code>, and <code><a href="../reference/streamline_layers.html">streamline_layers()</a></code> for reusable scatter layers, interactive 3D scatter plots, and streamlines.</li>
+<li>Add <code><a href="../reference/contrast_text.html">contrast_text()</a></code> for black or white text over transparent fills.</li>
+</ul></li>
+<li>
+<strong>fix</strong>:
+<ul><li>Fix the missing <code>rowwise()</code> error in <code><a href="../reference/geom_sankey_bump.html">geom_sankey_bump()</a></code>.</li>
+<li>Restore the caller’s random-number state after seeded plots, including on error, and retain variables used in arithmetic mappings and facet expressions.</li>
+</ul></li>
+<li>
+<strong>compatibility</strong>:
+<ul><li>Rename <code>get_chinese_palettes()</code> to <code><a href="../reference/chinese_palettes.html">chinese_palettes()</a></code>.</li>
+<li>Move <code>...</code> to the end of function signatures. Use <code>palettes = NULL</code> for unrestricted <code><a href="../reference/get_colors.html">get_colors()</a></code> searches and <code>value = NULL</code> for unweighted <code><a href="../reference/make_long.html">make_long()</a></code> selections.</li>
+<li>Import <code>dplyr</code> and declare the GitHub source for <code>thisutils</code> (&gt;= 0.5.4). Install optional dependencies on first use and give an install hint on failure.</li>
+</ul></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.6" id="thisplot-046">thisplot 0.4.6<a class="anchor" aria-label="anchor" href="#thisplot-046"></a></h2><p class="text-muted">CRAN release: 2026-10-28</p>
 <ul><li>
 <strong>compatibility</strong>:
-<ul><li>Require ggplot2 4.0.0 or later and use its public theme completion API.</li>
-<li>Require thisutils 0.5.0 or later for optional dependency checks without installing packages during plotting. Only hull marks require concaveman.</li>
+<ul><li>Require ggplot2 &gt;= 4.0.0 and thisutils &gt;= 0.5.0. Optional dependencies are checked without installation during plotting. Only hull marks require concaveman.</li>
 </ul></li>
 <li>
 <strong>feat</strong>:
-<ul><li>Add <code><a href="../reference/NetworkPlot.html">NetworkPlot()</a></code> to draw a network from an edge data frame and an optional node data frame, with igraph layouts (<code>fr</code>, <code>kk</code>, <code>circle</code>) or user-supplied coordinates, edge width and colour by weight and group, node group colour, shape and size mapping, repelled labels, highlight rings, and theme control. Duplicate edges are collapsed to the strongest weight and self-loops dropped.</li>
-<li>Add <code><a href="../reference/rasterise_plot.html">rasterise_plot()</a></code>, which renders the point and line layers of a <code>ggplot</code> or <code>patchwork</code> object as 300 dpi rasters, recursing into the sub-plots of a composite, so figures with many elements stay small and fast to draw. Layers are rendered with the <code>ragg</code> device, which, unlike the <code>Cairo</code> device of the underlying package, needs no X11.</li>
+<ul><li>Add <code><a href="../reference/NetworkPlot.html">NetworkPlot()</a></code> for styled node and edge plots with igraph layouts (<code>fr</code>, <code>kk</code>, <code>circle</code>) or supplied coordinates. Keep the strongest duplicate edge and drop self-loops.</li>
+<li>Add <code><a href="../reference/rasterise_plot.html">rasterise_plot()</a></code> for 300 dpi rasterisation of point and line layers in <code>ggplot</code> and <code>patchwork</code> objects without X11.</li>
 <li>Add <code><a href="../reference/plot_scatter.html">plot_scatter()</a></code> and <code><a href="../reference/plot_histogram.html">plot_histogram()</a></code> using <code><a href="../reference/theme_this.html">theme_this()</a></code> and thisplot palettes. Correlation annotation no longer depends on <code>ggpubr</code>; point density and marginal plots remain optional.</li>
 <li>
 <code><a href="../reference/StatPlot.html">StatPlot()</a></code> value bars can show numeric labels through <code>label = TRUE</code>.</li>
-<li>
-<code><a href="../reference/get_colors.html">get_colors()</a></code> can now take <code>ggplot</code> or <code>patchwork</code> objects and returns a two-column data frame with the factor levels and their mapped colors used in the plot(s).</li>
-<li>
-<code><a href="../reference/get_colors.html">get_colors()</a></code> also accepts other renderable plot objects (<code>gtable</code>, <code>grob</code>, <code>gList</code>, <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">ComplexHeatmap::Heatmap</a></code>, <code>pheatmap</code>, <code>trellis</code>) and returns the colors used in the plot with their Chinese names.</li>
-<li>Raise a clear error when an unsupported object type is passed to <code><a href="../reference/get_colors.html">get_colors()</a></code>.</li>
-<li>Add <code><a href="../reference/print_colored_table.html">print_colored_table()</a></code> for ANSI-colored data-frame output, with palette colors assigned by column by default and optional row coloring.</li>
-<li>Keep table headers uncolored and omit separator rules for compact console output.</li>
-<li>Add <code><a href="../reference/invert_svg.html">invert_svg()</a></code> to build a dark-mode variant of an SVG by replacing every colour with its RGB complement and giving fill-less elements a light inherited fill. Rasters embedded as <code>data:image/png;base64,...</code> payloads, such as the colour bar of a continuous ggplot2 legend, are complemented pixel by pixel too, which <code>invert_raster = FALSE</code> turns off. The <code><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb()</a></code> notation written by cairo-based devices such as <code><a href="https://rdrr.io/r/grDevices/cairo.html" class="external-link">grDevices::svg()</a></code> is understood as well, and a file that holds no colour to invert is reported instead of being copied silently.</li>
-<li>Add <code><a href="../reference/invert_png.html">invert_png()</a></code> for a PNG on its own and <code><a href="../reference/invert_figures.html">invert_figures()</a></code> to invert several figures at once, given files or directories. Both name their copy after the input with a <code>-dark</code> suffix, and <code><a href="../reference/invert_figures.html">invert_figures()</a></code> skips files that already carry that suffix.</li>
+<li>Extend <code><a href="../reference/get_colors.html">get_colors()</a></code> to return level-to-colour mappings for <code>ggplot</code> and <code>patchwork</code>, and colours with Chinese names for <code>gtable</code>, <code>grob</code>, <code>gList</code>, <code><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">ComplexHeatmap::Heatmap</a></code>, <code>pheatmap</code>, and <code>trellis</code>. Report unsupported object types clearly.</li>
+<li>Add <code><a href="../reference/print_colored_table.html">print_colored_table()</a></code> for ANSI-coloured data frames, with column colouring by default, optional row colouring, and plain headers.</li>
+<li>Add <code><a href="../reference/invert_svg.html">invert_svg()</a></code> and <code><a href="../reference/invert_png.html">invert_png()</a></code> for dark-mode figures. SVG inversion supports <code><a href="https://rdrr.io/r/grDevices/rgb.html" class="external-link">rgb()</a></code> colours and includes embedded PNGs by default (<code>invert_raster = FALSE</code> to skip them).</li>
+<li>Add <code><a href="../reference/invert_figures.html">invert_figures()</a></code> to process files or directories in batches. PNG and batch inversion write <code>-dark</code> copies, and batches skip files with that suffix.</li>
 </ul></li>
 <li>
 <strong>fix</strong>:
-<ul><li>Invert color animation values when the target SVG attribute is a color, preserving non-color animations and element references.</li>
-<li>Preserve edge endpoints with missing weights when constructing network layouts, including circular layouts that do not use weights.</li>
-<li>Preserve SVG element references and CSS selectors when inverting colors.</li>
-<li>Keep zero-weight edges in network plots while excluding them from layout forces, so the <code>fr</code> and <code>kk</code> layouts accept zero weights.</li>
+<ul><li>Invert SVG colour animations while preserving other animations, element references, and CSS selectors.</li>
+<li>Keep endpoints of edges with missing weights and retain zero-weight edges in network plots. Exclude zero-weight edges from <code>fr</code> and <code>kk</code> layout forces.</li>
 <li>Center the rotated y-axis label along the coordinate arrow in <code><a href="../reference/theme_blank.html">theme_blank()</a></code> across panel sizes and custom arrow lengths.</li>
 <li>Align <code><a href="../reference/get_colors.html">get_colors()</a></code> and colored-table columns using ANSI-aware terminal display widths, including Chinese text.</li>
 <li>Apply distinct palette colors consistently when printing colored tables.</li>
@@ -129,8 +127,7 @@
 <h2 class="pkg-version" data-toc-text="0.3.9" id="thisplot-039">thisplot 0.3.9<a class="anchor" aria-label="anchor" href="#thisplot-039"></a></h2>
 <ul><li>
 <strong>feat</strong>:
-<ul><li>
-<code><a href="../reference/DimDataPlot.html">DimDataPlot()</a></code>: New lightweight helper for plotting supplied 2D coordinates from data frames, with grouping, splitting, shape mapping, labels, palettes, theme controls, and optional group marks.</li>
+<ul><li>Add <code><a href="../reference/DimDataPlot.html">DimDataPlot()</a></code> for supplied 2D coordinates, with grouping, splitting, and optional labels and group marks.</li>
 <li>
 <code><a href="../reference/StatPlot.html">StatPlot()</a></code>: Added configurable major panel grid lines via <code>grid_major</code>, <code>grid_major_colour</code>, <code>grid_major_linetype</code>, and <code>grid_major_linewidth</code>.</li>
 <li>
@@ -138,9 +135,7 @@
 </ul></li>
 <li>
 <strong>docs</strong>:
-<ul><li>Added documentation and examples for <code><a href="../reference/DimDataPlot.html">DimDataPlot()</a></code>.</li>
-<li>Updated <code><a href="../reference/StatPlot.html">StatPlot()</a></code> documentation for the new major grid controls.</li>
-<li>Added <code><a href="../reference/StatPlot.html">StatPlot()</a></code> documentation and examples for the optional <code>venny</code> Venn backend.</li>
+<ul><li>Document <code><a href="../reference/DimDataPlot.html">DimDataPlot()</a></code> and the new <code><a href="../reference/StatPlot.html">StatPlot()</a></code> options, with examples for <code><a href="../reference/DimDataPlot.html">DimDataPlot()</a></code> and the <code>venny</code> backend.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -157,24 +152,16 @@
 <li>
 <code><a href="../reference/jitter_highlighted_points.html">jitter_highlighted_points()</a></code>: deterministically jitter highlighted points for stable plotting output.</li>
 </ul></li>
-<li>
-<code><a href="../reference/visual_colors.html">visual_colors()</a></code>: add adaptive label layout via <code>label_mode</code>, with tighter HTML rendering for Chinese, pinyin, RGB, and hex labels.</li>
-<li>
-<code>ChineseColors$visual_colors()</code>: pass <code>name_type</code> through to the layout mode so different label types use matching display rules.</li>
-<li>
-<code><a href="../reference/get_chinese_palettes.html">get_chinese_palettes()</a></code>: use <code>color_sets$Chinese</code> as the default Chinese palette and add a fallback palette definition when the dataset metadata is incomplete.</li>
+<li>Add adaptive HTML label layouts through <code>visual_colors(label_mode = ...)</code>. <code>ChineseColors$visual_colors()</code> uses <code>name_type</code> to select the layout.</li>
+<li>Use <code>color_sets$Chinese</code> as the default in <code>get_chinese_palettes()</code>, with a fallback for incomplete metadata.</li>
 </ul></li>
 <li>
 <strong>docs</strong>:
-<ul><li>Add runnable examples for the migration helper functions.</li>
-<li>Add documentation entries for <code><a href="../reference/annotate_quadrants.html">annotate_quadrants()</a></code>, <code><a href="../reference/clip_symmetric_range.html">clip_symmetric_range()</a></code>, <code><a href="../reference/jitter_highlighted_points.html">jitter_highlighted_points()</a></code>, and <code><a href="../reference/to_percent.html">to_percent()</a></code>.</li>
-<li>Expand Chinese color examples to show the default <code>color_sets$Chinese</code> palette.</li>
-<li>Update <code><a href="../reference/visual_colors.html">visual_colors()</a></code> documentation for the new adaptive label layout mode.</li>
+<ul><li>Document the migration helpers and adaptive label layouts. Add examples for the helpers and the default Chinese palette.</li>
 </ul></li>
 <li>
 <strong>data</strong>:
-<ul><li>Refresh the Chinese color palette metadata and dataset defaults used by <code><a href="../reference/ChineseColors.html">ChineseColors()</a></code>.</li>
-<li>Improve Chinese color ordering and default palette selection used for generated palette sets.</li>
+<ul><li>Refresh Chinese colour palette metadata, ordering, and defaults.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -243,15 +230,11 @@
 <h2 class="pkg-version" data-toc-text="0.3.4" id="thisplot-034">thisplot 0.3.4<a class="anchor" aria-label="anchor" href="#thisplot-034"></a></h2>
 <ul><li>
 <strong>feat</strong>:
-<ul><li>
-<code><a href="../reference/StatPlot.html">StatPlot()</a></code>: New function to visualize data using various plot types including bar plots, rose plots, ring plots, pie charts, trend plots, area plots, dot plots, sankey plots, chord plots, venn diagrams, and upset plots. Supports grouping, splitting, background coloring, and extensive customization options.</li>
+<ul><li>Add <code><a href="../reference/StatPlot.html">StatPlot()</a></code> for statistical plots including bars, trends, Sankey diagrams, Venn diagrams, and UpSet plots, with grouping and splitting.</li>
 </ul></li>
 <li>
 <strong>docs</strong>:
-<ul><li>
-<code><a href="../reference/StatPlot.html">StatPlot()</a></code>: Added comprehensive parameter documentation for all function arguments including <code>group.by</code>, <code>split.by</code>, <code>palette</code>, <code>palcolor</code>, <code>title</code>, <code>subtitle</code>, <code>xlab</code>, <code>ylab</code>, <code>legend.position</code>, <code>legend.direction</code>, <code>theme_use</code>, <code>theme_args</code>, <code>combine</code>, <code>nrow</code>, <code>ncol</code>, <code>byrow</code>, <code>force</code>, and <code>seed</code>.</li>
-<li>
-<code><a href="../reference/StatPlot.html">StatPlot()</a></code>: Updated examples to use generic test data instead of single-cell specific datasets, making the function more accessible as a general-purpose plotting tool.</li>
+<ul><li>Document <code><a href="../reference/StatPlot.html">StatPlot()</a></code> arguments and use generic data in examples.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -266,16 +249,10 @@
 <h2 class="pkg-version" data-toc-text="0.3.1" id="thisplot-031">thisplot 0.3.1<a class="anchor" aria-label="anchor" href="#thisplot-031"></a></h2><p class="text-muted">CRAN release: 2025-12-17</p>
 <ul><li>
 <strong>feat</strong>:
-<ul><li>
-<code>check_ci_env()</code>: New function to detect if the current environment supports browsable HTML output. Now detects local pkgdown builds via <code>IN_PKGDOWN</code> environment variable and knitr HTML output contexts.</li>
-<li>
-<code><a href="../reference/head.colors.html">head.colors()</a></code>: New S3 method for <code>colors</code> objects, allowing the use of <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> function to limit the number of displayed rows (default <code>n = 6L</code>).</li>
-<li>
-<code><a href="../reference/visual_colors.html">visual_colors()</a></code>: Integrated <code><a href="https://rstudio.github.io/htmltools/reference/browsable.html" class="external-link">htmltools::browsable</a></code> functionality. Added <code>browsable</code> parameter (default <code>NULL</code> for auto-detection) to automatically display widgets in appropriate environments. Automatically detects interactive sessions and GitHub Actions pkgdown workflow, while preventing browser opening during CRAN checks.</li>
-<li>
-<code>ChineseColors$visual_colors()</code>: Added <code>browsable</code> parameter support, consistent with the global <code><a href="../reference/visual_colors.html">visual_colors()</a></code> function.</li>
-<li>
-<code><a href="../reference/get_colors.html">get_colors()</a></code>: Now automatically infers RGB values from hex codes when colors are found in palettes but not in the main dataset. Added internal <code>hex_to_rgb()</code> helper function to convert hex color codes to RGB format strings.</li>
+<ul><li>Add <code>check_ci_env()</code> to detect browsable HTML contexts, including pkgdown and knitr builds.</li>
+<li>Add <code><a href="https://rdrr.io/r/utils/head.html" class="external-link">head()</a></code> support for <code>colors</code> objects, showing six rows by default.</li>
+<li>Add <code>browsable</code> to <code><a href="../reference/visual_colors.html">visual_colors()</a></code> and <code>ChineseColors$visual_colors()</code>. The default (<code>NULL</code>) detects when to display HTML and avoids opening a browser during CRAN checks.</li>
+<li>Infer RGB values from hex codes in <code><a href="../reference/get_colors.html">get_colors()</a></code> for palette entries outside the main dataset.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
@@ -293,24 +270,17 @@
 <h2 class="pkg-version" data-toc-text="0.2.0" id="thisplot-020">thisplot 0.2.0<a class="anchor" aria-label="anchor" href="#thisplot-020"></a></h2>
 <ul><li>
 <strong>feat</strong>:
-<ul><li>Chinese traditional color system
-<ul><li>
-<code><a href="../reference/ChineseColors.html">ChineseColors()</a></code>: New function to create a Chinese traditional color system object with 1058 representative colors extracted from traditional Chinese color charts. Supports accessing colors by name (pinyin or Chinese), number, or hex code, creating color palettes, and generating segmented colormaps.</li>
-<li>
-<code><a href="../reference/visual_colors.html">visual_colors()</a></code>: New function to visualize colors in HTML format with a grid of color swatches, supporting optional names, RGB values, or hex codes.</li>
-<li>
-<code><a href="../reference/get_chinese_palettes.html">get_chinese_palettes()</a></code>: New function to get Chinese color palettes organized by color categories (blue, green, yellow, red, brown, purple, etc.) with automatic continuous palette generation.</li>
-</ul></li>
+<ul><li>Add <code><a href="../reference/ChineseColors.html">ChineseColors()</a></code> to look up traditional Chinese colours by Chinese name, pinyin, number, or hex code and create palettes and segmented colour maps.</li>
+<li>Add <code><a href="../reference/visual_colors.html">visual_colors()</a></code> for HTML swatches with optional names, RGB values, or hex codes.</li>
+<li>Add <code>get_chinese_palettes()</code> for palettes by colour category, including continuous variants.</li>
 </ul></li>
 <li>
 <strong>data</strong>:
-<ul><li>
-<code>chinese_colors</code>: New data object containing 1058 Chinese traditional colors.</li>
+<ul><li>Add <code>chinese_colors</code>, a dataset of 1,058 traditional Chinese colours.</li>
 </ul></li>
 <li>
 <strong>docs</strong>:
-<ul><li>Added comprehensive documentation for Chinese color system functions.</li>
-<li>Updated package documentation to include Chinese traditional colors feature.</li>
+<ul><li>Document the traditional Chinese colour tools.</li>
 </ul></li>
 </ul></div>
     <div class="section level2">
