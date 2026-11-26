@@ -1,81 +1,60 @@
 # thisplot (development version)
 
-* **feat**: Add `annotation_raster_background()` to place an image in data
-  coordinates and blend it with white.
+* **feat**:
+  * Add `annotation_raster_background()` for white-blended images in data
+    coordinates and `geom_round_rect()` for rounded rectangles.
+  * Add `scatter_layers()`, `plot_scatter3d()`, and `streamline_layers()` for
+    reusable scatter layers, interactive 3D scatter plots, and streamlines.
+  * Add `contrast_text()` for black or white text over transparent fills.
 
-* **deps**: Declare the GitHub source for `thisutils`.
+* **fix**:
+  * Fix the missing `rowwise()` error in `geom_sankey_bump()`.
+  * Restore the caller's random-number state after seeded plots, including on
+    error, and retain variables used in arithmetic mappings and facet expressions.
 
-* **fix**: `geom_sankey_bump()` no longer fails with "could not find function rowwise".
-* **fix**: `dplyr` moves to Imports because `StatPlot()` uses it on its default path. Optional packages needed by heatmaps, hull marks, alluvial trends, Venn, rasterised, Sankey, scatter, marginal scatter, streamline and 3D plots and by PNG/SVG inversion are installed on first use through `thisutils::check_r(strict = TRUE)` (thisutils >= 0.5.4); the call stops with an install hint only if installation fails.
-* **refactor**: Share weighted and unweighted Sankey data preparation while preserving selections and column order.
-* **fix**: Seeded dimension, statistical and network plots restore the caller's random-number state, including after errors. Plot data slimming retains variables used in arithmetic mappings and facet expressions.
-
-* **refactor**: Place `...` last in function signatures; unrestricted `get_colors()` searches use `palettes = NULL`, and unweighted `make_long()` selections use `value = NULL`.
-
-* **feat**: Add `scatter_layers()` and `plot_scatter3d()` for shared point, outline and interactive three-dimensional rendering.
-
-* **feat**: Add `streamline_layers()` for shared vector-grid streamlines with fixed or magnitude colours.
-
-* **feat**: Add `contrast_text()` to choose black or white text after compositing transparent fills over their background.
-
-* **feat**: Add `geom_round_rect()` with a corner radius in millimetres and standard rectangle aesthetics.
+* **compatibility**:
+  * Rename `get_chinese_palettes()` to `chinese_palettes()`.
+  * Move `...` to the end of function signatures. Use `palettes = NULL` for
+    unrestricted `get_colors()` searches and `value = NULL` for unweighted
+    `make_long()` selections.
+  * Import `dplyr` and declare the GitHub source for `thisutils` (>= 0.5.4).
+    Install optional dependencies on first use and give an install hint on failure.
 
 # thisplot 0.4.6
 
 * **compatibility**:
-  * Require ggplot2 4.0.0 or later and use its public theme completion API.
-  * Require thisutils 0.5.0 or later for optional dependency checks without
-    installing packages during plotting. Only hull marks require concaveman.
+  * Require ggplot2 >= 4.0.0 and thisutils >= 0.5.0. Optional dependencies
+    are checked without installation during plotting. Only hull marks require
+    concaveman.
 
 * **feat**:
-  * Add `NetworkPlot()` to draw a network from an edge data frame and an
-    optional node data frame, with igraph layouts (`fr`, `kk`, `circle`) or
-    user-supplied coordinates, edge width and colour by weight and group,
-    node group colour, shape and size mapping, repelled labels, highlight
-    rings, and theme control. Duplicate edges are collapsed to the strongest
-    weight and self-loops dropped.
-  * Add `rasterise_plot()`, which renders the point and line layers of a
-    `ggplot` or `patchwork` object as 300 dpi rasters, recursing into the
-    sub-plots of a composite, so figures with many elements stay small and
-    fast to draw. Layers are rendered with the `ragg` device, which, unlike
-    the `Cairo` device of the underlying package, needs no X11.
+  * Add `NetworkPlot()` for styled node and edge plots with igraph layouts
+    (`fr`, `kk`, `circle`) or supplied coordinates. Keep the strongest duplicate
+    edge and drop self-loops.
+  * Add `rasterise_plot()` for 300 dpi rasterisation of point and line layers
+    in `ggplot` and `patchwork` objects without X11.
   * Add `plot_scatter()` and `plot_histogram()` using `theme_this()` and
     thisplot palettes. Correlation annotation no longer depends on `ggpubr`;
     point density and marginal plots remain optional.
   * `StatPlot()` value bars can show numeric labels through `label = TRUE`.
-  * `get_colors()` can now take `ggplot` or `patchwork` objects and returns
-    a two-column data frame with the factor levels and their mapped colors
-    used in the plot(s).
-  * `get_colors()` also accepts other renderable plot objects (`gtable`,
-    `grob`, `gList`, `ComplexHeatmap::Heatmap`, `pheatmap`, `trellis`) and
-    returns the colors used in the plot with their Chinese names.
-  * Raise a clear error when an unsupported object type is passed to
-    `get_colors()`.
-  * Add `print_colored_table()` for ANSI-colored data-frame output, with
-    palette colors assigned by column by default and optional row coloring.
-  * Keep table headers uncolored and omit separator rules for compact console
-    output.
-  * Add `invert_svg()` to build a dark-mode variant of an SVG by replacing
-    every colour with its RGB complement and giving fill-less elements a light
-    inherited fill. Rasters embedded as `data:image/png;base64,...` payloads,
-    such as the colour bar of a continuous ggplot2 legend, are complemented
-    pixel by pixel too, which `invert_raster = FALSE` turns off. The `rgb()`
-    notation written by cairo-based devices such as `grDevices::svg()` is
-    understood as well, and a file that holds no colour to invert is reported
-    instead of being copied silently.
-  * Add `invert_png()` for a PNG on its own and `invert_figures()` to invert
-    several figures at once, given files or directories. Both name their copy
-    after the input with a `-dark` suffix, and `invert_figures()` skips files
-    that already carry that suffix.
+  * Extend `get_colors()` to return level-to-colour mappings for `ggplot` and
+    `patchwork`, and colours with Chinese names for `gtable`, `grob`, `gList`,
+    `ComplexHeatmap::Heatmap`, `pheatmap`, and `trellis`. Report unsupported
+    object types clearly.
+  * Add `print_colored_table()` for ANSI-coloured data frames, with column
+    colouring by default, optional row colouring, and plain headers.
+  * Add `invert_svg()` and `invert_png()` for dark-mode figures. SVG inversion
+    supports `rgb()` colours and includes embedded PNGs by default
+    (`invert_raster = FALSE` to skip them).
+  * Add `invert_figures()` to process files or directories in batches. PNG
+    and batch inversion write `-dark` copies, and batches skip files with
+    that suffix.
 
 * **fix**:
-  * Invert color animation values when the target SVG attribute is a color,
-    preserving non-color animations and element references.
-  * Preserve edge endpoints with missing weights when constructing network
-    layouts, including circular layouts that do not use weights.
-  * Preserve SVG element references and CSS selectors when inverting colors.
-  * Keep zero-weight edges in network plots while excluding them from layout
-    forces, so the `fr` and `kk` layouts accept zero weights.
+  * Invert SVG colour animations while preserving other animations, element
+    references, and CSS selectors.
+  * Keep endpoints of edges with missing weights and retain zero-weight edges
+    in network plots. Exclude zero-weight edges from `fr` and `kk` layout forces.
   * Center the rotated y-axis label along the coordinate arrow in
     `theme_blank()` across panel sizes and custom arrow lengths.
   * Align `get_colors()` and colored-table columns using ANSI-aware terminal
@@ -114,15 +93,15 @@
 # thisplot 0.3.9
 
 * **feat**:
-  * `DimDataPlot()`: New lightweight helper for plotting supplied 2D coordinates from data frames, with grouping, splitting, shape mapping, labels, palettes, theme controls, and optional group marks.
+  * Add `DimDataPlot()` for supplied 2D coordinates, with grouping, splitting,
+    and optional labels and group marks.
   * `StatPlot()`: Added configurable major panel grid lines via `grid_major`, `grid_major_colour`, `grid_major_linetype`, and `grid_major_linewidth`.
   * `StatPlot()`: Added optional `venn_engine = "venny"` support for more flexible 2-4 set Venn diagrams while keeping `ggVennDiagram` as the default.
 
 * **docs**:
-  * Added documentation and examples for `DimDataPlot()`.
-  * Updated `StatPlot()` documentation for the new major grid controls.
-  * Added `StatPlot()` documentation and examples for the optional `venny` Venn backend.
- 
+  * Document `DimDataPlot()` and the new `StatPlot()` options, with examples
+    for `DimDataPlot()` and the `venny` backend.
+
 # thisplot 0.3.8
 
 * **feat**:
@@ -131,19 +110,17 @@
     * `annotate_quadrants()`: add quadrant guide lines and percentage labels to scatter plots.
     * `clip_symmetric_range()`: clip values to symmetric lower and upper limits.
     * `jitter_highlighted_points()`: deterministically jitter highlighted points for stable plotting output.
-  * `visual_colors()`: add adaptive label layout via `label_mode`, with tighter HTML rendering for Chinese, pinyin, RGB, and hex labels.
-  * `ChineseColors$visual_colors()`: pass `name_type` through to the layout mode so different label types use matching display rules.
-  * `get_chinese_palettes()`: use `color_sets$Chinese` as the default Chinese palette and add a fallback palette definition when the dataset metadata is incomplete.
+  * Add adaptive HTML label layouts through `visual_colors(label_mode = ...)`.
+    `ChineseColors$visual_colors()` uses `name_type` to select the layout.
+  * Use `color_sets$Chinese` as the default in `get_chinese_palettes()`, with a
+    fallback for incomplete metadata.
 
 * **docs**:
-  * Add runnable examples for the migration helper functions.
-  * Add documentation entries for `annotate_quadrants()`, `clip_symmetric_range()`, `jitter_highlighted_points()`, and `to_percent()`.
-  * Expand Chinese color examples to show the default `color_sets$Chinese` palette.
-  * Update `visual_colors()` documentation for the new adaptive label layout mode.
+  * Document the migration helpers and adaptive label layouts. Add examples
+    for the helpers and the default Chinese palette.
 
 * **data**:
-  * Refresh the Chinese color palette metadata and dataset defaults used by `ChineseColors()`.
-  * Improve Chinese color ordering and default palette selection used for generated palette sets.
+  * Refresh Chinese colour palette metadata, ordering, and defaults.
 
 # thisplot 0.3.7
 
@@ -188,11 +165,11 @@
 # thisplot 0.3.4
 
 * **feat**:
-  * `StatPlot()`: New function to visualize data using various plot types including bar plots, rose plots, ring plots, pie charts, trend plots, area plots, dot plots, sankey plots, chord plots, venn diagrams, and upset plots. Supports grouping, splitting, background coloring, and extensive customization options.
+  * Add `StatPlot()` for statistical plots including bars, trends, Sankey
+    diagrams, Venn diagrams, and UpSet plots, with grouping and splitting.
 
 * **docs**:
-  * `StatPlot()`: Added comprehensive parameter documentation for all function arguments including `group.by`, `split.by`, `palette`, `palcolor`, `title`, `subtitle`, `xlab`, `ylab`, `legend.position`, `legend.direction`, `theme_use`, `theme_args`, `combine`, `nrow`, `ncol`, `byrow`, `force`, and `seed`.
-  * `StatPlot()`: Updated examples to use generic test data instead of single-cell specific datasets, making the function more accessible as a general-purpose plotting tool.
+  * Document `StatPlot()` arguments and use generic data in examples.
 
 # thisplot 0.3.2
 
@@ -202,11 +179,14 @@
 # thisplot 0.3.1
 
 * **feat**:
-  * `check_ci_env()`: New function to detect if the current environment supports browsable HTML output. Now detects local pkgdown builds via `IN_PKGDOWN` environment variable and knitr HTML output contexts. 
-  * `head.colors()`: New S3 method for `colors` objects, allowing the use of `head()` function to limit the number of displayed rows (default `n = 6L`).
-  * `visual_colors()`: Integrated `htmltools::browsable` functionality. Added `browsable` parameter (default `NULL` for auto-detection) to automatically display widgets in appropriate environments. Automatically detects interactive sessions and GitHub Actions pkgdown workflow, while preventing browser opening during CRAN checks.
-  * `ChineseColors$visual_colors()`: Added `browsable` parameter support, consistent with the global `visual_colors()` function.
-  * `get_colors()`: Now automatically infers RGB values from hex codes when colors are found in palettes but not in the main dataset. Added internal `hex_to_rgb()` helper function to convert hex color codes to RGB format strings.
+  * Add `check_ci_env()` to detect browsable HTML contexts, including pkgdown
+    and knitr builds.
+  * Add `head()` support for `colors` objects, showing six rows by default.
+  * Add `browsable` to `visual_colors()` and `ChineseColors$visual_colors()`.
+    The default (`NULL`) detects when to display HTML and avoids opening a
+    browser during CRAN checks.
+  * Infer RGB values from hex codes in `get_colors()` for palette entries
+    outside the main dataset.
 
 # thisplot 0.3.0
 
@@ -218,17 +198,18 @@
 # thisplot 0.2.0
 
 * **feat**:
-  * Chinese traditional color system
-    * `ChineseColors()`: New function to create a Chinese traditional color system object with 1058 representative colors extracted from traditional Chinese color charts. Supports accessing colors by name (pinyin or Chinese), number, or hex code, creating color palettes, and generating segmented colormaps.
-    * `visual_colors()`: New function to visualize colors in HTML format with a grid of color swatches, supporting optional names, RGB values, or hex codes.
-    * `get_chinese_palettes()`: New function to get Chinese color palettes organized by color categories (blue, green, yellow, red, brown, purple, etc.) with automatic continuous palette generation.
+  * Add `ChineseColors()` to look up traditional Chinese colours by Chinese
+    name, pinyin, number, or hex code and create palettes and segmented colour maps.
+  * Add `visual_colors()` for HTML swatches with optional names, RGB values,
+    or hex codes.
+  * Add `get_chinese_palettes()` for palettes by colour category, including
+    continuous variants.
 
 * **data**:
-  * `chinese_colors`: New data object containing 1058 Chinese traditional colors.
+  * Add `chinese_colors`, a dataset of 1,058 traditional Chinese colours.
 
 * **docs**:
-  * Added comprehensive documentation for Chinese color system functions.
-  * Updated package documentation to include Chinese traditional colors feature.
+  * Document the traditional Chinese colour tools.
 
 # thisplot 0.1.0
 
