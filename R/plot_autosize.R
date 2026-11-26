@@ -2,7 +2,8 @@
 #'
 #' @description
 #' Build a compact plot by choosing a physical panel size and expanding it for
-#' dense in-panel text or overflowing plot labels. A shared point-size baseline
+#' dense in-panel text, overflowing plot labels, or exterior legends on
+#' individual ggplots. A shared point-size baseline
 #' harmonizes ggplot, patchwork, and recorded grid text such as wrapped
 #' ComplexHeatmap output while preserving their relative hierarchy. Constant
 #' data-label text is enlarged conservatively when space permits. The
@@ -119,26 +120,25 @@ plot_autosize <- function(
     aspect <- autosize_panel_aspect(x)
     if (is.finite(aspect)) {
       panel_width <- panel_width * max(text_scale)
-      panel_height <- panel_width * aspect
       size <- autosize_aspect_size(
         x,
         panel_width = panel_width,
         margin = margin,
         units = units
       )
+      panel_width <- size[["panel_width"]]
+      panel_height <- panel_width * aspect
       return(autosize_preserve(
         x, size, panel_width, panel_height, units, text_scale, text_base_pt, save, dpi
       ))
     }
     panel_width <- panel_width * text_scale[["width"]]
     panel_height <- panel_height * text_scale[["height"]]
-    panel_width <- autosize_label_width(
-      x,
-      width = panel_width,
-      height = panel_height,
-      margin = margin,
-      units = units
+    size <- autosize_content_size(
+      x, width = panel_width, height = panel_height, margin = margin, units = units
     )
+    panel_width <- size[["width"]]
+    panel_height <- size[["height"]]
   }
 
   out <- panel_fix(
@@ -871,13 +871,18 @@ autosize_aspect_size <- function(plot, panel_width, margin, units) {
   width_scale <- panel_width / as.numeric(gt$widths[panel_cols[[1]]])
   body_width <- sum(as.numeric(gt$widths[panel_cols])) * width_scale
   body_height <- sum(as.numeric(gt$heights[panel_rows])) * width_scale
+  fitted <- gt
+  fitted$widths[panel_cols] <- grid::unit(as.numeric(gt$widths[panel_cols]) * width_scale, units)
+  fitted$heights[panel_rows] <- grid::unit(as.numeric(gt$heights[panel_rows]) * width_scale, units)
+  guide_scale <- max(autosize_guide_scale(fitted, units))
   fixed_widths <- gt$widths[grid::unitType(gt$widths) != "null"]
   fixed_heights <- gt$heights[grid::unitType(gt$heights) != "null"]
   fixed_width <- grid::convertWidth(sum(fixed_widths), units, valueOnly = TRUE)
   fixed_height <- grid::convertHeight(sum(fixed_heights), units, valueOnly = TRUE)
   c(
-    width = body_width + fixed_width + 2 * margin,
-    height = body_height + fixed_height + 2 * margin
+    width = guide_scale * body_width + fixed_width + 2 * margin,
+    height = guide_scale * body_height + fixed_height + 2 * margin,
+    panel_width = guide_scale * panel_width
   )
 }
 
@@ -1122,7 +1127,7 @@ autosize_text_scale <- function(plot) {
   )
 }
 
-autosize_label_width <- function(plot, width, height, margin, units) {
+autosize_content_size <- function(plot, width, height, margin, units) {
   gt <- panel_fix(
     plot,
     width = width,
@@ -1137,7 +1142,50 @@ autosize_label_width <- function(plot, width, height, margin, units) {
     function(x) if (x$slot > 0) x$need / x$slot else 1,
     numeric(1)
   )
-  width * max(1, ratios, na.rm = TRUE)
+  guides <- if (inherits(plot, "patchwork")) c(width = 1, height = 1) else {
+    autosize_guide_scale(gt, units)
+  }
+  c(
+    width = width * max(guides[["width"]], ratios, na.rm = TRUE),
+    height = height * guides[["height"]]
+  )
+}
+
+autosize_guide_scale <- function(gt, units) {
+  layout <- gt$layout
+  panels <- grep("^panel($|-)", layout$name)
+  guides <- which(layout$name %in% paste0("guide-box-", c("top", "bottom", "left", "right")))
+  scale <- c(width = 1, height = 1)
+  for (i in guides) {
+    guide <- gt$grobs[[i]]
+    if (inherits(guide, "zeroGrob")) next
+    horizontal <- layout$name[i] %in% c("guide-box-top", "guide-box-bottom")
+    if (horizontal) {
+      convert <- grid::convertWidth
+      need <- grid::grobWidth(guide)
+      dimension <- "width"
+      sizes <- gt$widths
+      from <- layout$l
+      to <- layout$r
+    } else {
+      convert <- grid::convertHeight
+      need <- grid::grobHeight(guide)
+      dimension <- "height"
+      sizes <- gt$heights
+      from <- layout$t
+      to <- layout$b
+    }
+    span <- seq.int(from[i], to[i])
+    grow <- intersect(span, unlist(Map(seq.int, from[panels], to[panels])))
+    if (!length(grow)) next
+    available <- convert(sum(sizes[span]), units, valueOnly = TRUE)
+    minimum <- convert(need, units, valueOnly = TRUE)
+    if (minimum > available) {
+      body <- convert(sum(sizes[grow]), units, valueOnly = TRUE)
+      if (body > 0) scale[[dimension]] <- max(scale[[dimension]], 1 + (minimum - available) / body)
+    }
+  }
+  scale
 }
 
 autosize_label_metrics <- function(gt, units) {

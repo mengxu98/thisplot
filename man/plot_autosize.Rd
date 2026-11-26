@@ -45,7 +45,8 @@ returned through \code{\link[=panel_fix]{panel_fix()}}; wrapped grid content is 
 }
 \description{
 Build a compact plot by choosing a physical panel size and expanding it for
-dense in-panel text or overflowing plot labels. A shared point-size baseline
+dense in-panel text, overflowing plot labels, or exterior legends on
+individual ggplots. A shared point-size baseline
 harmonizes ggplot, patchwork, and recorded grid text such as wrapped
 ComplexHeatmap output while preserving their relative hierarchy. Constant
 data-label text is enlarged conservatively when space permits. The
