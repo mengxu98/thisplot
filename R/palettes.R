@@ -1,6 +1,4 @@
-#' @title Color palettes collected
-#'
-#' @description This function creates a color palette for a given vector of values.
+#' @title Create color palettes
 #'
 #' @md
 #' @param x A vector of character/factor or numeric values.
@@ -21,7 +19,8 @@
 #' @param NA_color Color assigned to NA if `NA_keep` is `TRUE`.
 #' Default is `"grey80"`.
 #'
-#' @return A character vector of color codes (hexadecimal format) corresponding to the input values `x`. The length and structure depend on the `matched` parameter.
+#' @return A character vector of color codes (hexadecimal format) corresponding to the input values `x`.
+#' The length and structure depend on the `matched` parameter.
 #'
 #' @seealso [show_palettes], [palette_list]
 #'
@@ -90,7 +89,7 @@ palette_colors <- function(
 ) {
   palette_list <- c(
     thisplot::palette_list,
-    get_chinese_palettes()
+    chinese_palettes()
   )
   if (missing(x)) {
     x <- 1:n
@@ -278,7 +277,7 @@ show_palettes <- function(
 ) {
   palette_list <- c(
     thisplot::palette_list,
-    get_chinese_palettes()
+    chinese_palettes()
   )
   if (!is.null(palettes)) {
     palette_list <- palettes
@@ -363,8 +362,8 @@ show_palettes <- function(
 #'
 #' @md
 #' @examples
-#' show_palettes(get_chinese_palettes())
-get_chinese_palettes <- function(
+#' show_palettes(chinese_palettes())
+chinese_palettes <- function(
   prefix = "Chinese"
 ) {
   cc_obj <- ChineseColors()
@@ -413,9 +412,8 @@ get_chinese_palettes <- function(
   chinese_default <- color_sets[["Chinese"]]
   if (is.null(chinese_default) || length(chinese_default) == 0) {
     fallback_names <- c(
-      "hushuilan", "qunqing", "jialingshuilv", "baoshilv",
-      "yangfei", "he", "zhizi", "qianlaohuang",
-      "chengse", "feise", "xueqing", "biandouzi"
+      "qunqing", "qingcong", "qianlaohuang", "jucheng",
+      "feise", "zhuse", "cangcang", "tengluozi"
     )
     fallback_idx <- match(fallback_names, thisplot::chinese_colors$name)
     if (anyNA(fallback_idx)) {

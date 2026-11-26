@@ -45,6 +45,6 @@ get_colors(p, palettes = NULL)
 }
 \seealso{
 \link{chinese_colors} for the dataset of Chinese traditional colors.
-\link{get_chinese_palettes} for getting Chinese color palettes.
+\link{chinese_palettes} for getting Chinese color palettes.
 \link{ChineseColors} for the ChineseColors object.
 }

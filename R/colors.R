@@ -312,7 +312,7 @@ simple_colors <- function(n = 10, palette = NULL) {
   } else {
     palette_list <- c(
       thisplot::palette_list,
-      get_chinese_palettes()
+      chinese_palettes()
     )
 
     if (!palette %in% names(palette_list)) {

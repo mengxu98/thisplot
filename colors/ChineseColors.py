@@ -33,18 +33,14 @@ BASE_CHINESE_COLORS = [
 ]
 
 DEFAULT_CHINESE_COLORS = [
-    "#B0D5DF",  # 湖水蓝 - light blue
-    "#1772B4",  # 群青 - deep blue
-    "#ADD5A2",  # 嘉陵水绿 - light green
-    "#41AE3C",  # 宝石绿 - deep green
-    "#F091A0",  # 杨妃 - light red
-    "#C91F37",  # 赫 - deep red
-    "#FEDA5A",  # 栀子 - light yellow
-    "#F9BD10",  # 浅烙黄 - deep yellow
-    "#FA8C35",  # 橙色 - light orange
-    "#ED5736",  # 妃色 - deep orange
-    "#B0A4E3",  # 雪青 - light purple
-    "#A35C8F",  # 扁豆紫 - deep purple
+    "#1772B4",  # 群青   蓝
+    "#0AA344",  # 青葱   绿
+    "#F9BD10",  # 浅烙黄 黄
+    "#F97D1C",  # 橘橙   橙
+    "#ED5736",  # 妃色   红
+    "#D70440",  # 朱色   红
+    "#5976BA",  # 苍苍   蓝
+    "#8076A3",  # 藤萝紫 紫
 ]
 
 
@@ -628,6 +624,353 @@ def interpolate_colors_from_set8(base_set8, all_colors, target_size):
     return ordered_colors[:target_size]
 
 
+def delta_e_2000(lab1, lab2):
+    """Calculate CIEDE2000 perceptual color difference between two LAB tuples."""
+    L1, a1, b1 = lab1
+    L2, a2, b2 = lab2
+
+    C1 = math.sqrt(a1 * a1 + b1 * b1)
+    C2 = math.sqrt(a2 * a2 + b2 * b2)
+    C_bar = 0.5 * (C1 + C2)
+    C_bar7 = C_bar**7
+    G = 0.5 * (1.0 - math.sqrt(C_bar7 / (C_bar7 + 25.0**7)))
+
+    a1_p = (1.0 + G) * a1
+    a2_p = (1.0 + G) * a2
+    C1_p = math.sqrt(a1_p * a1_p + b1 * b1)
+    C2_p = math.sqrt(a2_p * a2_p + b2 * b2)
+
+    h1_p = 0.0 if (b1 == 0.0 and a1_p == 0.0) else (math.degrees(math.atan2(b1, a1_p)) % 360.0)
+    h2_p = 0.0 if (b2 == 0.0 and a2_p == 0.0) else (math.degrees(math.atan2(b2, a2_p)) % 360.0)
+
+    dL_p = L2 - L1
+    dC_p = C2_p - C1_p
+
+    if C1_p * C2_p == 0.0:
+        dh_p = 0.0
+    else:
+        dh = h2_p - h1_p
+        if abs(dh) <= 180.0:
+            dh_p = dh
+        elif dh > 180.0:
+            dh_p = dh - 360.0
+        else:
+            dh_p = dh + 360.0
+
+    dH_p = 2.0 * math.sqrt(C1_p * C2_p) * math.sin(math.radians(dh_p * 0.5))
+
+    L_bar_p = 0.5 * (L1 + L2)
+    C_bar_p = 0.5 * (C1_p + C2_p)
+
+    if C1_p * C2_p == 0.0:
+        h_bar_p = h1_p + h2_p
+    elif abs(h1_p - h2_p) <= 180.0:
+        h_bar_p = 0.5 * (h1_p + h2_p)
+    elif (h1_p + h2_p) < 360.0:
+        h_bar_p = 0.5 * (h1_p + h2_p + 360.0)
+    else:
+        h_bar_p = 0.5 * (h1_p + h2_p - 360.0)
+
+    T = (
+        1.0
+        - 0.17 * math.cos(math.radians(h_bar_p - 30.0))
+        + 0.24 * math.cos(math.radians(2.0 * h_bar_p))
+        + 0.32 * math.cos(math.radians(3.0 * h_bar_p + 6.0))
+        - 0.20 * math.cos(math.radians(4.0 * h_bar_p - 63.0))
+    )
+
+    d_theta = 30.0 * math.exp(-(((h_bar_p - 275.0) / 25.0) ** 2))
+    C_bar_p7 = C_bar_p**7
+    R_C = 2.0 * math.sqrt(C_bar_p7 / (C_bar_p7 + 25.0**7))
+    L_term = (L_bar_p - 50.0) ** 2
+    S_L = 1.0 + (0.015 * L_term) / math.sqrt(20.0 + L_term)
+    S_C = 1.0 + 0.045 * C_bar_p
+    S_H = 1.0 + 0.015 * C_bar_p * T
+    R_T = -math.sin(math.radians(2.0 * d_theta)) * R_C
+
+    return math.sqrt(
+        (dL_p / S_L) ** 2
+        + (dC_p / S_C) ** 2
+        + (dH_p / S_H) ** 2
+        + R_T * (dC_p / S_C) * (dH_p / S_H)
+    )
+
+
+def _build_chromatic_rings(n_chr):
+    """Return multi-ring (n, L_target, C_target, hue_shift) specs for pure chromatic selection."""
+    if n_chr <= 8:
+        return [{"n": n_chr, "L": 60.0, "C": 64.0, "h_shift": 0.0}]
+    if n_chr <= 16:
+        return [
+            {"n": 8, "L": 54.0, "C": 62.0, "h_shift": 0.0},
+            {"n": n_chr - 8, "L": 76.0, "C": 40.0, "h_shift": 22.5},
+        ]
+    if n_chr <= 32:
+        n1, n2 = 10, 9
+        return [
+            {"n": n1, "L": 58.0, "C": 58.0, "h_shift": 0.0},
+            {"n": n2, "L": 76.0, "C": 38.0, "h_shift": 15.0},
+            {"n": n_chr - n1 - n2, "L": 45.0, "C": 46.0, "h_shift": 7.5},
+        ]
+    n1, n2, n3 = 16, 14, 14
+    return [
+        {"n": n1, "L": 59.0, "C": 58.0, "h_shift": 0.0},
+        {"n": n2, "L": 76.0, "C": 36.0, "h_shift": 10.0},
+        {"n": n3, "L": 43.0, "C": 46.0, "h_shift": 5.0},
+        {"n": n_chr - n1 - n2 - n3, "L": 68.0, "C": 32.0, "h_shift": 15.0},
+    ]
+
+
+def _order_2opt_path(sel_idx, labs, L_vals, H_vals, anchor_start_idx=None, start_hue=248.0):
+    """Order selected indices along a silky-smooth perceptual path minimizing sum(DE2000^2 + 0.5*dL^2)."""
+    n = len(sel_idx)
+    if n <= 2:
+        return list(sel_idx)
+
+    # Precompute pairwise transition weights W[a][b] for indices 0..n-1
+    W = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        li = labs[sel_idx[i]]
+        Li = L_vals[sel_idx[i]]
+        for j in range(i + 1, n):
+            d = delta_e_2000(li, labs[sel_idx[j]])
+            dL = Li - L_vals[sel_idx[j]]
+            w = d * d + 0.5 * dL * dL
+            W[i][j] = w
+            W[j][i] = w
+
+    anchor_w = None
+    if anchor_start_idx is not None:
+        a_lab = labs[anchor_start_idx]
+        a_L = L_vals[anchor_start_idx]
+        anchor_w = [
+            delta_e_2000(a_lab, labs[sel_idx[i]]) ** 2 + 0.5 * (a_L - L_vals[sel_idx[i]]) ** 2
+            for i in range(n)
+        ]
+        start_pos = min(range(n), key=lambda i: anchor_w[i])
+    else:
+        start_pos = min(
+            range(n),
+            key=lambda i: _circular_hue_distance(H_vals[sel_idx[i]], start_hue)
+            + 0.8 * abs(L_vals[sel_idx[i]] - 60.0),
+        )
+
+    path = [start_pos]
+    rem = [i for i in range(n) if i != start_pos]
+    while rem:
+        last = path[-1]
+        nxt = min(rem, key=lambda i: W[last][i])
+        path.append(nxt)
+        rem.remove(nxt)
+
+    def path_cost(p):
+        total = sum(W[p[k]][p[k + 1]] for k in range(n - 1))
+        if anchor_w is not None:
+            total += 1.5 * anchor_w[p[0]]
+        return total
+
+    improved = True
+    iters = 0
+    while improved and iters < 80:
+        improved = False
+        iters += 1
+        for i in range(n - 2):
+            for j in range(i + 1, n - 1):
+                cand = path[: i + 1] + list(reversed(path[i + 1 : j + 1])) + path[j + 1 :]
+                if path_cost(cand) + 1e-6 < path_cost(path):
+                    path = cand
+                    improved = True
+            cand = path[: i + 1] + list(reversed(path[i + 1 :]))
+            if path_cost(cand) + 1e-6 < path_cost(path):
+                path = cand
+                improved = True
+
+        cur_c = path_cost(path)
+        for i in range(n):
+            node = path[i]
+            without = path[:i] + path[i + 1 :]
+            best_p = path
+            best_c = cur_c
+            for pos in range(n):
+                cand = without[:pos] + [node] + without[pos:]
+                cc = path_cost(cand)
+                if cc + 1e-6 < best_c:
+                    best_c = cc
+                    best_p = cand
+            if best_c + 1e-6 < cur_c:
+                path = best_p
+                cur_c = best_c
+                improved = True
+
+    if anchor_start_idx is None:
+        if _circular_hue_distance(H_vals[sel_idx[path[-1]]], 235.0) < _circular_hue_distance(
+            H_vals[sel_idx[path[0]]], 235.0
+        ):
+            path.reverse()
+
+    return [sel_idx[i] for i in path]
+
+
+def generate_chinese_set_palette(all_colors, all_categories, target_size, start_hue=248.0):
+    """Select target_size colors from chinese_colors as a silky-smooth chromatic 2-opt path
+    with a seamlessly bridged monotonic-lightness gray_brown tail for larger sets (32/64/128)."""
+    seen = set()
+    unique_hex = []
+    unique_cat = []
+    for h, cat in zip(all_colors, all_categories):
+        if h not in seen:
+            seen.add(h)
+            unique_hex.append(h)
+            unique_cat.append(cat)
+
+    labs = [rgb_to_lab(hex_to_rgb(h)) for h in unique_hex]
+    L_vals = [lab[0] for lab in labs]
+    C_vals = [math.sqrt(lab[1] ** 2 + lab[2] ** 2) for lab in labs]
+    H_vals = [math.degrees(math.atan2(lab[2], lab[1])) % 360.0 for lab in labs]
+
+    n_gb = 0 if target_size <= 16 else (4 if target_size <= 32 else (8 if target_size <= 64 else 16))
+    n_chr = target_size - n_gb
+
+    L_floor = 34.0 if target_size <= 64 else 30.0
+    C_floor = 28.0 if target_size <= 16 else (22.0 if target_size <= 32 else (20.0 if target_size <= 64 else 17.0))
+
+    cand_chr = [
+        i
+        for i in range(len(unique_hex))
+        if unique_cat[i] != "gray_brown"
+        and L_floor <= L_vals[i] <= 85.0
+        and C_floor <= C_vals[i] <= 82.0
+        and not (25.0 <= H_vals[i] <= 108.0 and (L_vals[i] < 55.0 or C_vals[i] < 30.0))
+        and not (10.0 <= H_vals[i] < 45.0 and L_vals[i] < 44.0 and C_vals[i] < 48.0)
+        and not (L_vals[i] > 81.0 and C_vals[i] < 28.0)
+    ]
+
+    if target_size <= 64:
+        rings = _build_chromatic_rings(n_chr)
+        min_de_req = 17.5 if target_size <= 8 else (14.5 if target_size <= 16 else (10.2 if target_size <= 32 else 7.8))
+        sel_chr = []
+        sel_set = set()
+        min_d_cache = {i: 100.0 for i in cand_chr}
+
+        for rg in rings:
+            n_r = rg["n"]
+            for j in range(n_r):
+                th = (start_hue - rg["h_shift"] - j * (360.0 / n_r)) % 360.0
+                tL = rg["L"]
+                tC = rg["C"]
+                if _circular_hue_distance(th, 85.0) < 35.0:
+                    tL = min(83.0, max(62.0, tL + 14.0))
+                elif _circular_hue_distance(th, 45.0) < 22.0:
+                    tL = max(58.0, tL + 6.0)
+                elif _circular_hue_distance(th, 275.0) < 25.0:
+                    tL = max(36.0, tL - 5.0)
+
+                avail = [i for i in cand_chr if i not in sel_set]
+                ok = [i for i in avail if min_d_cache[i] >= min_de_req]
+                if not ok:
+                    ok = [i for i in avail if min_d_cache[i] >= min_de_req * 0.82]
+                if not ok:
+                    ok = sorted(avail, key=lambda i: min_d_cache[i], reverse=True)[: min(15, len(avail))]
+
+                best = min(
+                    ok,
+                    key=lambda i: (
+                        1.45 * _circular_hue_distance(H_vals[i], th)
+                        + 0.95 * abs(L_vals[i] - tL)
+                        + 0.35 * abs(C_vals[i] - tC)
+                        - 0.35 * min(min_d_cache[i], 25.0)
+                    ),
+                )
+                sel_chr.append(best)
+                sel_set.add(best)
+                b_lab = labs[best]
+                for i in cand_chr:
+                    if i not in sel_set:
+                        d = delta_e_2000(labs[i], b_lab)
+                        if d < min_d_cache[i]:
+                            min_d_cache[i] = d
+    else:
+        # Global CIEDE2000 farthest-point sampling for Set128 chromatic segment (prevents local clumping)
+        seed8_hex = set(generate_chinese_set_palette(unique_hex, unique_cat, 8, start_hue=start_hue))
+        sel_chr = [i for i, h in enumerate(unique_hex) if h in seed8_hex]
+        sel_set = set(sel_chr)
+        min_d_cache = {}
+        for i in cand_chr:
+            if i not in sel_set:
+                min_d_cache[i] = min(delta_e_2000(labs[i], labs[s]) for s in sel_chr)
+        while len(sel_chr) < n_chr:
+            avail = [i for i in cand_chr if i not in sel_set]
+            best = max(avail, key=lambda i: min_d_cache[i])
+            sel_chr.append(best)
+            sel_set.add(best)
+            b_lab = labs[best]
+            for i in cand_chr:
+                if i not in sel_set:
+                    d = delta_e_2000(labs[i], b_lab)
+                    if d < min_d_cache[i]:
+                        min_d_cache[i] = d
+
+    if n_gb == 0:
+        ord_chr = _order_2opt_path(sel_chr, labs, L_vals, H_vals, anchor_start_idx=None, start_hue=start_hue)
+        return [unique_hex[i] for i in ord_chr]
+
+    cand_gb = [
+        i
+        for i in range(len(unique_hex))
+        if unique_cat[i] == "gray_brown"
+        and 34.0 <= L_vals[i] <= 78.0
+        and 4.0 <= C_vals[i] <= 36.0
+        and i not in sel_set
+    ]
+    warm_light_gb = [i for i in cand_gb if 62.0 <= L_vals[i] <= 76.0]
+    bridge_chr = min(
+        sel_chr,
+        key=lambda c: min(delta_e_2000(labs[c], labs[g]) for g in warm_light_gb),
+    )
+
+    ord_chr = list(
+        reversed(_order_2opt_path(sel_chr, labs, L_vals, H_vals, anchor_start_idx=bridge_chr))
+    )
+
+    # Monotonic-lightness gray_brown tail smoothly descending/ascending from bridge_chr
+    anchor_idx = ord_chr[-1]
+    anchor_L = L_vals[anchor_idx]
+    if anchor_L >= 56.0:
+        start_L, end_L = min(74.0, anchor_L + 4.0), 36.0
+    else:
+        start_L, end_L = max(37.0, anchor_L - 2.0), 74.0
+    target_Ls = [
+        start_L + (end_L - start_L) * (k / max(1, n_gb - 1)) for k in range(n_gb)
+    ]
+
+    min_de_gb = 11.0 if n_gb <= 4 else (8.5 if n_gb <= 8 else 6.5)
+    sel_gb = []
+    used_all = list(ord_chr)
+    prev_idx = anchor_idx
+    for tL in target_Ls:
+        avail = [i for i in cand_gb if i not in sel_gb]
+        md_map = {i: min(delta_e_2000(labs[i], labs[u]) for u in used_all) for i in avail}
+        ok = [i for i in avail if md_map[i] >= min_de_gb]
+        if not ok:
+            ok = [i for i in avail if md_map[i] >= min_de_gb * 0.78]
+        if not ok:
+            ok = sorted(avail, key=lambda i: md_map[i], reverse=True)[: min(12, len(avail))]
+        best = min(
+            ok,
+            key=lambda i: (
+                1.6 * abs(L_vals[i] - tL)
+                + 0.55 * delta_e_2000(labs[prev_idx], labs[i])
+                - 0.35 * min(md_map[i], 18.0)
+            ),
+        )
+        sel_gb.append(best)
+        used_all.append(best)
+        prev_idx = best
+
+    sel_gb.sort(key=lambda i: L_vals[i], reverse=(anchor_L >= 56.0))
+    return [unique_hex[i] for i in ord_chr + sel_gb]
+
+
 def _category_hue_center(category_name):
     centers = {
         "red": 340.0,
@@ -1187,52 +1530,29 @@ def main(delete_csv=False, filter_colors=False):
     print(f"\nGenerating Chinese color sets...")
 
     color_sets = {}
-    color_sets["ChineseSet8"] = BASE_CHINESE_COLORS.copy()
     color_sets["Chinese"] = DEFAULT_CHINESE_COLORS.copy()
-    print(f"  ChineseSet8: {len(color_sets['ChineseSet8'])} colors (base colors)")
-    print(f"  Chinese: {len(color_sets['Chinese'])} colors (default palette)")
+    print(f"  Chinese: {len(color_sets['Chinese'])} colors (default palette, v2)")
 
-    print(f"    Base colors:")
-    for hex_color in BASE_CHINESE_COLORS:
-        rgb = hex_to_rgb(hex_color)
-        hsv = rgb_to_hsv(rgb)
-        hue_name = ""
-        if 0 <= hsv[0] < 30 or hsv[0] >= 330:
-            hue_name = "red"
-        elif 30 <= hsv[0] < 60:
-            hue_name = "orange"
-        elif 60 <= hsv[0] < 90:
-            hue_name = "yellow"
-        elif 90 <= hsv[0] < 150:
-            hue_name = "green"
-        elif 150 <= hsv[0] < 210:
-            hue_name = "cyan"
-        elif 210 <= hsv[0] < 270:
-            hue_name = "blue"
-        elif 270 <= hsv[0] < 330:
-            hue_name = "purple"
-        print(
-            f"      {hex_color}: hue={hsv[0]:.1f}° ({hue_name}), S={hsv[1]:.2f}, V={hsv[2]:.2f}"
-        )
-
-    main_color_list = [color["hex"] for color in sorted_colors]
     seen = set()
     unique_main_colors = []
-    for hex_color in main_color_list:
+    unique_main_categories = []
+    for color in sorted_colors:
+        hex_color = color["hex"]
         if hex_color not in seen:
             seen.add(hex_color)
             unique_main_colors.append(hex_color)
+            unique_main_categories.append(color["category"])
 
     print(f"  Main color list: {len(unique_main_colors)} colors")
 
-    set_sizes = [16, 32, 64, 128]
+    set_sizes = [8, 16, 32, 64, 128]
     for size in set_sizes:
-        selected_colors = interpolate_colors_from_set8(
-            BASE_CHINESE_COLORS, unique_main_colors, size
+        selected_colors = generate_chinese_set_palette(
+            unique_main_colors, unique_main_categories, size
         )
         color_sets[f"ChineseSet{size}"] = selected_colors
         print(
-            f"  ChineseSet{size}: {len(selected_colors)} colors (interpolated from {len(BASE_CHINESE_COLORS)} base colors)"
+            f"  ChineseSet{size}: {len(selected_colors)} colors (2-opt Silky + Monotonic GB Tail)"
         )
 
         color_hue_info = []

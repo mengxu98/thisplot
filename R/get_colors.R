@@ -21,7 +21,7 @@
 #'
 #' @seealso
 #' [chinese_colors] for the dataset of Chinese traditional colors.
-#' [get_chinese_palettes] for getting Chinese color palettes.
+#' [chinese_palettes] for getting Chinese color palettes.
 #' [ChineseColors] for the ChineseColors object.
 #'
 #' @examples
@@ -49,7 +49,7 @@ get_colors <- function(palettes = NULL, ...) {
 
   all_palettes <- c(
     thisplot::palette_list,
-    get_chinese_palettes()
+    chinese_palettes()
   )
   specified_palette_names <- character(0)
   if (!is.null(palettes)) {

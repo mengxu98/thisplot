@@ -13,7 +13,7 @@
 #'
 #' @seealso
 #' [chinese_colors] for the dataset of Chinese traditional colors.
-#' [get_chinese_palettes] for getting Chinese color palettes.
+#' [chinese_palettes] for getting Chinese color palettes.
 #' [visual_colors] for visualizing any color vector.
 #' [get_colors] for searching colors in dataset and palettes.
 #'

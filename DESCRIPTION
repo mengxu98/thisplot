@@ -65,5 +65,4 @@ Config/Needs/website: mengxu98/thistemplate
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-Config/roxygen2/version: 8.1.0
-RoxygenNote: 8.1.1
+Config/roxygen2/version: 8.1.1

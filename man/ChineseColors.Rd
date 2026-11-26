@@ -61,7 +61,7 @@ cc$visual_colors(
 }
 \seealso{
 \link{chinese_colors} for the dataset of Chinese traditional colors.
-\link{get_chinese_palettes} for getting Chinese color palettes.
+\link{chinese_palettes} for getting Chinese color palettes.
 \link{visual_colors} for visualizing any color vector.
 \link{get_colors} for searching colors in dataset and palettes.
 }

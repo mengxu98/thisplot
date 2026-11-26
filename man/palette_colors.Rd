@@ -2,7 +2,7 @@
 % Please edit documentation in R/palettes.R
 \name{palette_colors}
 \alias{palette_colors}
-\title{Color palettes collected}
+\title{Create color palettes}
 \usage{
 palette_colors(
   x,
@@ -44,10 +44,11 @@ Default is \code{FALSE}.}
 Default is \code{"grey80"}.}
 }
 \value{
-A character vector of color codes (hexadecimal format) corresponding to the input values \code{x}. The length and structure depend on the \code{matched} parameter.
+A character vector of color codes (hexadecimal format) corresponding to the input values \code{x}.
+The length and structure depend on the \code{matched} parameter.
 }
 \description{
-This function creates a color palette for a given vector of values.
+Create color palettes
 }
 \examples{
 x <- c(1:3, NA, 3:5)

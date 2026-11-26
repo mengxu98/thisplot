@@ -44,7 +44,7 @@ reference:
 - contents:
   - ChineseColors
   - chinese_colors
-  - get_chinese_palettes
+  - chinese_palettes
   - print.ChineseColors
 
 - subtitle: "Statistic plot"
